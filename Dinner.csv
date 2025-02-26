@@ -1,0 +1,512 @@
+Food,Hour,Calories,Carb (g),Sugar (g),Protein (g)
+Berry Smoothie,18:00:00,456.0,85.0,83.0,16.0
+Chicken Leg,20:30:00,475.0,0.0,0.0,62.0
+Asparagus,20:30:00,13.0,2.5,0.8,1.4
+Acai Smoothie,19:30:00,440.0,92.0,75.0,5.0
+(Trader Joe's) Mac and Cheese,20:00:00,135.0,23.5,1.5,5.0
+Coconut Shrimp,20:00:00,317.0,30.0,0.1,11.0
+Bourbon Chicken,20:30:00,212.0,10.0,9.4,22.0
+Rice,20:30:00,103.0,22.0,0.0,2.1
+Shrimp,20:30:00,86.0,1.1,0.0,17.0
+Cabbage,20:30:00,17.0,4.1,2.1,0.9
+Chai Tea,21:10:00,12.0,3.4,0.0,0.2
+Kale Salad,21:00:00,83.7,4.0,2.1,1.2
+Pizza,21:00:00,285.0,36.0,3.8,12.0
+Oreo Cookies,21:56:00,107.0,17.0,9.3,0.7
+Ranch Wings,22:00:00,776.0,30.4,0.6,44.0
+Turkey Slider,18:00:00,314.0,21.0,3.9,18.0
+Chicken and Rice,20:00:00,532.0,22.0,1.0,67.0
+Tangerine Orange,18:45:00,47.0,12.0,9.3,0.7
+Salad,20:15:00,13.0,2.8,1.2,0.8
+Green Smoothie,20:30:00,308.0,69.0,38.0,7.2
+Cheese Pita,19:50:00,640.0,95.0,0.0,30.0
+Spinach Smoothie,20:00:00,308.0,69.0,38.0,7.2
+(Red Baron) Brick Oven Pepperoni Pizza,18:00:00,1360.0,144.0,28.0,52.0
+M & M ,20:19:00,400.0,62.0,56.0,4.0
+Stouffers Salisbury Steak Family Size ,17:50:00,175.0,12.0,2.0,11.5
+Mashed Potato,17:50:00,300.0,40.0,2.0,4.0
+Chocolate Milk,18:22:00,241.0,36.0,34.0,11.0
+Frozen Pop,20:45:00,41.1,10.0,7.1,0.0
+Mello Yello,18:48:00,145.0,38.0,38.0,0.0
+Chip,20:59:00,302.0,43.0,0.5,4.5
+Salsa,20:59:00,19.0,4.3,2.6,1.0
+Gatorade,20:21:00,79.3,19.6,16.0,0.0
+Fig Newton,21:38:00,350.0,73.5,42.0,3.5
+Small Oranges/Summer Cuties,19:58:00,188.0,48.0,37.2,0.0
+Chocolate Milk,19:59:00,241.0,36.0,34.0,11.0
+Steak,19:00:00,788.0,0.0,0.0,74.0
+Fried Potato,19:00:00,365.0,48.0,0.3,4.0
+Ice Cream,20:00:00,273.0,31.0,28.0,4.6
+Rib,19:15:00,505.0,0.0,0.0,29.0
+Mash Potato,19:15:00,237.0,36.0,3.0,4.1
+Sweet Tea,19:15:00,160.0,41.0,40.0,0.0
+Cake,21:30:00,262.0,38.0,28.0,2.0
+Ice Cream,21:30:00,273.0,31.0,28.0,4.6
+Rice Krispies,17:22:00,140.0,31.0,3.6,2.5
+(Hamburger Helper) Deluxe Cheeseburger Macaroni,19:00:00,660.0,132.0,18.0,18.0
+Mello Yello,19:00:00,180.0,48.0,48.0,0.0
+Chocolate Cake,21:30:00,424.0,58.0,44.0,3.8
+Ice Cream,21:30:00,273.0,31.0,28.0,4.6
+Power Smoothie,18:55:00,202.5,43.7,38.7,5.0
+Salad,20:20:00,60.0,13.0,3.5,3.7
+French Dressing,20:20:00,129.0,1.8,1.4,0.4
+Spaghetti,20:20:00,852.0,171.0,6.1,30.0
+Crab Cakes,18:09:00,391.0,16.0,3.2,25.0
+Brussel Sprouts,18:09:00,122.0,24.0,5.9,8.7
+Tortilla Chips,21:00:00,268.0,38.0,0.4,4.0
+Carne Asada Steak,20:00:00,498.0,0.5,0.1,59.0
+Beans,20:00:00,53.0,12.0,4.5,2.7
+Tortilla Chips,19:30:00,535.0,77.0,0.9,8.1
+Salsa,19:30:00,33.0,7.5,4.5,1.7
+Merlot Wine,19:30:00,293.0,8.9,2.2,0.3
+Crusted Parmesian Chicken,19:30:00,760.0,20.0,0.0,84.0
+Salad with Ranch Dressing,19:30:00,654.9,48.2,8.5,17.0
+Sweet Potato with Butter and Brown Sugar,19:30:00,140.0,12.6,7.2,0.6
+Chocolate Lava Cake,19:30:00,182.0,18.0,13.0,2.8
+Vanilla Ice Cream,19:30:00,59.0,6.7,6.0,1.0
+Lemon Drop Martini,19:30:00,678.0,65.0,62.0,0.4
+Hibachi Steak,18:30:00,262.9,1.1,0.0,36.6
+Vegetables,18:30:00,37.0,7.4,1.8,1.6
+Fried Rice,18:30:00,296.0,56.0,0.9,6.9
+Merlot Wine,18:30:00,146.0,4.4,1.1,0.1
+BBQ Chicken,21:15:00,382.0,27.0,22.0,41.0
+Lasagna,20:00:00,355.0,20.0,6.6,26.0
+Salad,20:00:00,53.3,11.6,4.9,3.3
+French Dressing,20:00:00,129.0,1.8,1.4,0.4
+Hershey Kiss,20:40:00,70.0,7.7,6.7,1.0
+Reese Cup,20:40:00,80.3,8.6,7.4,1.6
+Peach,18:00:00,68.0,17.0,15.0,1.6
+Grapes,20:15:00,34.0,8.9,7.6,0.4
+Peach,20:15:00,68.0,17.0,15.0,1.6
+Popcorn,20:00:00,485.0,48.0,0.5,6.5
+Tea with Lemon,20:00:00,2.2,0.7,0.0,0.0
+Peanut Butter,20:45:00,94.0,3.9,1.1,3.5
+Spoon Biscotti,20:45:00,87.0,13.0,5.0,1.5
+Salmon,20:30:00,468.0,0.0,0.0,50.0
+Spinach,20:30:00,41.0,6.8,0.8,5.3
+Mash Potatoes,20:30:00,237.0,36.0,3.0,4.1
+Small Bag of Popcorn,18:30:00,485.0,48.0,0.5,6.5
+Cookies,18:30:00,444.0,60.0,29.7,4.5
+Cheese Stick,18:30:00,85.0,0.6,0.3,6.3
+Chicken Breast ,20:00:00,198.0,0.0,0.0,37.0
+Spinach,20:00:00,41.0,6.8,0.8,5.3
+Cereal,19:00:00,211.0,41.0,2.4,6.8
+Banana,19:00:00,105.0,27.0,14.0,1.3
+90% Cocoa Dark Chocolate,22:00:00,60.0,3.0,0.8,1.0
+Ziti,19:00:00,358.0,70.0,1.3,13.0
+Slice of Banana Bread,19:30:00,362.0,58.0,28.0,5.5
+Cheese,22:00:00,113.0,0.9,0.1,6.4
+Salad,17:45:00,67.0,14.0,6.1,4.1
+Ranch Dressing,17:45:00,244.0,1.7,1.3,0.4
+Baked Potato,17:45:00,80.5,18.3,1.0,2.2
+(Babybel) Cheese,22:30:00,71.0,0.3,0.3,5.0
+Pepperoni,22:30:00,40.0,0.1,0.0,1.5
+Chicken,18:00:00,149.0,0.0,0.0,16.0
+Peppers,18:00:00,11.0,2.7,1.0,0.4
+Onions,18:00:00,30.0,6.9,3.2,0.9
+Flour Tortilla,18:00:00,159.0,27.0,0.0,4.3
+Black Beans,18:00:00,114.0,20.0,0.3,7.6
+Babybel Cheese,22:00:00,71.0,0.3,0.3,5.0
+Salad,18:00:00,87.0,18.0,7.9,5.3
+Ranch Dressing,18:00:00,183.0,2.5,2.0,0.6
+Cheese,22:30:00,113.0,0.9,0.1,6.4
+Coffee,18:00:00,3.0,0.0,0.0,0.4
+Creamer,18:00:00,12.0,1.0,0.0,0.1
+Sugar,18:00:00,33.0,8.5,8.5,0.0
+Taco Salad,19:30:00,503.0,45.0,3.1,22.0
+Tortilla Chips,19:30:00,212.0,31.0,0.3,3.2
+Salsa,19:30:00,7.5,1.7,1.0,0.4
+Peanut Butter,22:45:00,83.0,3.4,0.9,3.1
+(Outback Steakhouse) Chicken Tacos,18:30:00,1210.0,55.0,8.0,65.0
+(Outback Steakhouse) Asparagus,18:30:00,60.0,4.0,2.0,2.0
+(Outback Steakhouse) Bread with Butter,18:30:00,310.0,51.0,10.0,10.0
+(Outback Steakhouse) Mixed Drink,18:30:00,601.0,44.0,44.0,0.0
+90% Dark Chocolate,22:15:00,60.0,3.0,0.8,1.0
+Salad,17:00:00,67.0,14.0,6.1,4.1
+Ranch Dressing,17:00:00,122.0,1.7,1.3,0.4
+Yogurt,18:00:00,143.0,16.0,16.0,12.0
+Strawberries,18:00:00,17.0,4.0,2.5,0.3
+Granola Bar,22:00:00,711.0,119.0,49.0,9.6
+Multigrain Chips,21:00:00,280.0,36.0,0.0,6.0
+Hummus,21:00:00,71.0,6.1,0.0,3.4
+Chocolate chip cookies,19:30:00,296.0,40.0,19.8,3.0
+Fruit smoothie,22:00:00,606.0,126.0,90.0,21.0
+Baked cheetos,22:00:00,700.0,100.0,5.0,10.0
+Fruit smoothie,18:25:00,606.0,126.0,90.0,21.0
+PB protein whey powder,18:25:00,113.0,2.0,0.0,25.0
+Chex Mix cheddar,18:25:00,260.0,44.0,6.0,4.0
+Fritos single serving bag,20:00:00,452.0,48.0,0.2,5.1
+Blue Bunny fudge bar,1900-01-01 00:45:00,124.0,24.0,18.0,4.4
+Lean Cuisine mushroom ravioli box meal,20:25:00,270.0,40.0,8.0,10.0
+M&Ms,1900-01-01 00:05:00,236.0,34.0,31.0,2.1
+Premier protein choc shake,18:15:00,160.0,5.0,1.0,30.0
+Nutrigrain bar,18:15:00,130.0,25.0,13.0,2.0
+Fruit smoothie,20:35:00,606.0,126.0,90.0,21.0
+PB protein whey powder,20:35:00,113.0,2.0,0.0,25.0
+Baked cheetos,20:35:00,840.0,120.0,6.0,12.0
+Baked cheetos,18:45:00,210.0,30.0,1.5,3.0
+Totinos pizza,19:15:00,1320.0,148.0,16.0,44.0
+Baked cheetos,20:00:00,140.0,20.0,1.0,2.0
+3/4 large blueberry pancake,19:50:00,84.0,11.0,0.0,2.3
+Baked cheetos,19:50:00,700.0,100.0,5.0,10.0
+Salad - Butter Lettuce,17:55,171.0,8.5,3.7,2.5
+Chickpeas,17:55,116.0,19.0,3.4,6.3
+Red Onion,17:55,11.4,2.6,1.2,0.4
+Chicken,17:55,130.0,0.0,0.0,14.0
+(Toast) Red Wine Vinegrette,17:55,35.0,1.8,1.6,0.1
+(Jolly Time) Select Yellow Pop Corn - Air Popped,20:30,200.0,48.0,0.0,8.0
+Virgil's Zero Sugar Black Cherry Soda,20:30,0.0,0.0,0.0,0.0
+(Peppridge Farm) Whole Wheat Hamburger Bun,22:25,130.0,22.0,3.0,7.0
+(Jif) Extra Crunchy Peanut Butter,22:25,190.0,8.0,3.0,7.0
+Tilapia,19:05,74.0,0.0,0.0,15.0
+(Harris Teeter) Charleston Crabcake,19:05,90.0,3.7,0.7,5.8
+(Green Giant) Rice Cauliflower - Plain,19:05,10.5,2.1,0.8,0.8
+Broccoli - Steamed,19:05,30.0,6.1,1.2,2.0
+Lemon Juice,19:05,0.8,0.3,0.1,0.0
+(Jolly Time) Select Yellow Pop Corn - Air Popped,20:50,200.0,48.0,0.0,8.0
+Virgil's Zero Sugar Black Cherry Soda,20:50,0.0,0.0,0.0,0.0
+Butter Lettuce,18:10,11.0,1.9,0.8,1.1
+Red Onion,18:10,7.5,1.7,0.8,0.2
+(Toast) Red Wine Vinegrette,18:10,12.0,0.6,0.5,0.0
+Tilapia,18:10,63.8,0.0,0.0,12.9
+(Harris Teeter) Charleston Crabcake,18:10,50.2,2.1,0.4,3.2
+Lemon Juice,18:10,0.8,0.3,0.1,0.0
+Pecans,18:40,207.0,4.2,1.2,2.8
+(Jolly Time) Select Yellow Pop Corn - Air Popped,21:00,200.0,48.0,0.0,8.0
+(Peppridge Farm) Whole Wheat Hamburger Bun,22:30,130.0,22.0,3.0,7.0
+Smart Balance,22:30,41.0,0.0,0.0,0.0
+Navel Orange,22:30,104.0,27.0,18.0,1.9
+"Homemade soup with Hot Italian sausage, kale, cannolli beans, onion, garlic, (Kirkland) organic chicken stock, white wine",20:25,600.0,48.0,8.3,22.5
+"Homemade soup with Hot Italian sausage, kale, cannolli beans, onion, garlic, (Kirkland) organic chicken stock, white wine",21:30,200.0,16.0,2.8,7.5
+Chicken breaded with (Progesso) Italian Bread Crumbs,18:35,275.6,20.5,1.3,29.9
+Potato,18:35,50.2,11.3,0.6,1.4
+Extra Virgin Olive Oil,18:35,119.0,0.0,0.0,0.0
+(Crosse and Blackwell) Old Fashioned English Fish and Chip  Vinegar,18:35,0.0,0.0,0.0,0.0
+(Jolly Time) Select Yellow Pop Corn - Air Popped,21:20,200.0,48.0,0.0,8.0
+Virgil's Zero Sugar Black Cherry Soda,21:20,0.0,0.0,0.0,0.0
+Butter Lettuce,19:05,22.1,3.8,1.6,2.2
+Chickpeas,19:05,147.0,24.1,4.3,8.0
+Red Onion,19:05,15.0,3.4,1.6,0.5
+Chicken,19:05,105.8,0.0,0.0,11.4
+(Toast) Red Wine Vinegrette,19:05,35.0,1.8,1.6,0.1
+Butter Lettuce,19:05,12.0,2.1,0.9,1.2
+Chickpeas,19:05,86.6,14.2,2.5,4.7
+Red Onion,19:05,5.3,1.2,0.6,0.2
+Chicken breaded with (Progesso) Italian Bread Crumbs,19:05,237.2,17.6,1.1,25.7
+(Toast) Red Wine Vinegrette,19:05,24.0,1.2,1.1,0.0
+Potato,19:05,39.1,8.8,0.5,1.1
+Extra Virgin Olive Oil,19:05,59.5,0.0,0.0,0.0
+(Crosse and Blackwell) Old Fashioned English Fish and Chip  Vinegar,19:05,0.0,0.0,0.0,0.0
+Salad - Spring Mix,19:15,17.0,3.1,0.5,1.3
+Chickpeas,19:15,127.4,20.9,3.7,6.9
+Red Onion,19:15,7.9,1.8,0.8,0.3
+(Toast) Red Wine Vinegrette,19:15,12.0,0.6,0.5,0.0
+"Homemade Chicken Noodle Soup with chicken, onion, celery, (Kirkland) organic chicken stock, and (Amish Kitchens) wide egg noodles",19:15,124.0,15.0,1.3,6.3
+(Jolly Time) Select Yellow Pop Corn - Air Popped,20:55,200.0,48.0,0.0,8.0
+Virgil's Zero Sugar Black Cherry Soda,20:55,0.0,0.0,0.0,0.0
+Steamed Shrimp,17:55:00,29.0,0.4,0.0,5.5
+Potato,17:55:00,80.0,18.0,1.0,2.2
+Mixed Vegetable,17:55:00,5.7,1.2,0.5,0.3
+Moscato,17:55:00,197.0,13.0,0.0,0.2
+Pizza Triangles,19:00:00,1138.0,143.0,15.0,49.0
+Brownie,19:00:00,132.0,14.0,0.0,1.8
+Lemon,19:00:00,24.0,7.8,2.1,0.9
+Tomato and Mozzarella Toothpick,19:00:00,220.0,4.7,2.8,13.0
+Corona,19:00:00,148.0,14.0,0.0,0.0
+Blackberries,19:00:00,6.1,1.4,0.7,0.2
+Steak,20:15:00,473.0,0.0,0.0,44.0
+Large Baked Potato,20:15:00,278.0,63.0,3.5,7.5
+Mojito,20:15:00,343.0,48.0,43.0,0.6
+Steamed Broccoli,20:15:00,30.0,6.1,1.2,2.0
+Air Fried French Fries,19:18:00,442.0,59.0,0.4,4.9
+Moscato,19:18:00,197.0,13.0,0.0,0.2
+Air Fried Chicken Loingettes ,18:25:00,377.0,4.4,0.0,40.0
+"Salad - Tomato, Cheese, Lettuce, Tortilla Strips",18:25:00,80.0,17.0,7.3,4.9
+"Burger Salad - Lettuce, Tomato, Cheese, Tortilla Strips, Burger, Thousand Island Dressing",17:32:00,471.0,13.0,8.7,28.0
+Baked Sweet Potato,17:00:00,103.0,24.0,7.4,2.3
+Lemon Cookies,17:00:00,550.7,89.3,50.7,6.0
+Moscato,17:00:00,197.0,13.0,0.0,0.2
+Chicken Wingettes,19:00:00,526.0,16.0,0.4,27.0
+Medium Baked Potato,19:00:00,80.0,18.0,1.0,2.2
+"Mixed Vegetable, Green Beans, Peas, Corn, Carrots",19:00:00,37.0,7.9,3.0,9.0
+Corn on the Cobb,19:30:00,99.0,22.0,4.7,3.5
+Ham Biscuit,19:30:00,299.0,27.0,4.1,9.1
+Hot Dog,19:30:00,77.0,0.6,0.3,2.8
+"Smoothie (spinach, celery, banana, and strawberry)",18:15:00,323.0,68.0,48.0,11.0
+California Roll,21:15:00,523.0,57.0,11.0,12.0
+Townhouse Cracker,21:25:00,67.2,7.7,0.8,0.7
+2% Milk,21:30:00,122.0,12.0,12.0,8.1
+Celery Stick,17:30:00,14.0,3.0,1.8,0.6
+peanut butter,17:30:00,188.0,7.7,2.1,7.0
+Cream of Wheat Instant Hot Cereal,19:50:00,146.7,32.0,1.3,5.3
+Strawberry,19:50:00,23.0,5.5,3.5,0.5
+2% Milk,19:50:00,122.0,12.0,12.0,8.1
+Celery Stick,17:30:00,14.0,3.0,1.8,0.6
+Peanut Butter,17:30:00,188.0,7.7,2.1,7.0
+Boiled Chicken with Cherry Tomatoes and Taco Shell Pieces,20:00:00,498.7,0.1,0.0,54.3
+Atlantic Salmon,20:00:00,468.0,0.0,0.0,50.0
+Pita Bread,20:00:00,165.0,33.0,0.8,5.5
+Barbecue Sauce,20:00:00,58.0,14.0,11.0,0.3
+2% Milk,20:30:00,122.0,12.0,12.0,8.1
+Swiss Cheese Thinly Sliced,19:15:00,110.0,0.4,0.0,7.5
+Cream of Wheat Instant Hot Cereal,19:15:00,146.7,32.0,1.3,5.3
+2% Milk,19:15:00,122.0,12.0,12.0,8.1
+Celery Stick,17:40:00,14.0,3.0,1.8,0.6
+Peanut Butter,17:40:00,188.0,7.7,2.1,7.0
+Swiss Cheese Thinly Sliced,17:40:00,220.0,0.8,0.0,15.0
+Cream of Wheat Instant Hot Cereal,19:30:00,146.7,32.0,1.3,5.3
+2% Milk ,19:30:00,122.0,12.0,12.0,8.1
+Townhouse Cracker,17:11:00,67.2,7.7,0.8,0.7
+Celery Stick,17:25:00,7.0,1.5,0.9,0.3
+Peanut Buttter,17:25:00,188.0,7.7,2.1,7.0
+Salmon with Butter and Asparagus,18:45:00,660.0,1.8,0.2,56.0
+(Florida's Natural) Orange Juice,19:15:00,110.0,26.0,22.0,2.0
+Boneless Skinless Chicken Thigh,17:55:00,232.5,0.0,0.0,33.8
+Potato,17:55:00,154.0,35.0,2.0,4.2
+Cooked Spinach,17:55:00,21.0,3.4,0.4,2.7
+Kombucha GTS Cosmic Cranberry,18:55:00,30.0,7.0,2.0,0.0
+(Blue Diamond) Almond Nut Thins,18:55:00,130.0,24.0,0.0,3.0
+Bacon,19:15:00,161.0,0.6,0.0,12.0
+Kombucha GTS Cosmic Cranberry,19:40:00,22.5,5.3,1.5,0.0
+Gin-soaked Raisins,20:20:00,129.0,34.0,25.0,1.3
+Boneless Skinless Chicken Thigh,18:05:00,186.0,0.0,0.0,27.0
+(Hannah) Tatziki Sauce,18:05:00,80.0,4.0,0.0,2.0
+Tomatoes,18:05:00,30.0,6.4,4.3,1.4
+Balsamic Vinegar,18:05:00,28.0,5.4,4.8,0.2
+Cucumber,18:05:00,7.8,1.9,0.9,0.3
+Salad Greens,18:05:00,18.0,3.4,0.6,1.4
+Red Bell Pepper,18:05:00,9.5,2.3,1.5,0.3
+Chardonnay Wine,19:25:00,197.0,5.1,2.3,0.2
+Pistachios,20:20:00,200.0,9.5,2.5,7.5
+Chardonnay Wine,20:20:00,197.0,5.1,2.3,0.2
+Chardonnay Wine,17:15:00,148.0,3.8,1.7,0.1
+Salmon,18:00:00,234.0,0.0,0.0,25.0
+Faro,18:00:00,337.0,71.0,7.8,15.0
+Cooked Broccoli,18:00:00,54.0,11.2,2.2,3.8
+(Dove) Promises Dark Chocolate,18:32:00,168.0,19.2,15.2,1.6
+Kombucha GTS Cosmic Cranberry,17:11:00,30.0,7.0,2.0,0.0
+Boneless Skinless Chicken Thigh,17:11:00,279.0,0.0,0.0,40.5
+Faro,17:11:00,337.0,71.0,7.8,15.0
+Cooked Broccoli,17:11:00,27.0,5.6,1.1,1.9
+(Dove) Promises Dark Chocolate,17:30:00,84.0,9.6,7.6,0.8
+Boneless Skinless Chicken Thigh,17:12:00,186.0,0.0,0.0,27.0
+(Hannah) Tatziki Sauce,17:12:00,80.0,4.0,0.0,2.0
+Celery,17:12:00,14.0,3.0,1.8,0.6
+Balsamic Vinegar,17:12:00,28.0,5.4,4.8,0.2
+Cucumber,17:12:00,7.8,1.9,0.9,0.3
+Salad Greens,17:12:00,27.0,5.1,0.8,2.1
+Red Bell Pepper,17:12:00,9.5,2.3,1.5,0.3
+Kombucha GTS Cosmic Cranberry,19:39:00,30.0,7.0,2.0,0.0
+Grilled Salmon,18:07:00,292.0,0.0,0.0,31.0
+"Homemade potato cauliflower soup with potato, cauliflower, chicken broth, onions",18:07:00,450.0,41.0,1.9,23.0
+Boneless Skinless Chicken Thigh,18:04:00,186.0,0.0,0.0,27.0
+"Homemade potato cauliflower soup with potato, cauliflower, chicken broth, onions",18:04:00,450.0,41.0,1.9,23.0
+Kombucha GTS Cosmic Cranberry,19:22:00,30.0,7.0,2.0,0.0
+"Sausage, Kale, Sweet Potato Soup",17:30:00,300.0,46.0,26.0,5.4
+Pizza,19:00:00,712.0,89.0,9.6,30.0
+Salad,19:00:00,10.0,2.1,0.9,0.6
+Mountain Dew,19:00:00,230.0,62.0,62.0,0.0
+Hamburger,19:20:00,1080.0,81.0,0.0,69.0
+Chips,19:20:00,894.0,90.0,0.5,10.8
+Mountain Dew,19:20:00,110.0,31.0,31.0,0.0
+Candy Bar,19:50:00,280.0,35.0,29.0,4.3
+Reese's Peanut Butter Cup,17:30:00,210.0,24.0,21.0,5.0
+Popcorn,19:00:00,505.0,50.0,0.5,6.8
+Nutty Bar,19:00:00,326.0,33.0,20.0,4.8
+Mountain Dew,19:00:00,110.0,31.0,31.0,0.0
+Chicken Leg,19:20:00,475.0,0.0,0.0,62.0
+Potato Salad,19:20:00,358.0,28.0,0.0,6.7
+Baked Beans,19:20:00,239.0,54.0,20.0,12.0
+Diet Mountain Dew,19:20:00,0.0,0.0,0.0,0.0
+Sausage Biscuit,19:00:00,824.0,66.0,3.6,22.0
+Scrambled Eggs with Jelly,19:00:00,169.0,1.8,1.6,11.0
+Peanut Butter Cracker,18:00:00,207.0,25.0,4.4,4.8
+Chicken Casserole,19:30:00,513.0,30.0,2.7,24.0
+Potato Salad,19:30:00,243.0,19.0,0.0,4.6
+Green Beans,19:30:00,40.0,8.9,4.1,2.1
+Apple Pie,19:30:00,269.0,39.0,18.0,2.2
+Diet Mountain Dew,19:30:00,0.0,0.0,0.0,0.0
+Chicken Pot Pie,18:30:00,463.0,44.0,5.1,12.0
+Mashed Potato,18:30:00,192.0,28.5,2.4,3.3
+Diet Mountain Dew,18:30:00,0.0,0.0,0.0,0.0
+Peach Cobbler,18:30:00,226.0,40.0,32.0,2.3
+Chicken Casserole,18:00:00,513.0,30.0,2.7,24.0
+Mashed Potato,18:00:00,128.0,19.0,1.6,2.2
+Peas,18:00:00,95.0,18.0,6.7,6.1
+Cranberry Sauce,18:00:00,110.0,28.0,22.0,0.6
+Diet Mountain Dew,18:00:00,0.0,0.0,0.0,0.0
+Chocolate Pudding,18:00:00,242.0,39.0,29.0,3.6
+Porkchop,18:30:00,355.0,0.0,0.0,44.0
+Baked Potato,18:30:00,105.0,24.0,1.3,2.8
+Salad,18:30:00,10.0,2.1,0.9,0.6
+Toast,18:30:00,128.0,24.0,2.7,4.0
+Mountain Dew,18:30:00,110.0,31.0,31.0,0.0
+Oreo Cookie,17:00:00,200.0,32.0,18.0,2.0
+Peanuts,17:00:00,333.0,12.0,2.8,14.0
+Banana Sandwich,20:15:00,443.0,55.0,18.0,6.6
+Cookies,20:15:00,443.0,59.0,30.0,4.6
+Diet Mountain Dew,20:15:00,0.0,0.0,0.0,0.0
+Black Raspberry Chocolate Ice Cream,19:00:00,600.0,60.0,54.0,6.0
+Cheese and Crackers,19:17:00,179.0,10.0,2.2,7.8
+(UTZ) Cheese Puffs,21:44:00,226.0,22.0,1.1,2.3
+Cream Cheese,18:29:00,102.0,1.6,1.1,1.8
+Sausage,18:29:00,210.0,0.6,0.6,8.1
+Tea,18:45:00,1.8,0.5,0.0,0.0
+Stevia,18:45:00,0.0,3.3,0.0,0.0
+Olives,20:27:00,26.0,1.4,0.0,0.2
+Grapes,21:15:00,14.0,3.5,3.0,0.1
+(Babybel) Cheese Bite,22:40:00,71.0,0.3,0.3,5.0
+Chicken Thigh,17:47:00,556.0,0.2,0.0,61.0
+Green Beans,17:47:00,44.0,9.9,4.5,2.4
+Moon Cheddar Cheese,20:49:00,230.0,1.8,0.3,12.9
+Mint Chocolate Cookies,17:38:00,390.0,48.0,27.0,3.0
+Brownie,19:01:00,466.0,50.0,0.0,6.2
+Dark Chocolate Chip,19:22:00,458.0,52.0,40.0,4.0
+Corn Cheese Puffs,19:30:00,457.0,3.6,0.5,28.5
+Cheese and Crackers,19:42:00,179.0,10.0,2.2,7.8
+Peanut M & M,17:45:00,103.0,12.0,10.0,1.9
+Grilled Cheese,18:50:00,732.0,57.0,11.0,23.0
+Kashi Go Crunch with Milk,19:40:00,253.3,50.7,17.3,12.0
+Vodka Gray Goose,17:45:00,69.0,0.0,0.0,0.0
+Kale,17:53:00,36.0,7.3,1.6,2.5
+Mozzarella,17:53:00,85.0,0.6,0.3,6.3
+Chicken Burger,17:53:00,535.0,57.0,6.5,29.0
+Green Beans,17:53:00,44.0,9.9,4.5,2.4
+Whole Wheat Toast with Butter,19:02:00,222.0,29.0,3.3,5.2
+Angle Food Candy from Mother,19:24:00,292.0,58.0,55.7,1.5
+Grilled Chicken Cheese Sandwich,18:40:00,511.0,31.0,4.6,39.0
+Angle Food Candy ,19:49:00,292.0,58.0,55.7,1.5
+(Garrett's) Caramel Popcorn Cheddar,21:28:00,362.0,66.0,44.0,3.2
+Chicken Salad Sandwich,17:25:00,535.0,33.0,6.9,34.0
+Ginger Bread Cookie,17:45:00,806.0,147.0,72.0,12.0
+Chicken,19:40:00,187.0,0.0,0.0,20.0
+Rice,19:40:00,205.0,45.0,0.1,4.3
+Cheddar and Caramel Popcorn,19:40:00,58.0,5.7,0.1,1.0
+peppermint bark candy,20:15:00,144.0,18.0,16.0,1.4
+Tea,21:01:00,1.8,0.5,0.0,0.0
+Stevia,21:01:00,0.0,3.3,0.0,0.0
+(Mich) Ultra Beer,22:40:00,95.0,2.6,0.0,0.6
+Lasagna (mostly vegetables),18:57,524.0,30.0,9.8,38.0
+Red Wine,18:57,50.0,1.5,0.4,0.0
+Cashew Nut,19:02,54.0,3.1,0.5,1.4
+Chocolate,19:27,54.0,5.9,5.2,0.8
+Herbal Tea,20:49,2.4,0.5,0.0,0.0
+Honey,20:49,21.0,5.8,5.8,0.0
+Frosted Flake,21:23,280.0,56.5,24.0,8.0
+Decaf Latte,21:38,189.0,19.0,19.0,12.0
+Lactose Free Milk,21:38,409.0,11.0,0.0,7.4
+Small Sweet Potato,17:20,54.0,12.0,3.9,1.2
+Turkey Leg,17:20,345.0,0.0,0.0,49.0
+Stuffing,17:20,176.0,17.0,1.8,2.5
+English Peas,17:20,84.0,16.0,5.9,5.4
+Ice Cream Sandwich,19:03,284.0,45.0,22.0,5.1
+Pound Cake,20:38,212.0,32.0,20.0,3.0
+Strawberry,20:38,2.9,0.7,0.4,0.1
+Blueberry,20:38,85.0,21.0,15.0,1.1
+Ice Cream,20:38,273.0,31.0,28.0,4.6
+toffee,17:47,134.0,16.0,15.0,0.3
+vegetable lasagna,19:40,392.0,24.0,5.1,24.0
+green beans,19:40,11.0,2.5,1.1,0.6
+ice cream,20:08,273.0,31.0,28.0,4.6
+ice cream sandwich,17:28,284.0,45.0,22.0,5.1
+rice,17:32,205.0,45.0,0.1,4.3
+bean,17:32,225.0,40.0,0.6,15.0
+duck burrito,17:32,434.0,56.0,5.1,17.0
+salsa,17:32,10.0,2.4,1.4,0.6
+corn chips,17:32,151.0,16.0,0.1,1.7
+beer,17:30,153.0,13.0,0.0,1.6
+duck soup with dumpling,17:30,129.0,23.0,7.5,7.0
+egg,19:00,36.0,0.2,0.1,3.1
+potato chip,19:00,447.0,45.0,0.3,5.4
+ice cream,19:00,273.0,31.0,28.0,4.6
+ice cream sandwich,22:35,284.0,45.0,22.0,5.1
+Mixed Nuts,18:13,153.0,6.5,1.2,4.4
+pasta salad with vegetables,19:00,407.0,35.0,3.0,12.0
+salad dressing,19:00,129.0,1.8,1.4,0.4
+egg,19:00,72.0,0.4,0.2,6.3
+toffee,19:24,134.0,16.0,15.0,0.3
+ice cream,21:16,273.0,31.0,28.0,4.6
+cookie,21:25,886.0,118.0,59.0,9.2
+soda,18:19,155.0,38.0,37.0,0.0
+lamb,19:45,250.0,0.0,0.0,21.0
+small sweet potato,19:45,54.0,12.0,3.9,1.2
+beet,19:45,22.0,5.0,4.0,0.8
+tea,20:20,2.4,0.7,0.0,0.0
+Honey,20:20,21.0,5.8,5.8,0.0
+cookie,20:40,1181.3,157.3,78.7,12.3
+On Gold Standard 100% Whey Protein,19:30:00,113.0,2.0,0.0,25.0
+2% Milk,19:30:00,122.0,12.0,12.0,8.0
+Frozen Strawberries,19:30:00,20.0,5.0,2.5,0.2
+Pork Loin Tenderloin (Hornet),19:30:00,83.0,0.0,0.0,14.7
+Thomas Blueberry English Muffins,18:50:00,300.0,56.0,2.0,10.0
+Jimmy Dean Hot Premium Pork Sausage,18:50:00,150.0,0.7,0.5,8.5
+Large Egg,18:50:00,70.0,0.4,0.2,6.3
+Kerry Gold Butter,18:50:00,100.0,0.0,0.0,0.0
+Lanad o Lakes Cinnamon Sugar,18:50:00,60.0,17.0,15.0,0.0
+Asndes Cremede Menth Thin Mints,19:32:00,75.0,8.4,7.2,1.1
+Lu Petit Ecolier Milk Chocolate Biscuit Cookie,17:30:00,123.0,18.2,5.3,1.6
+Chicken Breast Air Fried,19:21:00,198.0,0.0,0.0,37.0
+"Green Smoothie (with avocado, cotton candy green grapes, pear, broccoli, kale, spinach, banana)",19:21:00,123.0,28.0,15.0,3.0
+Lu Petit Ecolier Milk Chocolate Biscuit Cookie,19:21:00,123.0,18.2,5.3,1.6
+Sathers Caramel Creams,17:30:00,94.0,17.0,9.0,0.7
+Large Eggs Scrambled (nothing added),19:40:00,182.0,2.0,2.0,12.0
+Thomas English Muffin Blueberry,19:40:00,150.0,28.0,1.0,5.0
+Thomas English Muffin Cinnamon,19:40:00,150.0,28.0,1.0,5.0
+2% Milk,19:40:00,122.0,12.0,12.0,8.0
+On Gold Standard 100% Whey Protein,19:40:00,113.0,2.0,0.0,25.0
+Kerry Gold Butter,19:40:00,100.0,0.0,0.0,0.0
+Pizza Slice of NY Pepperoni,18:30:00,626.0,70.0,7.0,26.0
+Mozarrella Sticks,18:30:00,303.0,24.0,2.0,14.0
+Coca Cola,18:30:00,150.0,41.0,41.0,0.0
+Kraft Mac and Cheese,19:30:00,376.0,47.0,8.5,9.7
+On Gold Standard 100% Whey Protein,19:30:00,113.0,2.0,0.0,25.0
+2% Milk,19:30:00,122.0,12.0,12.0,8.0
+Frozen Strawberries,19:30:00,40.0,10.0,5.0,0.4
+Ghiradelli Peppermint Bark Square,17:50:00,144.0,18.0,16.0,1.4
+Jimmy Dean Hot Premium Pork Sausage,18:15:00,150.0,0.7,0.5,8.5
+Thomas English Muffin Cinnamon,18:15:00,300.0,56.0,2.0,10.0
+Kerry Gold Butter,18:15:00,100.0,0.0,0.0,0.0
+Land o Lakes Cinnamon Butter,18:15:00,60.0,17.0,15.0,0.0
+2% Milk,18:15:00,122.0,12.0,12.0,8.0
+Sloppy Joe with 1 Bun,17:15:00,399.0,37.0,13.0,27.0
+Lay's Wavy Potato Chips,17:15:00,298.0,30.0,0.2,3.6
+Lut Petit Ecolier Milk Chocolate Biscuit Cookie,17:15:00,123.0,18.2,5.3,1.6
+Ruffles chips,17:50,447.0,45.0,0.3,5.4
+Panko breaded baked fish ,20:30,398.0,14.0,0.0,32.0
+Celery,20:30,13.0,2.4,1.1,0.6
+Onion,20:30,41.5,9.5,4.5,1.3
+BLT salad,18:10,409.0,16.5,3.8,12.5
+Whole grapefruit,18:10,104.0,26.0,17.0,1.9
+Slim Fast,1:10,171.0,2.5,1.8,19.5
+Taco Bell Nachos Grande,20:00,740.0,82.0,5.0,16.0
+Taco Bell Cinnamon Twists,20:00,170.0,27.0,13.0,1.0
+Crystal Light Lemonade,20:00,198.0,51.0,49.0,0.3
+2/3 bag Orville Redenbacher butter popcorn,18:20,255.0,26.0,1.0,4.0
+Banana,18:38,105.0,27.0,14.5,1.3
+Coffee + skim milk,18:38,35.0,4.5,4.7,3.4
+Chef Salad,20:55,675.0,26.5,9.5,28.0
+V8 juice ,20:55,30.0,7.0,5.0,1.0
+Coffee + skim milk,17:00,35.0,4.5,4.7,3.4
+Small chocolate shake (1/2),17:00,270.0,48.0,47.3,7.0
+Ham and cheese sandwhich,17:00,517.0,28.5,3.6,28.0
+Coffee + skim milk,17:00,35.0,4.5,4.7,3.4
+Outback Cobb salad with salmon,20:00,577.0,15.0,5.7,43.0
+Blue cheese dressing,20:00,146.0,1.4,1.0,0.4
+Outback cheesecake with chocolate sauce,22:00,480.0,45.0,37.0,7.1
+Pecans,17:30,100.0,2.1,0.6,1.4
+Outback bread loaf (1/2) + butter,18:00,320.0,60.0,0.7,11.2
+Banana,18:10,105.0,27.0,14.5,1.3
+"Chipotle burrito bowl chicken and steak, black beans, cheese, lettuce, salsa, sour cream",19:30,1008.0,117.0,5.6,49.0
+2 Yuengling beers,19:30,312.0,26.4,0.0,3.4
+Chicken soup,18:00,168.0,24.0,5.2,10.0
+"Crostinis (slice of French bread, swiss, tomato)",18:00,522.0,99.0,9.0,20.7
+"Chicken enchiladas with black beans, spanish rice, salsa",19:30,536.0,60.0,4.8,28.0
+Beer,19:30,204.0,17.0,0.0,2.2
+"12"" Italian BMT Subway whole wheat mayo",17:00,1064.0,60.0,8.0,50.0
+Bojangles chicken thigh,20:00,714.0,23.4,0.0,57.0
+Sweat tea ice,20:00,320.0,84.0,80.0,0.0
+Plain cheese pizza,18:30,1808.0,228.0,24.4,76.0
+Anchovies,18:30,25.0,0.0,0.0,3.6
+Salad,18:30,7.0,1.4,0.6,0.4
+Blue Cheese dressing,18:30,146.0,1.4,1.0,0.4
+Lemonade,18:30,99.0,26.0,25.0,0.2

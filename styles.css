@@ -1,0 +1,131 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Arrière-plan gris clair */
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.box {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    width: 30%; /* Ajuste la largeur des boîtes */
+    box-sizing: border-box;
+}
+
+.row-1 .box {
+    width: 48%; /* Ajuste la largeur des boîtes dans la première ligne */
+}
+
+.row-4 .box {
+    width: 98%; /* Ajuste la largeur des boîtes dans la quatrième ligne */
+}
+
+.meal-menu {
+    margin-top: 20px;
+}
+
+.meal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.meal-row label {
+    width: 120px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.meal-row select {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.chart-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+canvas {
+    width: 100%;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#total-calories-display {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+#initial-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    border: 2px solid #4CAF50;
+    background-color: #f0f8ff;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    width: 350px; /* Ajout d'une largeur fixe */
+}
+
+#initial-menu h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#initial-menu label {
+    display: block;
+    margin-top: 10px;
+    color: #555;
+}
+
+#initial-menu input, #initial-menu select {
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 250px; /* Augmentation de la largeur des champs */
+}
+
+#initial-menu button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#initial-menu button:hover {
+    background-color: #45a049;
+}
+
