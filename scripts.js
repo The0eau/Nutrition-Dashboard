@@ -160,18 +160,18 @@ document.addEventListener("DOMContentLoaded", function() {
         initialMenu.style.display = "none";
         dashboard.style.display = "grid";
 
-        loadCSVData("Beakfast.csv", "breakfast-select-1");
-        loadCSVData("Breakfast.csv", "breakfast-select-2");
-        loadCSVData("Breakfast.csv", "breakfast-select-3");
-        loadCSVData("Lunch.csv", "lunch-select-1");
-        loadCSVData("Lunch.csv", "lunch-select-2");
-        loadCSVData("Lunch.csv", "lunch-select-3");
-        loadCSVData("Snack.csv", "snack-select-1");
-        loadCSVData("Snack.csv", "snack-select-2");
-        loadCSVData("Snack.csv", "snack-select-3");
-        loadCSVData("Dinner.csv", "dinner-select-1");
-        loadCSVData("Dinner.csv", "dinner-select-2");
-        loadCSVData("Dinner.csv", "dinner-select-3");
+        loadCSVData("breakfast.csv", "breakfast-select-1");
+        loadCSVData("breakfast.csv", "breakfast-select-2");
+        loadCSVData("breakfast.csv", "breakfast-select-3");
+        loadCSVData("lunch.csv", "lunch-select-1");
+        loadCSVData("lunch.csv", "lunch-select-2");
+        loadCSVData("lunch.csv", "lunch-select-3");
+        loadCSVData("snack.csv", "snack-select-1");
+        loadCSVData("snack.csv", "snack-select-2");
+        loadCSVData("snack.csv", "snack-select-3");
+        loadCSVData("dinner.csv", "dinner-select-1");
+        loadCSVData("dinner.csv", "dinner-select-2");
+        loadCSVData("dinner.csv", "dinner-select-3");
 
         const calorieCtx = document.getElementById("calorieChart").getContext("2d");
         calorieChart = new Chart(calorieCtx, {
