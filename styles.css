@@ -17,14 +17,11 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 10px;
-    width: 49%; /* Ajuste la largeur des boîtes */
+    width: 30%; /* Ajuste la largeur des boîtes */
     box-sizing: border-box;
 }
 
 .row-1 .box {
-    width: 48%; /* Ajuste la largeur des boîtes dans la première ligne */
-}
-.row-2 .box {
     width: 48%; /* Ajuste la largeur des boîtes dans la première ligne */
 }
 
