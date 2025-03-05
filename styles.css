@@ -25,6 +25,10 @@ body {
     width: 48%; /* Ajuste la largeur des boîtes dans la première ligne */
 }
 
+.row-2 .box {
+    width: 48%; /* Ajuste la largeur des boîtes dans la première ligne */
+}
+
 .row-4 .box {
     width: 98%; /* Ajuste la largeur des boîtes dans la quatrième ligne */
 }
