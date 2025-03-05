@@ -123,17 +123,35 @@ document.addEventListener("DOMContentLoaded", function() {
         const gender = document.getElementById("gender").value;
         const age = parseInt(document.getElementById("age").value);
         const weight = parseFloat(document.getElementById("weight").value);
-        const height = parseFloat(document.getElementById("height").value);
-        const activityLevel = parseFloat(document.getElementById("activity").value); // Activity factor  
-
-        let baseCalories;
         if (gender === "female") {
-            baseCalories = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            if (age >= 0 && age < 3) {
+                totalCaloriesBegin = (58.317 * weight) - 31.1;
+            } else if (age >= 3 && age < 10) {
+                totalCaloriesBegin = (20.315 * weight) + 485.9;
+            } else if (age >= 10 && age < 18) {
+                totalCaloriesBegin = (13.384 * weight) + 692.6;
+            } else if (age >= 18 && age < 30) {
+                totalCaloriesBegin = (14.818 * weight) + 486.6;
+            } else if (age >= 30 && age < 60) {
+                totalCaloriesBegin = (8.126 * weight) + 845.6;
+            } else {
+                totalCaloriesBegin = (9.082 * weight) + 658.5;
+            }
         } else {
-            baseCalories = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            if (age >= 0 && age < 3) {
+                totalCaloriesBegin = (59.512 * weight) - 30.4;
+            } else if (age >= 3 && age < 10) {
+                totalCaloriesBegin = (22.706 * weight) + 504.3;
+            } else if (age >= 10 && age < 18) {
+                totalCaloriesBegin = (17.686 * weight) + 658.2;
+            } else if (age >= 18 && age < 30) {
+                totalCaloriesBegin = (15.057 * weight) + 692.2;
+            } else if (age >= 30 && age < 60) {
+                totalCaloriesBegin = (11.472 * weight) + 873.1;
+            } else {
+                totalCaloriesBegin = (11.711 * weight) + 587.7;
+            }
         }
-        // Adjust for activity level
-        totalCaloriesBegin = baseCalories * activityLevel;
 
         // Modification de l'attribut onclick du bouton "Back"
          document.querySelector(".row-1 .box:last-child button").setAttribute("onclick", "goToInitialMenu()");
