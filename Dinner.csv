@@ -176,8 +176,8 @@ Pecans,18:40,207.0,4.2,1.2,2.8
 (Peppridge Farm) Whole Wheat Hamburger Bun,22:30,130.0,22.0,3.0,7.0
 Smart Balance,22:30,41.0,0.0,0.0,0.0
 Navel Orange,22:30,104.0,27.0,18.0,1.9
-"Homemade soup with Hot Italian sausage, kale, cannolli beans, onion, garlic, (Kirkland) organic chicken stock, white wine",20:25,600.0,48.0,8.3,22.5
-"Homemade soup with Hot Italian sausage, kale, cannolli beans, onion, garlic, (Kirkland) organic chicken stock, white wine",21:30,200.0,16.0,2.8,7.5
+"Homemade soup with Hot Italian sausage kale cannolli beans onion garlic (Kirkland) organic chicken stock white wine",20:25,600.0,48.0,8.3,22.5
+"Homemade soup with Hot Italian sausage kale cannolli beans onion garlic (Kirkland) organic chicken stock white wine",21:30,200.0,16.0,2.8,7.5
 Chicken breaded with (Progesso) Italian Bread Crumbs,18:35,275.6,20.5,1.3,29.9
 Potato,18:35,50.2,11.3,0.6,1.4
 Extra Virgin Olive Oil,18:35,119.0,0.0,0.0,0.0
@@ -201,7 +201,7 @@ Salad - Spring Mix,19:15,17.0,3.1,0.5,1.3
 Chickpeas,19:15,127.4,20.9,3.7,6.9
 Red Onion,19:15,7.9,1.8,0.8,0.3
 (Toast) Red Wine Vinegrette,19:15,12.0,0.6,0.5,0.0
-"Homemade Chicken Noodle Soup with chicken, onion, celery, (Kirkland) organic chicken stock, and (Amish Kitchens) wide egg noodles",19:15,124.0,15.0,1.3,6.3
+"Homemade Chicken Noodle Soup with chicken onion celery (Kirkland) organic chicken stock and (Amish Kitchens) wide egg noodles",19:15,124.0,15.0,1.3,6.3
 (Jolly Time) Select Yellow Pop Corn - Air Popped,20:55,200.0,48.0,0.0,8.0
 Virgil's Zero Sugar Black Cherry Soda,20:55,0.0,0.0,0.0,0.0
 Steamed Shrimp,17:55:00,29.0,0.4,0.0,5.5
@@ -221,18 +221,18 @@ Steamed Broccoli,20:15:00,30.0,6.1,1.2,2.0
 Air Fried French Fries,19:18:00,442.0,59.0,0.4,4.9
 Moscato,19:18:00,197.0,13.0,0.0,0.2
 Air Fried Chicken Loingettes ,18:25:00,377.0,4.4,0.0,40.0
-"Salad - Tomato, Cheese, Lettuce, Tortilla Strips",18:25:00,80.0,17.0,7.3,4.9
-"Burger Salad - Lettuce, Tomato, Cheese, Tortilla Strips, Burger, Thousand Island Dressing",17:32:00,471.0,13.0,8.7,28.0
+"Salad - Tomato Cheese Lettuce Tortilla Strips",18:25:00,80.0,17.0,7.3,4.9
+"Burger Salad - Lettuce Tomato Cheese Tortilla Strips Burger Thousand Island Dressing",17:32:00,471.0,13.0,8.7,28.0
 Baked Sweet Potato,17:00:00,103.0,24.0,7.4,2.3
 Lemon Cookies,17:00:00,550.7,89.3,50.7,6.0
 Moscato,17:00:00,197.0,13.0,0.0,0.2
 Chicken Wingettes,19:00:00,526.0,16.0,0.4,27.0
 Medium Baked Potato,19:00:00,80.0,18.0,1.0,2.2
-"Mixed Vegetable, Green Beans, Peas, Corn, Carrots",19:00:00,37.0,7.9,3.0,9.0
+"Mixed Vegetable Green Beans Peas Corn Carrots",19:00:00,37.0,7.9,3.0,9.0
 Corn on the Cobb,19:30:00,99.0,22.0,4.7,3.5
 Ham Biscuit,19:30:00,299.0,27.0,4.1,9.1
 Hot Dog,19:30:00,77.0,0.6,0.3,2.8
-"Smoothie (spinach, celery, banana, and strawberry)",18:15:00,323.0,68.0,48.0,11.0
+"Smoothie (spinach celery banana and strawberry)",18:15:00,323.0,68.0,48.0,11.0
 California Roll,21:15:00,523.0,57.0,11.0,12.0
 Townhouse Cracker,21:25:00,67.2,7.7,0.8,0.7
 2% Milk,21:30:00,122.0,12.0,12.0,8.1
@@ -298,11 +298,11 @@ Salad Greens,17:12:00,27.0,5.1,0.8,2.1
 Red Bell Pepper,17:12:00,9.5,2.3,1.5,0.3
 Kombucha GTS Cosmic Cranberry,19:39:00,30.0,7.0,2.0,0.0
 Grilled Salmon,18:07:00,292.0,0.0,0.0,31.0
-"Homemade potato cauliflower soup with potato, cauliflower, chicken broth, onions",18:07:00,450.0,41.0,1.9,23.0
+"Homemade potato cauliflower soup with potato cauliflower chicken broth onions",18:07:00,450.0,41.0,1.9,23.0
 Boneless Skinless Chicken Thigh,18:04:00,186.0,0.0,0.0,27.0
-"Homemade potato cauliflower soup with potato, cauliflower, chicken broth, onions",18:04:00,450.0,41.0,1.9,23.0
+"Homemade potato cauliflower soup with potato cauliflower chicken broth onions",18:04:00,450.0,41.0,1.9,23.0
 Kombucha GTS Cosmic Cranberry,19:22:00,30.0,7.0,2.0,0.0
-"Sausage, Kale, Sweet Potato Soup",17:30:00,300.0,46.0,26.0,5.4
+"Sausage Kale Sweet Potato Soup",17:30:00,300.0,46.0,26.0,5.4
 Pizza,19:00:00,712.0,89.0,9.6,30.0
 Salad,19:00:00,10.0,2.1,0.9,0.6
 Mountain Dew,19:00:00,230.0,62.0,62.0,0.0
@@ -446,7 +446,7 @@ Lanad o Lakes Cinnamon Sugar,18:50:00,60.0,17.0,15.0,0.0
 Asndes Cremede Menth Thin Mints,19:32:00,75.0,8.4,7.2,1.1
 Lu Petit Ecolier Milk Chocolate Biscuit Cookie,17:30:00,123.0,18.2,5.3,1.6
 Chicken Breast Air Fried,19:21:00,198.0,0.0,0.0,37.0
-"Green Smoothie (with avocado, cotton candy green grapes, pear, broccoli, kale, spinach, banana)",19:21:00,123.0,28.0,15.0,3.0
+"Green Smoothie (with avocado cotton candy green grapes pear broccoli kale spinach banana)",19:21:00,123.0,28.0,15.0,3.0
 Lu Petit Ecolier Milk Chocolate Biscuit Cookie,19:21:00,123.0,18.2,5.3,1.6
 Sathers Caramel Creams,17:30:00,94.0,17.0,9.0,0.7
 Large Eggs Scrambled (nothing added),19:40:00,182.0,2.0,2.0,12.0
@@ -496,11 +496,11 @@ Outback cheesecake with chocolate sauce,22:00,480.0,45.0,37.0,7.1
 Pecans,17:30,100.0,2.1,0.6,1.4
 Outback bread loaf (1/2) + butter,18:00,320.0,60.0,0.7,11.2
 Banana,18:10,105.0,27.0,14.5,1.3
-"Chipotle burrito bowl chicken and steak, black beans, cheese, lettuce, salsa, sour cream",19:30,1008.0,117.0,5.6,49.0
+"Chipotle burrito bowl chicken and steak black beans cheese lettuce salsa sour cream",19:30,1008.0,117.0,5.6,49.0
 2 Yuengling beers,19:30,312.0,26.4,0.0,3.4
 Chicken soup,18:00,168.0,24.0,5.2,10.0
-"Crostinis (slice of French bread, swiss, tomato)",18:00,522.0,99.0,9.0,20.7
-"Chicken enchiladas with black beans, spanish rice, salsa",19:30,536.0,60.0,4.8,28.0
+"Crostinis (slice of French bread swiss tomato)",18:00,522.0,99.0,9.0,20.7
+"Chicken enchiladas with black beans spanish rice salsa",19:30,536.0,60.0,4.8,28.0
 Beer,19:30,204.0,17.0,0.0,2.2
 "12"" Italian BMT Subway whole wheat mayo",17:00,1064.0,60.0,8.0,50.0
 Bojangles chicken thigh,20:00,714.0,23.4,0.0,57.0

@@ -19,6 +19,16 @@
         <input type="number" id="age" min="0"><br>
         <label for="weight">Weight (kg):</label>
         <input type="number" id="weight" min="0"><br>
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" min="0"><br>
+        <label for="activity">Activity Level:</label>
+        <select id="activity">
+            <option value="1.2">Sedentary</option>
+            <option value="1.375">Lightly active</option>
+            <option value="1.55">Moderately active</option>
+            <option value="1.725">Very active</option>
+            <option value="1.9">Intense exercise (2+ hours/day)</option>
+        </select>
         <button id="calculate-calories">Calculate Calories</button>
     </div>
 
@@ -28,7 +38,7 @@
             <div class="box"><button onclick="history.back()">Back</button></div>
         </div>
         <div class="row row-2">
-            <div class="box">List of meals taken during the day 
+            <div class="box">List of meals taken during the day:
                 <div class="meal-menu">
                     <div class="meal-row">
                         <label for="breakfast-select-1">Breakfast 1:</label>
@@ -84,10 +94,12 @@
                 <div class="chart-container">
                     <canvas id="calorieChart"></canvas>
                 </div>
+                <div class="chart-container">Bar chart for sugar
+                    <canvas id="sugarChart"></canvas>
+                </div>
             </div>
         </div>
         <div class="row row-3">
-            <div class="box">Bar chart for sugar<canvas id="sugarChart"></canvas></div>
             <div class="box">Bar chart for proteins<canvas id="proteinChart"></canvas></div>
             <div class="box">Bar chart for carbs<canvas id="carbsChart"></canvas></div>
         </div>
