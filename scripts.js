@@ -133,8 +133,8 @@ document.addEventListener("DOMContentLoaded", function() {
             baseCalories = (10 * weight) + (6.25 * height) - (5 * age) + 5;
         }
         // Adjust for activity level
-        const totalCaloriesBegin = baseCalories * activityLevel;
-        
+        totalCaloriesBegin = baseCalories * activityLevel;
+
         // Modification de l'attribut onclick du bouton "Back"
          document.querySelector(".row-1 .box:last-child button").setAttribute("onclick", "goToInitialMenu()");
 
