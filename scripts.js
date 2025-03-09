@@ -150,8 +150,12 @@ function updateBarChart() {
 }
 
 function goToInitialMenu() {
-    document.getElementById("initial-menu").style.display = "block";
-    document.getElementById("dashboard").style.display = "none";
+    document.querySelector("#dashboard").classList.remove("active");
+    document.querySelector("#dashboard").classList.add("hidden");
+    setTimeout(function() {
+        document.querySelector("#initial-menu").classList.add("visible");
+        document.querySelector("#initial-menu").classList.remove("hidden");
+    }, 500);
     document.getElementById("chatbot-toggler").style.display = "none";
 }
 
@@ -229,8 +233,14 @@ document.addEventListener("DOMContentLoaded", function() {
          document.querySelector(".row-1 .box:last-child button").setAttribute("onclick", "goToInitialMenu()");
 
         totalCaloriesDisplay.textContent = `Total required calories: ${totalCaloriesBegin} kcal`;
-        initialMenu.style.display = "none";
-        dashboard.style.display = "grid";
+        // Ajouter la classe "hidden" au menu initial pour le faire disparaître
+        document.querySelector("#initial-menu").classList.remove("visible");
+        document.querySelector("#initial-menu").classList.add("hidden");
+        
+        setTimeout(function() {
+            document.querySelector("#dashboard").classList.add("active");
+            document.querySelector("#dashboard").classList.remove("hidden");
+        }, 500);
         chatbotToggle.style.display = "flex";
         if (indice == false){
             loadCSVData("breakfast.csv", "breakfast-select-1");

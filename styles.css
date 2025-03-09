@@ -49,12 +49,18 @@ body {
     background-color: #45a049;
 }
 
+
+
 .row-1 .box {
     width: 48%; /* Ajuste la largeur des boîtes dans la première ligne */
 }
 
-.row-2 .box {
-    width: 48%; /* Ajuste la largeur des boîtes dans la première ligne */
+.row-2 #box1 {
+    width: 35%; /* Ajuste la largeur des boîtes dans la première ligne */
+}
+
+.row-2 #box2 {
+    width : 60%;
 }
 
 .row-4 .box {
@@ -70,6 +76,9 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    display: flex;
+    gap: 20px; /* Espacement entre les boutons */
+    justify-content: center; /* Centrer les boutons horizontalement */
 }
 
 .meal-row label {
@@ -126,6 +135,38 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     width: 350px; /* Ajout d'une largeur fixe */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+#dashboard {
+    display: none; /* Cacher le dashboard au départ */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+#initial-menu.hidden {
+    opacity: 0;
+    transform: translateY(-50px); /* L'initial menu s'élève lors de la disparition */
+}
+
+#dashboard.active {
+    display: grid; /* Afficher le dashboard */
+    opacity: 1;
+    transform: translateY(0); /* Faire apparaître le dashboard */
+}
+
+#dashboard.hidden {
+    opacity: 0;
+    transform: scale(0.5) translateY(100px); /* Réduire et déplacer le dashboard vers le bas */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/* Transition inverse lorsque l'on retourne au menu initial */
+#initial-menu.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%);
 }
 
 #initial-menu h2 {
@@ -449,6 +490,36 @@ body.show-chatbot .chatbot-popup {
 
 
 @media (max-width: 520px) {
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .row {
+        flex-direction: column;
+        align-items: center;
+        width: 100vh;
+    }
+
+    .box {
+        width: 70%; /* Les boîtes prennent 90% de l'écran sur petits écrans */
+    }
+
+    .row-2 #box1 {
+        width: 70%; /* Ajuste la largeur des boîtes dans la première ligne */
+    }
+    
+    .row-2 #box2 {
+        width : 70%;
+    }
+
+    #initial-menu {
+        width: 90%; /* Ajuste la largeur pour les petits écrans */
+        max-width: none; /* Supprime la largeur maximale */
+    }
+
     #chatbot-toggler {
         bottom: 20px;
         right: 20px;
