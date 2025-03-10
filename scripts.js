@@ -174,7 +174,7 @@ function drawLineChart(data) {
     if (d3.max(data) == 0) {
         yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
     } else {
-        yScale = d3.scaleLinear().domain([0, d3.max(data)]).range([height, 0]);
+        yScale = d3.scaleLinear().domain([0, d3.max(data) + 30]).range([height, 0]);
     }
 
 
@@ -246,7 +246,7 @@ function drawBarChart(data) {
                     .range([height, 0]);
         } else {
             yScale = d3.scaleLinear()
-                    .domain([0, d3.max(nutrient.values)])
+                    .domain([0, d3.max(nutrient.values) + 30])
                     .range([height, 0]);
         }
         
