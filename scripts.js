@@ -80,20 +80,7 @@ function loadCSVData(file, selectId) {
         .catch(error => console.error('Erreur lors du chargement du CSV :', error));
 }
 
-function updateCalorieChart(breakfast, lunch, snack, dinner) {
-    cumulativeCalories = 0;
-    let calorieData1 = []; 
-    calorieData1[0] = (cumulativeCalories += breakfast);
-    calorieData1[1] = (cumulativeCalories += lunch);
-    calorieData1[2] = (cumulativeCalories += snack);
-    calorieData1[3] = (cumulativeCalories += dinner);
-    calorieData1[4] = cumulativeCalories; // Total à minuit
-
-    calorieGraph.data.datasets[0].data = calorieData1;
-    calorieGraph.update();
-}
-
-function updateBarChart() {
+function update() {
     const breakfastSelect1 = document.getElementById("breakfast-select-1");
     const breakfastSelect2 = document.getElementById("breakfast-select-2");
     const breakfastSelect3 = document.getElementById("breakfast-select-3");
@@ -119,6 +106,7 @@ function updateBarChart() {
     snackCalories = calculateMealTotal(snackSelect1, snackSelect2, snackSelect3, "calories");
     dinnerCalories = calculateMealTotal(dinnerSelect1, dinnerSelect2, dinnerSelect3, "calories");
 
+
     breakfastSugar = calculateMealTotal(breakfastSelect1, breakfastSelect2, breakfastSelect3, "sugar");
     lunchSugar = calculateMealTotal(lunchSelect1, lunchSelect2, lunchSelect3, "sugar");
     snackSugar = calculateMealTotal(snackSelect1, snackSelect2, snackSelect3, "sugar");
@@ -134,20 +122,180 @@ function updateBarChart() {
     snackCarbs = calculateMealTotal(snackSelect1, snackSelect2, snackSelect3, "carbs");
     dinnerCarbs = calculateMealTotal(dinnerSelect1, dinnerSelect2, dinnerSelect3, "carbs");
 
-    calorieChart.data.datasets[0].data = [breakfastCalories, lunchCalories, snackCalories, dinnerCalories];
-    sugarChart.data.datasets[0].data = [breakfastSugar, lunchSugar, snackSugar, dinnerSugar];
-    proteinChart.data.datasets[0].data = [breakfastProtein, lunchProtein, snackProtein, dinnerProtein];
-    carbsChart.data.datasets[0].data = [breakfastCarbs, lunchCarbs, snackCarbs, dinnerCarbs];
-
-    updateCalorieChart(breakfastCalories, lunchCalories, snackCalories, dinnerCalories);
-    calorieChart.update();
-    sugarChart.update();
-    proteinChart.update();
-    carbsChart.update();
+    updateBarChart();
+    updateCalorieChart();
 
     totalCalories = breakfastCalories + lunchCalories + snackCalories + dinnerCalories;
     document.querySelector(".row-1 .box:first-child").textContent = `Total required calories: ${totalCalories}/${totalCaloriesBegin} kcal`;
+
+
 }
+
+function updateCalorieChart() {
+    let cumulativeCalories = 0;
+    let calorieData = [
+        (cumulativeCalories += breakfastCalories),
+        (cumulativeCalories += lunchCalories),
+        (cumulativeCalories += snackCalories),
+        (cumulativeCalories += dinnerCalories),
+    ];
+    drawLineChart(calorieData);
+}
+
+function updateBarChart() {
+    let macronutrientData = [
+        { label: "calorie", values: [breakfastCalories, lunchCalories, snackCalories, dinnerCalories] },
+        { label: "sugar", values: [breakfastSugar, lunchSugar, snackSugar, dinnerSugar] },
+        { label: "protein", values: [breakfastProtein, lunchProtein, snackProtein, dinnerProtein] },
+        { label: "carbs", values: [breakfastCarbs, lunchCarbs, snackCarbs, dinnerCarbs] }
+    ];
+    console.log(macronutrientData);
+    drawBarChart(macronutrientData);
+}
+
+function drawLineChart(data) {
+    d3.select("#calorieGraph").selectAll("*").remove();
+    let width = 400, height = 200, margin = 40;
+    let svg = d3.select("#calorieGraph")
+                .append("svg")
+                .attr("width", width + 2 * margin)
+                .attr("height", height + 2 * margin)
+                .append("g")
+                .attr("transform", `translate(${margin}, ${margin})`);
+
+        
+    let xScale = d3.scaleBand()
+                .domain(["Breakfast", "Lunch", "Snack", "Dinner"]) // L'ordre des repas
+                .range([0, width])  // La largeur totale du graphique
+                .padding(0); // Ajuster l'espacement des barres
+
+    let yScale;
+
+    if (d3.max(data) == 0) {
+        yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+    } else {
+        yScale = d3.scaleLinear().domain([0, d3.max(data)]).range([height, 0]);
+    }
+
+
+
+    let xAxis = d3.axisBottom(xScale);
+    svg.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0, ${height})`)
+    .call(xAxis);
+
+    let yAxis = d3.axisLeft(yScale);
+    svg.append("g")
+    .attr("class", "y-axis")
+    .call(yAxis);
+
+    svg.append("text")
+    .attr("x", -height / 2)
+    .attr("y", -30)
+    .attr("transform", "rotate(-90)")
+    .attr("text-anchor", "middle")
+    .attr("class", "y-axis-label")
+    .text(`calorie (Kcal)`);
+
+    let line = d3.line()
+    .x((d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))
+                 .y(d => yScale(d))
+                 .curve(d3.curveMonotoneX);
+
+    svg.append("path")
+       .datum(data)
+       .attr("fill", "none")
+       .attr("stroke", "red")
+       .attr("transform", `translate(50,0)`)
+       .attr("stroke-width", 3)
+       .attr("d", line);
+
+    svg.selectAll(".dot")
+       .data(data)
+       .enter().append("circle")
+       .attr("cx", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))  // Utilisation des labels
+       .attr("transform", `translate(50,0)`)
+       .attr("cy", d => yScale(d))
+       .attr("r", 5)
+       .attr("fill", "red");
+}
+
+function drawBarChart(data) {
+    data.forEach((nutrient, index) => {
+        d3.select(`#${nutrient.label}Chart`).selectAll("*").remove();
+
+        let width = 400, height = 200, margin = 40;
+        let svg = d3.select(`#${nutrient.label}Chart`)
+                    .append("svg")
+                    .attr("width", width + 2 * margin)
+                    .attr("height", height + 2 * margin)
+                    .append("g")
+                    .attr("transform", `translate(${margin}, ${margin})`);
+
+        let xScale = d3.scaleBand()
+                    .domain(["Breakfast", "Lunch", "Snack", "Dinner"])
+                    .range([0, width])
+                    .padding(0.2);
+
+        let yScale;
+        
+        if (d3.max(nutrient.values) == 0) {
+            yScale = d3.scaleLinear()
+                    .domain([0, 100])
+                    .range([height, 0]);
+        } else {
+            yScale = d3.scaleLinear()
+                    .domain([0, d3.max(nutrient.values)])
+                    .range([height, 0]);
+        }
+        
+
+        // Création de l'axe X
+        let xAxis = d3.axisBottom(xScale);
+        svg.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", `translate(0, ${height})`)
+        .call(xAxis);
+
+        // Création de l'axe Y
+        let yAxis = d3.axisLeft(yScale);
+        svg.append("g")
+        .attr("class", "y-axis")
+        .call(yAxis);
+
+        if (nutrient.label == "calorie") {
+            
+        svg.append("text")
+            .attr("x", -height / 2)
+            .attr("y", -30)
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "middle")
+            .attr("class", "y-axis-label")
+            .text(`${nutrient.label} (Kcal)`);
+        } else {
+            svg.append("text")
+            .attr("x", -height / 2)
+            .attr("y", -30)
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "middle")
+            .attr("class", "y-axis-label")
+            .text(`${nutrient.label} (g)`); // Le titre de l'axe Y correspond au label du nutriment
+        }
+
+        let color = ["red","lightpink","lightseagreen","lightseagreen"];
+
+        svg.selectAll(`.bar-${index}`)
+        .data(nutrient.values)
+        .enter().append("rect")
+        .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
+        .attr("y", d => yScale(d))
+        .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
+        .attr("height", d => height - yScale(d))
+        .attr("fill", color[index]); // Appliquer la couleur correspondante à chaque nutriment
+    });
+}
+
 
 function goToInitialMenu() {
     document.querySelector("#dashboard").classList.remove("active");
@@ -238,17 +386,14 @@ function buttonReco(messageInput){
 };
 
 document.addEventListener("DOMContentLoaded", function() {
-    const initialMenu = document.getElementById("initial-menu");
-    const dashboard = document.getElementById("dashboard");
     const chatbotToggle = document.getElementById("chatbot-toggler");
     const calculateCaloriesButton = document.getElementById("calculate-calories");
     const totalCaloriesDisplay = document.getElementById("total-calories-display");
-
     calculateCaloriesButton.addEventListener("click", function() {
         const gender = document.getElementById("gender").value;
         const age = parseInt(document.getElementById("age").value);
         const weight = parseFloat(document.getElementById("weight").value);
-        const height = parseFloat(document.getElementById("height").value);
+       
         const activityLevel = parseFloat(document.getElementById("activity").value); // Activity factor 
 
         if (!age) {
@@ -295,141 +440,21 @@ document.addEventListener("DOMContentLoaded", function() {
             loadCSVData("dinner.csv", "dinner-select-2");
             loadCSVData("dinner.csv", "dinner-select-3");
 
-            const calorieGCtx = document.getElementById("calorieGraph").getContext("2d");
-            const calorieCtx = document.getElementById("calorieChart").getContext("2d");
-            calorieGraph = new Chart(calorieGCtx, {
-                type: "line",
-                data: {
-                    labels: ["Breakfast", "Lunch", "Snack", "Dinner"],
-                    datasets: [{
-                        label: "Cumulative Calories Throughout the Day",
-                        data: [0, 0, 0, 0],
-                        borderColor: "red",
-                        backgroundColor: "rgba(255, 99, 132, 0.2)",
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Calories'
-                            }
-                        }
-                    }
-                }
-            });
-            calorieChart = new Chart(calorieCtx, {
-                type: 'bar',
-                data: {
-                    labels: ["Breakfast", "Lunch", "Snack", "Dinner"],
-                    datasets: [{
-                        label: 'Calories per Meal',
-                        data: [0, 0, 0, 0],
-                        backgroundColor: ['red', 'red', 'red', 'red'],
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Calories'
-                            }
-                        }
-                    }
-                }
-            });
+            updateCalorieChart();
+            updateBarChart();
 
-            const sugarCtx = document.getElementById("sugarChart").getContext("2d");
-            sugarChart = new Chart(sugarCtx, {
-                type: 'bar',
-                data: {
-                    labels: ["Breakfast", "Lunch", "Snack", "Dinner"],
-                    datasets: [{
-                        label: 'Sugar (g)',
-                        data: [0, 0, 0, 0],
-                        backgroundColor: ['lightpink', 'lightpink', 'lightpink', 'lightpink'],
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Sugar (g)'
-                            }
-                        }
-                    }
-                }
-            });
-
-            const proteinCtx = document.getElementById("proteinChart").getContext("2d");
-            proteinChart = new Chart(proteinCtx, {
-                type: 'bar',
-                data: {
-                    labels: ["Breakfast", "Lunch", "Snack", "Dinner"],
-                    datasets: [{
-                        label: 'Proteins (g)',
-                        data: [0, 0, 0, 0],
-                        backgroundColor: ['lightseagreen', 'lightseagreen', 'lightseagreen', 'lightseagreen'],
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Proteins (g)'
-                            }
-                        }
-                    }
-                }
-            });
-
-            const carbsCtx = document.getElementById("carbsChart").getContext("2d");
-            carbsChart = new Chart(carbsCtx, {
-                type: 'bar',
-                data: {
-                    labels: ["Breakfast", "Lunch", "Snack", "Dinner"],
-                    datasets: [{
-                        label: 'Carbs (g)',
-                        data: [0, 0, 0, 0],
-                        backgroundColor: ['lightsalmon', 'lightsalmon', 'lightsalmon', 'lightsalmon'],
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Carbs (g)'
-                            }
-                        }
-                    }
-                }
-            });
-
-            document.getElementById("breakfast-select-1").addEventListener("change", updateBarChart);
-            document.getElementById("breakfast-select-2").addEventListener("change", updateBarChart);
-            document.getElementById("breakfast-select-3").addEventListener("change", updateBarChart);
-            document.getElementById("lunch-select-1").addEventListener("change", updateBarChart);
-            document.getElementById("lunch-select-2").addEventListener("change", updateBarChart);
-            document.getElementById("lunch-select-3").addEventListener("change", updateBarChart);
-            document.getElementById("snack-select-1").addEventListener("change", updateBarChart);
-            document.getElementById("snack-select-2").addEventListener("change", updateBarChart);
-            document.getElementById("snack-select-3").addEventListener("change", updateBarChart);
-            document.getElementById("dinner-select-1").addEventListener("change", updateBarChart);
-            document.getElementById("dinner-select-2").addEventListener("change", updateBarChart);
-            document.getElementById("dinner-select-3").addEventListener("change", updateBarChart);
+            document.getElementById("breakfast-select-1").addEventListener("change", update);
+            document.getElementById("breakfast-select-2").addEventListener("change", update);
+            document.getElementById("breakfast-select-3").addEventListener("change", update);
+            document.getElementById("lunch-select-1").addEventListener("change", update);
+            document.getElementById("lunch-select-2").addEventListener("change", update);
+            document.getElementById("lunch-select-3").addEventListener("change", update);
+            document.getElementById("snack-select-1").addEventListener("change", update);
+            document.getElementById("snack-select-2").addEventListener("change", update);
+            document.getElementById("snack-select-3").addEventListener("change", update);
+            document.getElementById("dinner-select-1").addEventListener("change", update);
+            document.getElementById("dinner-select-2").addEventListener("change", update);
+            document.getElementById("dinner-select-3").addEventListener("change", update);
             indice = true ;
         }
     }
