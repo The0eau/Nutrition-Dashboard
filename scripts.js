@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const gender = document.getElementById("gender").value;
         const age = parseInt(document.getElementById("age").value);
         const weight = parseFloat(document.getElementById("weight").value);
-       
+        const height = parseFloat(document.getElementById("height").value);
         const activityLevel = parseFloat(document.getElementById("activity").value); // Activity factor 
 
         if (!age) {
