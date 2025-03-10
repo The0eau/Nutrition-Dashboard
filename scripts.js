@@ -155,7 +155,7 @@ function updateBarChart() {
 
 function drawLineChart(data) {
     d3.select("#calorieGraph").selectAll("*").remove();
-    let width = 400, height = 200, margin = 40;
+    let width = 500, height = 200, margin = 40;
     let svg = d3.select("#calorieGraph")
                 .append("svg")
                 .attr("width", width + 2 * margin)
@@ -225,7 +225,11 @@ function drawBarChart(data) {
     data.forEach((nutrient, index) => {
         d3.select(`#${nutrient.label}Chart`).selectAll("*").remove();
 
-        let width = 400, height = 200, margin = 40;
+        let width = 300, height = 200, margin = 40;
+        if (nutrient.label == "calorie") {
+            width = 500, height = 200, margin = 40;
+        }
+        
         let svg = d3.select(`#${nutrient.label}Chart`)
                     .append("svg")
                     .attr("width", width + 2 * margin)
@@ -283,7 +287,7 @@ function drawBarChart(data) {
             .text(`${nutrient.label} (g)`); // Le titre de l'axe Y correspond au label du nutriment
         }
 
-        let color = ["red","lightpink","lightseagreen","lightseagreen"];
+        let color = ["red","lightpink","lightseagreen","lightsalmon"];
 
         svg.selectAll(`.bar-${index}`)
         .data(nutrient.values)
