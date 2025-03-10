@@ -260,7 +260,7 @@ body.show-chatbot #chatbot-toggler span:last-child{
     bottom: 0; 
     right: 10px; 
     width: 500px; 
-    height: 400px; 
+    height: 600px; 
     z-index: 999; 
     background: #fff;
     overflow: hidden;
@@ -335,7 +335,7 @@ body.show-chatbot .chatbot-popup {
     padding: 25px 25px;
     display: flex;
     gap: 20px;
-    height: 250px;
+    height: 400px;
     margin-bottom: 10px;
     overflow-y: auto;
     flex-direction: column;
@@ -452,24 +452,38 @@ body.show-chatbot .chatbot-popup {
     align-items: center;
     background: #fff;
     border-radius: 32px;
+    outline: 1px solid #CCCCE5;
 }
 
-
-.chat-form {
-    display: flex;
-    justify-content: space-between;
+.chat-form .message-input{
+    border: none;
+    outline: none;
     height: 47px;
-    gap: 10px;
-    padding: 10px;
+    width: 100%;
+    resize: none;
+    max-height: 180px;
+    white-space: pre-line;
+    font-size: 0.95 rem;
+    padding: 14px 0 13px 18px;
+    border-radius: inherit;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.chat-form .message-input:hover{
+    scrollbar-color: #ccccf5 transparent;
+}
+
+.chat-form .chat-controls {
+    display: flex;
+    height: 47px;
+    gap: 3px;
     align-items: center;
     align-self: flex-end;
     padding-right: 6px;
 }
 
 .chat-form .chat-controls button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 35px;
     width: 35px;
     border: none;
@@ -478,16 +492,90 @@ body.show-chatbot .chatbot-popup {
     color: #706DB0;
     background: none;
     border-radius: 50%;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
     transition: 0.2s ease;
+    padding: 0;
 }
 
 
+.chat-form .chat-controls #send-message {
+    background: #5350C4;
+    display: none;
+    color: #fff;
+}
+
+.chat-form .message-input:valid~.chat-controls #send-message {
+    display: block;
+}
+
+.chat-form .chat-controls #send-message:hover {
+    background: #3d39ac;
+}
 
 .chat-form .chat-controls button:hover{
     background: #f1f1ff;
 }
 
+.chat-form .file-upload-wrapper{
+    height: 35px;
+    width: 35px;
+    position: relative;
+}
 
+.chat-form .file-upload-wrapper :where(img, button){
+    position: absolute;
+}
+
+.chat-form .file-upload-wrapper img{
+    
+    display: none;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.chat-form .file-upload-wrapper #file-cancel{
+    color: #ff0000;
+    background: #fff;
+}
+
+.chat-form .file-upload-wrapper :where(img, #file-cancel),
+.chat-form .file-upload-wrapper.file-uploaded #file-upload{
+    display: none;
+}
+
+.chat-form .file-upload-wrapper.file-uploaded img,
+.chat-form .file-upload-wrapper.file-uploaded:hover #file-cancel{
+    display: block;
+}
+
+em-emoji-picker {
+    position: absolute;
+    left: 50%;
+    top: -337px;
+    width: 100%;
+    max-width: 350px;
+    max-height: 330px;
+    visibility: hidden;
+    transform: translateX(-50%);
+}
+
+body.show-emoji-picker em-emoji-picker {
+    visibility: visible;
+}
+
+.auto {
+    display: flex;
+    height: 47px;
+    gap: 3px;
+    align-items: center;
+    align-self: flex-end;
+    justify-content: center;
+    padding-right: 6px;
+}
 
 @media (max-width: 520px) {
 

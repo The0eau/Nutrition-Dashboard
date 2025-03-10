@@ -136,12 +136,25 @@
             </div>
         </div>
         <div class="chat-footer">
-            <form action="" class="chat-form">
+            <div class="auto">
                 <button type="submit" id="all" >All</button>
                 <button type="submit" id="breakfast-rec" >Breakfast</button>
                 <button type="submit" id="lunch-rec" >Lunch</button>
                 <button type="submit" id="snack-rec" >Snack</button>
                 <button type="submit" id="dinner-rec" >Dinner</button>
+            </div>
+            <form action="" class="chat-form">
+                <textarea placeholder="message..." class="message-input" required></textarea>
+                <div class="chat-controls">
+                    <button type="button" id="emoji-picker" class="material-symbols-outlined">sentiment_satisfied</button>
+                    <div class="file-upload-wrapper">
+                        <input type="file" accept="images/*" id="file-input" hidden>
+                        <img src="#">
+                        <button type="button" id="file-upload" class="material-symbols-rounded">attach_file</button>
+                        <button type="button" id="file-cancel" class="material-symbols-rounded">close</button>
+                    </div>
+                    <button type="submit" id="send-message" class="material-symbols-rounded">arrow_upward</button>
+                </div>
             </form>
             
         </div>
