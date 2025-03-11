@@ -30,6 +30,7 @@ let indice = false;
 
 let totalCaloriesBegin;
 
+
 function loadCSVData(file, selectId) {
     fetch(file)
         .then(response => response.text())
@@ -126,7 +127,14 @@ function update() {
     updateCalorieChart();
 
     totalCalories = breakfastCalories + lunchCalories + snackCalories + dinnerCalories;
-    document.querySelector(".row-1 .box:first-child").textContent = `Total required calories: ${totalCalories}/${totalCaloriesBegin} kcal`;
+    if (totalCalories < totalCaloriesBegin - (10/100)*totalCaloriesBegin) {
+        document.querySelector("#calorie-imp").textContent = `Not enought calories`;
+    } else if (totalCalories > totalCaloriesBegin + (10/100)*totalCaloriesBegin){ 
+        document.querySelector("#calorie-imp").textContent = `Too much calories`;
+    } else {
+        document.querySelector("#calorie-imp").textContent = `Enought calories`;
+    }
+    document.querySelector("#total").textContent = `Total required calories: ${totalCalories}/${totalCaloriesBegin} kcal`;
 
 
 }
@@ -207,7 +215,7 @@ function drawLineChart(data) {
        .datum(data)
        .attr("fill", "none")
        .attr("stroke", "red")
-       .attr("transform", `translate(50,0)`)
+       .attr("transform", `translate(63,0)`)
        .attr("stroke-width", 3)
        .attr("d", line);
 
@@ -215,10 +223,54 @@ function drawLineChart(data) {
        .data(data)
        .enter().append("circle")
        .attr("cx", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))  // Utilisation des labels
-       .attr("transform", `translate(50,0)`)
+       .attr("transform", `translate(63,0)`)
        .attr("cy", d => yScale(d))
        .attr("r", 5)
        .attr("fill", "red");
+}
+
+function drawLegend(svg, width, nutrientLabel, colors) {
+    let legendData;
+    let legend;
+    if (nutrientLabel === "calorie") {
+     legendData = [
+        { label: "Not enought calories", color: "dark-red" },
+        { label: "Calories", color: colors },
+        { label: "Too much calories", color: "orange" }    
+    ];
+    legend = svg.append("g")
+            .attr("class", "legend")
+            .attr("transform", `translate(${width - 90}, -40)`); 
+    } else {
+    legendData = [
+        { label: nutrientLabel, color: colors } // Couleur générique
+    ];
+    legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(${width - 150}, -10)`);
+    }
+
+    
+
+    legend.selectAll("rect")
+    .data(legendData)
+    .enter()
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", (d, i) => i * 20)
+    .attr("width", 15)
+    .attr("height", 15)
+    .attr("fill", d => d.color);
+
+    legend.selectAll("text")
+    .data(legendData)
+    .enter()
+    .append("text")
+    .attr("x", 20)
+    .attr("y", (d, i) => i * 20 + 12)
+    .text(d => d.label)
+    .attr("font-size", "12px")
+    .attr("fill", "black");
 }
 
 function drawBarChart(data) {
@@ -250,7 +302,7 @@ function drawBarChart(data) {
                     .range([height, 0]);
         } else {
             yScale = d3.scaleLinear()
-                    .domain([0, d3.max(nutrient.values) + 30])
+                    .domain([0, d3.max(nutrient.values) + (20/100)*d3.max(nutrient.values)])
                     .range([height, 0]);
         }
         
@@ -268,15 +320,19 @@ function drawBarChart(data) {
         .attr("class", "y-axis")
         .call(yAxis);
 
+        let color = ["red","lightpink","lightseagreen","lightsalmon"];
+
         if (nutrient.label == "calorie") {
             
-        svg.append("text")
-            .attr("x", -height / 2)
-            .attr("y", -30)
-            .attr("transform", "rotate(-90)")
-            .attr("text-anchor", "middle")
-            .attr("class", "y-axis-label")
-            .text(`${nutrient.label} (Kcal)`);
+            svg.append("text")
+                .attr("x", -height / 2)
+                .attr("y", -30)
+                .attr("transform", "rotate(-90)")
+                .attr("text-anchor", "middle")
+                .attr("class", "y-axis-label")
+                .text(`${nutrient.label} (Kcal)`);
+
+            drawLegend(svg, width, nutrient.label, color[index])
         } else {
             svg.append("text")
             .attr("x", -height / 2)
@@ -285,18 +341,29 @@ function drawBarChart(data) {
             .attr("text-anchor", "middle")
             .attr("class", "y-axis-label")
             .text(`${nutrient.label} (g)`); // Le titre de l'axe Y correspond au label du nutriment
+            drawLegend(svg, width, nutrient.label, color[index])
         }
 
-        let color = ["red","lightpink","lightseagreen","lightsalmon"];
-
-        svg.selectAll(`.bar-${index}`)
-        .data(nutrient.values)
-        .enter().append("rect")
-        .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
-        .attr("y", d => yScale(d))
-        .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
-        .attr("height", d => height - yScale(d))
-        .attr("fill", color[index]); // Appliquer la couleur correspondante à chaque nutriment
+        
+        if (nutrient.label == "calorie"){
+            svg.selectAll(`.bar-${index}`)
+            .data(nutrient.values)
+            .enter().append("rect")
+            .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
+            .attr("y", d => yScale(d))
+            .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
+            .attr("height", d => height - yScale(d))
+            .attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
+        } else {
+            svg.selectAll(`.bar-${index}`)
+            .data(nutrient.values)
+            .enter().append("rect")
+            .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
+            .attr("y", d => yScale(d))
+            .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
+            .attr("height", d => height - yScale(d))
+            .attr("fill", color[index]);
+        }
     });
 }
 
@@ -390,9 +457,27 @@ function buttonReco(messageInput){
 };
 
 document.addEventListener("DOMContentLoaded", function() {
+    // Show the initial menu when "Commencer" button is clicked
+    document.getElementById('and-btn').addEventListener('click', function() {
+        document.getElementById('intro-and').classList.add('hidden');
+        document.getElementById('intro-but').classList.remove('hidden');
+        document.getElementById('intro-but').classList.add('visible');
+    });
+    document.getElementById('but-btn').addEventListener('click', function() {
+        document.getElementById('intro-but').classList.remove('visible');
+        document.getElementById('intro-but').classList.add('hidden');
+        document.getElementById('hook').classList.remove('hidden');
+        document.getElementById('hook').classList.add('visible');
+    });
+    document.getElementById('start-btn').addEventListener('click', function() {
+        document.getElementById('hook').classList.remove('visible');
+        document.getElementById('hook').classList.add('hidden');
+        document.getElementById('initial-menu').classList.remove('hidden');
+        document.getElementById('initial-menu').classList.add('visible');
+    });
     const chatbotToggle = document.getElementById("chatbot-toggler");
     const calculateCaloriesButton = document.getElementById("calculate-calories");
-    const totalCaloriesDisplay = document.getElementById("total-calories-display");
+    const totalCaloriesDisplay = document.getElementById("total");
     calculateCaloriesButton.addEventListener("click", function() {
         const gender = document.getElementById("gender").value;
         const age = parseInt(document.getElementById("age").value);

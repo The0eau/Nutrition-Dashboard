@@ -2,8 +2,58 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4; /* Arrière-plan gris clair */
+    background-color: #f4f4f4; 
 }
+
+
+#hook , #intro-and, #intro-but {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+}
+
+#hook-container , #intro-and-container, #intro-but-container {
+    width: 50%;
+    text-align: center;
+    padding: 40px;
+    background-color: white;
+    color: white;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+#hook h1, #intro-and h1, #intro-but h1 {
+    font-size: 2em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+#hook p {
+    font-size: 1.2em;
+    color: #7f8c8d;
+}
+
+
+#hook.hidden, #intro-and.hidden, #intro-but.hidden   {
+    display: none;
+}
+
+#hook.visible, #intro-but.visible  {
+    display: flex;
+}
+
+
+#start-btn {
+    transition: transform 0.3s ease;
+}
+
+#start-btn:hover {
+    transform: scale(1.1); 
+}
+
 
 .row {
     display: flex;
@@ -17,14 +67,14 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 10px;
-    width: 30%; /* Ajuste la largeur des boîtes */
+    width: 30%; 
     box-sizing: border-box;
 }
 
 #but {
     display: flex;
-    gap: 20px; /* Espacement entre les boutons */
-    justify-content: center; /* Centrer les boutons horizontalement */
+    gap: 20px; 
+    justify-content: center; 
     background: none;
     border: none;
     border-radius: none;
@@ -58,11 +108,17 @@ body {
 }
 
 .row-1 .box {
-    width: 48%; /* Ajuste la largeur des boîtes dans la première ligne */
+    width: 48%; 
+}
+
+#total-calories-display {
+    text-align: center; 
+    align-items: center; 
+    justify-content: center; 
 }
 
 .row-2 #box1 {
-    width: 35%; /* Ajuste la largeur des boîtes dans la première ligne */
+    width: 35%; 
 }
 
 .row-2 #box2 {
@@ -70,7 +126,7 @@ body {
 }
 
 .row-4 .box {
-    width: 98%; /* Ajuste la largeur des boîtes dans la quatrième ligne */
+    width: 98%;
 }
 
 .meal-menu {
@@ -83,8 +139,8 @@ body {
     align-items: center;
     margin-bottom: 10px;
     display: flex;
-    gap: 20px; /* Espacement entre les boutons */
-    justify-content: center; /* Centrer les boutons horizontalement */
+    gap: 20px; 
+    justify-content: center; 
 }
 
 .meal-row label {
@@ -140,13 +196,13 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
-    width: 350px; /* Ajout d'une largeur fixe */
+    width: 350px; 
     opacity: 1;
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 #dashboard {
-    display: none; /* Cacher le dashboard au départ */
+    display: none; 
     opacity: 0;
     transform: translateY(50px);
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -154,22 +210,22 @@ button:hover {
 
 #initial-menu.hidden {
     opacity: 0;
-    transform: translateY(-50px); /* L'initial menu s'élève lors de la disparition */
+    transform: translateY(-50px); 
 }
 
 #dashboard.active {
-    display: grid; /* Afficher le dashboard */
+    display: grid; 
     opacity: 1;
-    transform: translateY(0); /* Faire apparaître le dashboard */
+    transform: translateY(0); 
 }
 
 #dashboard.hidden {
     opacity: 0;
-    transform: scale(0.5) translateY(100px); /* Réduire et déplacer le dashboard vers le bas */
+    transform: scale(0.5) translateY(100px); 
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
-/* Transition inverse lorsque l'on retourne au menu initial */
+
 #initial-menu.visible {
     opacity: 1;
     transform: translate(-50%, -50%);
@@ -191,7 +247,7 @@ button:hover {
     margin: 5px 0 15px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: 250px; /* Augmentation de la largeur des champs */
+    width: 250px; 
 }
 
 #initial-menu button {
@@ -599,11 +655,11 @@ body.show-emoji-picker em-emoji-picker {
     }
 
     .box {
-        width: 70%; /* Les boîtes prennent 90% de l'écran sur petits écrans */
+        width: 70%; 
     }
 
     .row-2 #box1 {
-        width: 70%; /* Ajuste la largeur des boîtes dans la première ligne */
+        width: 70%; 
     }
     
     .row-2 #box2 {
@@ -611,8 +667,8 @@ body.show-emoji-picker em-emoji-picker {
     }
 
     #initial-menu {
-        width: 90%; /* Ajuste la largeur pour les petits écrans */
-        max-width: none; /* Supprime la largeur maximale */
+        width: 90%; 
+        max-width: none; 
     }
 
     #chatbot-toggler {

@@ -9,7 +9,31 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"/>
 </head>
 <body>
-    <div id="initial-menu" class="visible">
+
+    <div id="intro-and">
+        <div id="intro-and-container">
+            <h1>You are someone who cares about your health and what you eat, but you're not exactly sure how to track your progress day by day!</h1>
+            <button id="and-btn">Start</button>
+        </div>
+    </div>
+    <div id="intro-but" class="hidden">
+        <div id="intro-but-container">
+            <h1>But despite your efforts, it can be difficult to accurately track your calories, protein, carbs, and sugar, or even know what meal to choose to reach your health goals!</h1>
+            <button id="but-btn">Start</button>
+        </div>
+    </div>
+
+
+    <div id="hook" class="hidden">
+        <div id="hook-container">
+            <h1>Right now it's easy, optimize your diet and reach your health goals in the blink of an eye!</h1>
+            <p>Enter your information to receive personalized recommendations and visualize your daily nutritional needs.</p>
+            <button id="start-btn">Start</button>
+        </div>
+    </div>
+    
+
+    <div id="initial-menu" class="hidden">
         <h2>Enter Your Information</h2>
         <label for="gender">Gender:</label>
         <select id="gender">
@@ -35,7 +59,9 @@
 
     <div id="dashboard" class="hidden">
         <div class="row row-1">
-            <div class="box" id="total-calories-display">Total required calories: 0 kcal</div>
+            <div class="box" id="total-calories-display"><p id="total">Total required calories: 0 kcal</p>
+            <p id="calorie-imp">Choose your meal</p>
+            </div>
             <div class="box" id="but"><button onclick="history.back()">Caracteristics</button><button onclick="location.reload()">Back</button></div>
             
         </div>
@@ -127,7 +153,7 @@
                 </svg>
                 <div class="message-text">
                     Hey there <br />
-                    How can I help u ?
+                    Are you curious to know how your meals impact your health? Let me help you find the best nutrition plan!
                 </div>
             </div>
         </div>
