@@ -40,3 +40,4 @@ function addMealRow(mealType) {
     // Ajout de la ligne au tableau
     mealTableBody.appendChild(row);
 }
+

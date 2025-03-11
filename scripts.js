@@ -30,6 +30,21 @@ let indice = false;
 
 let totalCaloriesBegin;
 
+function addBrush(svg, width, height, updateFunction, displayFunction) {
+    let brush = d3.brushX()
+        .extent([[0, 0], [width, height]])
+        .on("brush end", function ({ selection }) {
+            if (!selection) return;
+            let [x0, x1] = selection;
+            updateFunction(x0, x1);
+            displayFunction(x0, x1);
+        });
+    
+    svg.append("g")
+        .attr("class", "brush")
+        .call(brush);
+}
+
 
 function loadCSVData(file, selectId) {
     fetch(file)
@@ -319,6 +334,23 @@ function drawBarChart(data) {
         svg.append("g")
         .attr("class", "y-axis")
         .call(yAxis);
+
+        let brushInfo = d3.select("#brush-info");
+
+        addBrush(svg, width, height, (x0, x1) => {
+            let selectedIndices = xScale.domain().filter(d => {
+                let xPos = xScale(d) + xScale.bandwidth() / 2;
+                return x0 <= xPos && xPos <= x1;
+            });
+            bars.attr("fill", d => selectedIndices.includes(["Breakfast", "Lunch", "Snack", "Dinner"][data.indexOf(d)]) ? "orange" : "steelblue");
+        }, (x0, x1) => {
+            let selectedData = data.map((nutrient, i) => ({ label: nutrient.label, value: nutrient.values[i] }))
+                                   .filter((_, i) => {
+                                       let xPos = xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]) + xScale.bandwidth() / 2;
+                                       return x0 <= xPos && xPos <= x1;
+                                   });
+            brushInfo.text(`Selected: ${selectedData.map(d => `${d.label}: ${d.value}`).join(", ")}`);
+        });
 
         let color = ["red","lightpink","lightseagreen","lightsalmon"];
 
