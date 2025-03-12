@@ -30,6 +30,20 @@ let indice = false;
 
 let totalCaloriesBegin;
 
+let currentView = {
+    calorie: 'main',
+    sugar: 'main',
+    protein: 'main',
+    carbs: 'main'
+};
+
+let selectedMeal = {
+    calorie: '',
+    sugar: '',
+    protein: '',
+    carbs: ''
+};
+
 function addBrushing(svg, width, height, xScale, data, nutrientLabel) {
     let brush = d3.brushX()
         .extent([[0, 0], [width, height]])
@@ -163,11 +177,11 @@ function update() {
 
     totalCalories = breakfastCalories + lunchCalories + snackCalories + dinnerCalories;
     if (totalCalories < totalCaloriesBegin - (10/100)*totalCaloriesBegin) {
-        document.querySelector("#calorie-imp").textContent = `Not enought calories`;
+        document.querySelector("#calorie-imp").textContent = `Not enough calories`;
     } else if (totalCalories > totalCaloriesBegin + (10/100)*totalCaloriesBegin){ 
         document.querySelector("#calorie-imp").textContent = `Too much calories`;
     } else {
-        document.querySelector("#calorie-imp").textContent = `Enought calories`;
+        document.querySelector("#calorie-imp").textContent = `Enough calories`;
     }
     document.querySelector("#total").textContent = `Total required calories: ${totalCalories}/${totalCaloriesBegin} kcal`;
 
@@ -175,14 +189,12 @@ function update() {
 }
 
 function updateCalorieChart() {
-    let cumulativeCalories = 0;
-    let calorieData = [
-        (cumulativeCalories += breakfastCalories),
-        (cumulativeCalories += lunchCalories),
-        (cumulativeCalories += snackCalories),
-        (cumulativeCalories += dinnerCalories),
-    ];
-    drawLineChart(calorieData);
+    let calorieData = [breakfastCalories, lunchCalories, snackCalories, dinnerCalories];
+    let sugarData = [breakfastSugar, lunchSugar, snackSugar, dinnerSugar];
+    let proteinData = [breakfastProtein, lunchProtein, snackProtein, dinnerProtein];
+    let carbsData = [breakfastCarbs, lunchCarbs, snackCarbs, dinnerCarbs];
+
+    drawLineChart(calorieData, sugarData, proteinData, carbsData);
 }
 
 function updateBarChart() {
@@ -192,78 +204,407 @@ function updateBarChart() {
         { label: "protein", values: [breakfastProtein, lunchProtein, snackProtein, dinnerProtein] },
         { label: "carbs", values: [breakfastCarbs, lunchCarbs, snackCarbs, dinnerCarbs] }
     ];
-    console.log(macronutrientData);
+    
     drawBarChart(macronutrientData);
 }
 
-function drawLineChart(data) {
-    d3.select("#calorieGraph").selectAll("*").remove();
-    let width = 500, height = 200, margin = 40;
-    let svg = d3.select("#calorieGraph")
-                .append("svg")
-                .attr("width", width + 2 * margin)
-                .attr("height", height + 2 * margin)
-                .append("g")
-                .attr("transform", `translate(${margin}, ${margin})`);
+function initializeChartViews() {
+    currentView = {
+        calorie: 'main',
+        sugar: 'main',
+        protein: 'main',
+        carbs: 'main'
+    };
+    
+    selectedMeal = {
+        calorie: '',
+        sugar: '',
+        protein: '',
+        carbs: ''
+    };
+}
+
+// function drawLineChart(data) {
+//     d3.select("#calorieGraph").selectAll("*").remove();
+//     let width = 500, height = 200, margin = 40;
+//     let svg = d3.select("#calorieGraph")
+//                 .append("svg")
+//                 .attr("width", width + 2 * margin)
+//                 .attr("height", height + 2 * margin)
+//                 .append("g")
+//                 .attr("transform", `translate(${margin}, ${margin})`);
 
         
+//     let xScale = d3.scaleBand()
+//                 .domain(["Breakfast", "Lunch", "Snack", "Dinner"]) // L'ordre des repas
+//                 .range([0, width])  // La largeur totale du graphique
+//                 .padding(0); // Ajuster l'espacement des barres
+
+//     let yScale;
+
+//     if (d3.max(data) == 0) {
+//         yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+//     } else {
+//         yScale = d3.scaleLinear().domain([0, d3.max(data) + 30]).range([height, 0]);
+//     }
+
+
+
+//     let xAxis = d3.axisBottom(xScale);
+//     svg.append("g")
+//     .attr("class", "x-axis")
+//     .attr("transform", `translate(0, ${height})`)
+//     .call(xAxis);
+
+//     let yAxis = d3.axisLeft(yScale);
+//     svg.append("g")
+//     .attr("class", "y-axis")
+//     .call(yAxis);
+
+//     svg.append("text")
+//     .attr("x", -height / 2)
+//     .attr("y", -30)
+//     .attr("transform", "rotate(-90)")
+//     .attr("text-anchor", "middle")
+//     .attr("class", "y-axis-label")
+//     .text(`calorie (Kcal)`);
+
+//     let line = d3.line()
+//     .x((d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))
+//                  .y(d => yScale(d))
+//                  .curve(d3.curveMonotoneX);
+
+//     svg.append("path")
+//        .datum(data)
+//        .attr("fill", "none")
+//        .attr("stroke", "red")
+//        .attr("transform", `translate(63,0)`)
+//        .attr("stroke-width", 3)
+//        .attr("d", line);
+
+//     svg.selectAll(".dot")
+//        .data(data)
+//        .enter().append("circle")
+//        .attr("cx", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))  // Utilisation des labels
+//        .attr("transform", `translate(63,0)`)
+//        .attr("cy", d => yScale(d))
+//        .attr("r", 5)
+//        .attr("fill", "red");
+
+//     addBrushing(svg, width, height, xScale, data, "Calories")
+// }
+
+
+// Add brush functionality - reusing the existing function
+
+// Add a global variable to track line chart brush state
+let lineChartBrushEnabled = false;
+
+function drawLineChart(data, sugarData, proteinData, carbsData) {
+    d3.select("#calorieGraph").selectAll("*").remove();
+    let width = 500, height = 200, margin = 40;
+    
+    // Create SVG container with extra space for toggle button
+    const svgContainer = d3.select("#calorieGraph")
+                .append("svg")
+                .attr("width", width + 2 * margin)
+                .attr("height", height + 2 * margin + 10);
+    
+    // Create main chart group
+    const svg = svgContainer.append("g")
+                .attr("transform", `translate(${margin}, ${margin})`);
+
+    // Define meal names for consistency
+    const mealNames = ["Breakfast", "Lunch", "Snack", "Dinner"];
+        
     let xScale = d3.scaleBand()
-                .domain(["Breakfast", "Lunch", "Snack", "Dinner"]) // L'ordre des repas
-                .range([0, width])  // La largeur totale du graphique
-                .padding(0); // Ajuster l'espacement des barres
+                .domain(mealNames)
+                .range([0, width])
+                .padding(0);
 
+    // Create y-scale with proper handling for zero values
     let yScale;
-
     if (d3.max(data) == 0) {
         yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
     } else {
         yScale = d3.scaleLinear().domain([0, d3.max(data) + 30]).range([height, 0]);
     }
 
-
-
+    // Create axes
     let xAxis = d3.axisBottom(xScale);
     svg.append("g")
-    .attr("class", "x-axis")
-    .attr("transform", `translate(0, ${height})`)
-    .call(xAxis);
+        .attr("class", "x-axis")
+        .attr("transform", `translate(0, ${height})`)
+        .call(xAxis);
 
     let yAxis = d3.axisLeft(yScale);
     svg.append("g")
-    .attr("class", "y-axis")
-    .call(yAxis);
+        .attr("class", "y-axis")
+        .call(yAxis);
 
+    // Add y-axis label
     svg.append("text")
-    .attr("x", -height / 2)
-    .attr("y", -30)
-    .attr("transform", "rotate(-90)")
-    .attr("text-anchor", "middle")
-    .attr("class", "y-axis-label")
-    .text(`calorie (Kcal)`);
+        .attr("x", -height / 2)
+        .attr("y", -30)
+        .attr("transform", "rotate(-90)")
+        .attr("text-anchor", "middle")
+        .attr("class", "y-axis-label")
+        .text(`Calories (Kcal)`);
 
+    // Create the line
     let line = d3.line()
-    .x((d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))
-                 .y(d => yScale(d))
-                 .curve(d3.curveMonotoneX);
+        .x((d, i) => xScale(mealNames[i]) + xScale.bandwidth() / 2)
+        .y(d => yScale(d))
+        .curve(d3.curveMonotoneX);
 
     svg.append("path")
-       .datum(data)
-       .attr("fill", "none")
-       .attr("stroke", "red")
-       .attr("transform", `translate(63,0)`)
-       .attr("stroke-width", 3)
-       .attr("d", line);
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "red")
+        .attr("stroke-width", 3)
+        .attr("d", line);
+        
+    // Create brush info element
+    let brushInfo = svg.append("text")
+        .attr("id", "line-chart-brush-info")
+        .attr("x", width / 2)
+        .attr("y", -10)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "12px")
+        .text("");
 
+    // Add data points (circles)
     svg.selectAll(".dot")
-       .data(data)
-       .enter().append("circle")
-       .attr("cx", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))  // Utilisation des labels
-       .attr("transform", `translate(63,0)`)
-       .attr("cy", d => yScale(d))
-       .attr("r", 5)
-       .attr("fill", "red");
+        .data(data)
+        .enter().append("circle")
+        .attr("cx", (d, i) => xScale(mealNames[i]) + xScale.bandwidth() / 2)
+        .attr("cy", d => yScale(d))
+        .attr("r", 5)
+        .attr("fill", "red")
+        .on("mouseover", function(event, d) {
+            if (!lineChartBrushEnabled) {
+                // Change dot color on hover
+                d3.select(this).attr("fill", "#ff6666");
 
-    addBrushing(svg, width, height, xScale, data, "Calories")
+                // Show tooltip on hover
+                const mealIndex = data.indexOf(d);
+                const mealName = mealNames[mealIndex];
+                
+                let tooltip = svg.append("g")
+                    .attr("class", "tooltip")
+                    .attr("transform", `translate(${xScale(mealName) + xScale.bandwidth() / 2}, ${yScale(d) - 20})`);
+
+                // Calculate the width based on the text length
+                const textWidth = Math.max(
+                    mealName.length * 8, // Meal label width
+                    `${d} kcal`.length * 7, // Calories width
+                    `${sugarData[mealIndex]} g sugar`.length * 7, // Sugar width
+                    `${proteinData[mealIndex]} g protein`.length * 7, // Protein width
+                    `${carbsData[mealIndex]} g carbs`.length * 7 // Carbs width
+                ) + 30; // Add some padding
+
+                // Tooltip box
+                tooltip.append("rect")
+                    .attr("width", textWidth) // Dynamic width
+                    .attr("height", 80) // Increased height to fit all values
+                    .attr("fill", "#555")
+                    .attr("rx", 5)
+                    .attr("x", -textWidth / 2); // Center the tooltip on the data point
+
+                // Tooltip text (meal label)
+                tooltip.append("text")
+                    .attr("x", 0) // Center the text in the box
+                    .attr("y", 20) // Vertical alignment
+                    .attr("text-anchor", "middle") // Center the text
+                    .attr("fill", "white") // Text color
+                    .attr("font-weight", "bold") // Bold text
+                    .text(mealName);
+
+                // Tooltip text (calories)
+                tooltip.append("text")
+                    .attr("x", 0) // Center the text in the box
+                    .attr("y", 35) // Vertical alignment
+                    .attr("text-anchor", "middle") // Center the text
+                    .attr("fill", "white") // Text color
+                    .text(`${d} kcal`);
+
+                // Tooltip text (sugar)
+                tooltip.append("text")
+                    .attr("x", 0) // Center the text in the box
+                    .attr("y", 50) // Vertical alignment
+                    .attr("text-anchor", "middle") // Center the text
+                    .attr("fill", "white") // Text color
+                    .text(`${sugarData[mealIndex]} g sugar`);
+
+                // Tooltip text (protein)
+                tooltip.append("text")
+                    .attr("x", 0) // Center the text in the box
+                    .attr("y", 65) // Vertical alignment
+                    .attr("text-anchor", "middle") // Center the text
+                    .attr("fill", "white") // Text color
+                    .text(`${proteinData[mealIndex]} g protein`);
+
+                // Tooltip text (carbs)
+                tooltip.append("text")
+                    .attr("x", 0) // Center the text in the box
+                    .attr("y", 80) // Vertical alignment
+                    .attr("text-anchor", "middle") // Center the text
+                    .attr("fill", "white") // Text color
+                    .text(`${carbsData[mealIndex]} g carbs`);
+            }
+        })
+        .on("mouseout", function() {
+            if (!lineChartBrushEnabled) {
+                // Reset dot color on mouseout
+                d3.select(this).attr("fill", "red");
+
+                // Hide tooltip on mouseout
+                svg.selectAll(".tooltip").remove();
+            }
+        });
+
+    // Add brush toggle button
+    const brushToggleGroup = svgContainer.append("g")
+        .attr("class", "brush-toggle-group")
+        .style("cursor", "pointer")
+        .on("click", function() {
+            // Toggle brush state
+            lineChartBrushEnabled = !lineChartBrushEnabled;
+            
+            // Update button appearance
+            d3.select(this).select("rect")
+                .attr("fill", lineChartBrushEnabled ? "#2196F3" : "#9E9E9E");
+            
+            d3.select(this).select("text")
+                .text(lineChartBrushEnabled ? "Brush On" : "Brush Off");
+            
+            // Add or remove brush
+            if (lineChartBrushEnabled) {
+                addBrush(svg, width, height, function(x0, x1) {
+                    // Update function for brushing
+                    svg.selectAll(".dot").attr("fill", function(d, i) {
+                        const xPos = xScale(mealNames[i]) + xScale.bandwidth() / 2;
+                        return (x0 <= xPos && xPos <= x1) ? "orange" : "red";
+                    });
+                }, function(x0, x1) {
+                    // Display function for brushing
+                    const selectedMeals = mealNames.filter((d, i) => {
+                        const xPos = xScale(d) + xScale.bandwidth() / 2;
+                        return x0 <= xPos && xPos <= x1;
+                    });
+                    
+                    const selectedData = selectedMeals.map(meal => {
+                        const i = mealNames.indexOf(meal);
+                        return {
+                            meal: meal,
+                            calories: data[i],
+                            sugar: sugarData[i],
+                            protein: proteinData[i],
+                            carbs: carbsData[i]
+                        };
+                    });
+                    
+                    // Calculate totals of selected values
+                    const totalCalories = selectedData.reduce((sum, item) => sum + item.calories, 0);
+                    const totalSugar = selectedData.reduce((sum, item) => sum + item.sugar, 0);
+                    const totalProtein = selectedData.reduce((sum, item) => sum + item.protein, 0);
+                    const totalCarbs = selectedData.reduce((sum, item) => sum + item.carbs, 0);
+                    
+                    let infoText = "";
+                    if (selectedData.length > 0) {
+                        infoText = `Selected: ${selectedData.map(d => `${d.meal}: ${d.calories.toFixed(1)} kcal`).join(", ")}`;
+                        
+                        // Add total if more than one item is selected
+                        if (selectedData.length > 1) {
+                            infoText += `, Total: ${totalCalories.toFixed(1)} kcal`;
+                        }
+                    }
+                    
+                    brushInfo.text(infoText);
+                });
+            } else {
+                // Remove brush
+                svg.select(".brush").remove();
+                brushInfo.text("");
+                
+                // Reset dot colors
+                svg.selectAll(".dot")
+                    .attr("fill", "red");
+            }
+        });
+        
+    brushToggleGroup.append("rect")
+        .attr("class", "brush-toggle-button")
+        .attr("x", 10) // Position in top-left
+        .attr("y", 10)
+        .attr("width", 80)
+        .attr("height", 20)
+        .attr("rx", 5)
+        .attr("fill", lineChartBrushEnabled ? "#2196F3" : "#9E9E9E");
+        
+    brushToggleGroup.append("text")
+        .attr("class", "brush-toggle-text")
+        .attr("x", 50) // Center text in button
+        .attr("y", 23)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text(lineChartBrushEnabled ? "Brush On" : "Brush Off");
+    
+    // Add brush only if enabled
+    if (lineChartBrushEnabled) {
+        addBrush(svg, width, height, function(x0, x1) {
+            // Update function for brushing
+            svg.selectAll(".dot").attr("fill", function(d, i) {
+                const xPos = xScale(mealNames[i]) + xScale.bandwidth() / 2;
+                return (x0 <= xPos && xPos <= x1) ? "orange" : "red";
+            });
+        }, function(x0, x1) {
+            // Display function for brushing
+            const selectedMeals = mealNames.filter((d, i) => {
+                const xPos = xScale(d) + xScale.bandwidth() / 2;
+                return x0 <= xPos && xPos <= x1;
+            });
+            
+            const selectedData = selectedMeals.map(meal => {
+                const i = mealNames.indexOf(meal);
+                return { 
+                    meal: meal, 
+                    value: nutrient.values[i] 
+                };
+            });
+            
+            // Calculate total of selected values
+            const totalValue = selectedData.reduce((sum, item) => sum + item.value, 0);
+            
+            let infoText = "";
+            if (selectedData.length > 0) {
+                infoText = `Selected ${nutrient.label}: ${selectedData.map(d => 
+                    `${d.meal}: ${d.value.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`).join(", ")}`;
+                
+                // Add total if more than one item is selected
+                if (selectedData.length > 1) {
+                    infoText += `, Total: ${totalValue.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`;
+                }
+            }
+            
+            brushInfo.text(infoText);
+        });
+    }
+}
+
+function addBrush(svg, width, height, updateFunction, displayFunction) {
+    let brush = d3.brushX()
+        .extent([[0, 0], [width, height]])
+        .on("brush end", function (event) {
+            if (!event.selection) return;
+            let [x0, x1] = event.selection;
+            updateFunction(x0, x1);
+            displayFunction(x0, x1);
+        });
+    
+    svg.append("g")
+        .attr("class", "brush")
+        .call(brush);
 }
 
 function drawLegend(svg, width, nutrientLabel, colors) {
@@ -271,7 +612,7 @@ function drawLegend(svg, width, nutrientLabel, colors) {
     let legend;
     if (nutrientLabel === "calorie") {
      legendData = [
-        { label: "Not enought calories", color: "dark-red" },
+        { label: "Not enough calories", color: "dark-red" },
         { label: "Calories", color: colors },
         { label: "Too much calories", color: "orange" }    
     ];
@@ -310,6 +651,117 @@ function drawLegend(svg, width, nutrientLabel, colors) {
     .attr("fill", "black");
 }
 
+// function drawBarChart(data) {
+//     data.forEach((nutrient, index) => {
+//         d3.select(`#${nutrient.label}Chart`).selectAll("*").remove();
+
+//         let width = 300, height = 200, margin = 40;
+//         if (nutrient.label == "calorie") {
+//             width = 500, height = 200, margin = 40;
+//         }
+        
+//         let svg = d3.select(`#${nutrient.label}Chart`)
+//                     .append("svg")
+//                     .attr("width", width + 2 * margin)
+//                     .attr("height", height + 2 * margin)
+//                     .append("g")
+//                     .attr("transform", `translate(${margin}, ${margin})`);
+
+//         let xScale = d3.scaleBand()
+//                     .domain(["Breakfast", "Lunch", "Snack", "Dinner"])
+//                     .range([0, width])
+//                     .padding(0.2);
+
+//         let yScale;
+        
+//         if (d3.max(nutrient.values) == 0) {
+//             yScale = d3.scaleLinear()
+//                     .domain([0, 100])
+//                     .range([height, 0]);
+//         } else {
+//             yScale = d3.scaleLinear()
+//                     .domain([0, d3.max(nutrient.values) + (20/100)*d3.max(nutrient.values)])
+//                     .range([height, 0]);
+//         }
+        
+
+//         // Création de l'axe X
+//         let xAxis = d3.axisBottom(xScale);
+//         svg.append("g")
+//         .attr("class", "x-axis")
+//         .attr("transform", `translate(0, ${height})`)
+//         .call(xAxis);
+
+//         // Création de l'axe Y
+//         let yAxis = d3.axisLeft(yScale);
+//         svg.append("g")
+//         .attr("class", "y-axis")
+//         .call(yAxis);
+
+//         let brushInfo = d3.select("#brush-info");
+
+        
+        
+//         let color = ["red","lightpink","lightseagreen","lightsalmon"];
+
+//         if (nutrient.label == "calorie") {
+            
+//             svg.append("text")
+//                 .attr("x", -height / 2)
+//                 .attr("y", -30)
+//                 .attr("transform", "rotate(-90)")
+//                 .attr("text-anchor", "middle")
+//                 .attr("class", "y-axis-label")
+//                 .text(`${nutrient.label} (Kcal)`);
+
+//             drawLegend(svg, width, nutrient.label, color[index])
+//         } else {
+//             svg.append("text")
+//             .attr("x", -height / 2)
+//             .attr("y", -30)
+//             .attr("transform", "rotate(-90)")
+//             .attr("text-anchor", "middle")
+//             .attr("class", "y-axis-label")
+//             .text(`${nutrient.label} (g)`); // Le titre de l'axe Y correspond au label du nutriment
+//             drawLegend(svg, width, nutrient.label, color[index])
+//         }
+
+        
+//         if (nutrient.label == "calorie"){
+//             svg.selectAll(`.bar-${index}`)
+//             .data(nutrient.values)
+//             .enter().append("rect")
+//             .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
+//             .attr("y", d => yScale(d))
+//             .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
+//             .attr("height", d => height - yScale(d))
+//             .attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
+//         } else {
+//             svg.selectAll(`.bar-${index}`)
+//             .data(nutrient.values)
+//             .enter().append("rect")
+//             .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
+//             .attr("y", d => yScale(d))
+//             .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
+//             .attr("height", d => height - yScale(d))
+//             .attr("fill", color[index]);
+//         }
+//         addBrushing(svg, width, height, xScale, nutrient.values, nutrient.label);
+
+//     });
+// }
+
+
+
+
+// Add global variables to track brush state
+let brushEnabled = {
+    calorie: false,
+    sugar: false,
+    protein: false,
+    carbs: false
+};
+
 function drawBarChart(data) {
     data.forEach((nutrient, index) => {
         d3.select(`#${nutrient.label}Chart`).selectAll("*").remove();
@@ -319,52 +771,71 @@ function drawBarChart(data) {
             width = 500, height = 200, margin = 40;
         }
         
-        let svg = d3.select(`#${nutrient.label}Chart`)
+        // Create the SVG container with extra space for reset button and brush toggle
+        const svgContainer = d3.select(`#${nutrient.label}Chart`)
                     .append("svg")
                     .attr("width", width + 2 * margin)
-                    .attr("height", height + 2 * margin)
-                    .append("g")
+                    .attr("height", height + 2 * margin + 50);
+        
+        // Create a group for the chart elements
+        const svg = svgContainer.append("g")
                     .attr("transform", `translate(${margin}, ${margin})`);
 
-        let xScale = d3.scaleBand()
-                    .domain(["Breakfast", "Lunch", "Snack", "Dinner"])
-                    .range([0, width])
-                    .padding(0.2);
+        // Define meal names for consistency
+        const mealNames = ["Breakfast", "Lunch", "Snack", "Dinner"];
 
-        let yScale;
+        // Set x-axis based on view
+        let xScale, xDomain;
+        if (currentView[nutrient.label] === 'main') {
+            xDomain = mealNames;
+        } else {
+            // For detail view, show the three food items of the selected meal
+            const mealType = selectedMeal[nutrient.label].toLowerCase();
+            xDomain = [`${mealType} 1`, `${mealType} 2`, `${mealType} 3`];
+        }
         
-        if (d3.max(nutrient.values) == 0) {
+        xScale = d3.scaleBand()
+                .domain(xDomain)
+                .range([0, width])
+                .padding(0.2);
+
+        // Determine y values based on view
+        let yScale;
+        let yValues;
+        
+        if (currentView[nutrient.label] === 'main') {
+            yValues = nutrient.values;
+        } else {
+            // Get individual food values for detail view
+            yValues = getDetailValues(nutrient.label, selectedMeal[nutrient.label]);
+        }
+        
+        // Create y-scale with proper domain
+        if (d3.max(yValues) === 0) {
             yScale = d3.scaleLinear()
                     .domain([0, 100])
                     .range([height, 0]);
         } else {
             yScale = d3.scaleLinear()
-                    .domain([0, d3.max(nutrient.values) + (20/100)*d3.max(nutrient.values)])
+                    .domain([0, d3.max(yValues) + (20/100)*d3.max(yValues)])
                     .range([height, 0]);
         }
-        
 
-        // Création de l'axe X
+        // Create the x-axis
         let xAxis = d3.axisBottom(xScale);
         svg.append("g")
-        .attr("class", "x-axis")
-        .attr("transform", `translate(0, ${height})`)
-        .call(xAxis);
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0, ${height})`)
+            .call(xAxis);
 
-        // Création de l'axe Y
+        // Create the y-axis
         let yAxis = d3.axisLeft(yScale);
         svg.append("g")
-        .attr("class", "y-axis")
-        .call(yAxis);
+            .attr("class", "y-axis")
+            .call(yAxis);
 
-        let brushInfo = d3.select("#brush-info");
-
-        
-        
-        let color = ["red","lightpink","lightseagreen","lightsalmon"];
-
+        // Add y-axis label
         if (nutrient.label == "calorie") {
-            
             svg.append("text")
                 .attr("x", -height / 2)
                 .attr("y", -30)
@@ -372,41 +843,613 @@ function drawBarChart(data) {
                 .attr("text-anchor", "middle")
                 .attr("class", "y-axis-label")
                 .text(`${nutrient.label} (Kcal)`);
-
-            drawLegend(svg, width, nutrient.label, color[index])
         } else {
             svg.append("text")
-            .attr("x", -height / 2)
-            .attr("y", -30)
-            .attr("transform", "rotate(-90)")
-            .attr("text-anchor", "middle")
-            .attr("class", "y-axis-label")
-            .text(`${nutrient.label} (g)`); // Le titre de l'axe Y correspond au label du nutriment
-            drawLegend(svg, width, nutrient.label, color[index])
+                .attr("x", -height / 2)
+                .attr("y", -30)
+                .attr("transform", "rotate(-90)")
+                .attr("text-anchor", "middle")
+                .attr("class", "y-axis-label")
+                .text(`${nutrient.label} (g)`);
         }
-
         
-        if (nutrient.label == "calorie"){
-            svg.selectAll(`.bar-${index}`)
-            .data(nutrient.values)
-            .enter().append("rect")
-            .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
-            .attr("y", d => yScale(d))
-            .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
-            .attr("height", d => height - yScale(d))
-            .attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
-        } else {
-            svg.selectAll(`.bar-${index}`)
-            .data(nutrient.values)
-            .enter().append("rect")
-            .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
-            .attr("y", d => yScale(d))
-            .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
-            .attr("height", d => height - yScale(d))
-            .attr("fill", color[index]);
-        }
-        addBrushing(svg, width, height, xScale, nutrient.values, nutrient.label);
+        // Add legend
+        let color = ["red", "lightpink", "lightseagreen", "lightsalmon"];
+        drawLegend(svg, width, nutrient.label, color[index]);
 
+        // Create brush info element if needed
+        let brushInfo = d3.select(`#${nutrient.label}-brush-info`);
+        if (brushInfo.empty()) {
+            brushInfo = svg.append("text")
+                .attr("id", `${nutrient.label}-brush-info`)
+                .attr("x", width / 2)
+                .attr("y", -10)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12px");
+        }
+
+        // Create bars with different behavior based on view
+        if (currentView[nutrient.label] === 'main') {
+            // Main view with clickable bars for drill-down
+            if (nutrient.label == "calorie") {
+                svg.selectAll(`.bar-${index}`)
+                    .data(nutrient.values)
+                    .enter().append("rect")
+                    .attr("x", (d, i) => xScale(mealNames[i]))
+                    .attr("y", d => yScale(d))
+                    .attr("width", xScale.bandwidth())
+                    .attr("height", d => height - yScale(d))
+                    .attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red")
+                    .attr("class", "clickable-bar")
+                    .style("cursor", "pointer")
+                    .on("click", function(event, d) {
+                        if (!brushEnabled[nutrient.label]) {
+                            const mealIndex = nutrient.values.indexOf(d);
+                            const mealName = mealNames[mealIndex];
+                            // Switch to detail view
+                            currentView[nutrient.label] = 'detail';
+                            selectedMeal[nutrient.label] = mealName;
+                            updateBarChart();
+                        }
+                    })
+                    .on("mouseover", function(event, d) {
+                        if (!brushEnabled[nutrient.label]) {
+                            // Change bar color on hover
+                            d3.select(this).attr("fill", d => d < 250 ? "#ff6666" : d > 700 ? "#ffcc00" : "#ff9999");
+                            
+                            // Show tooltip on hover
+                            showTooltip(svg, d, nutrient, xScale, yScale);
+                        }
+                    })
+                    .on("mouseout", function() {
+                        if (!brushEnabled[nutrient.label]) {
+                            // Reset bar color on mouseout
+                            d3.select(this).attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
+                            
+                            // Hide tooltip on mouseout
+                            svg.selectAll(".tooltip").remove();
+                        }
+                    });
+            } else {
+                svg.selectAll(`.bar-${index}`)
+                    .data(nutrient.values)
+                    .enter().append("rect")
+                    .attr("x", (d, i) => xScale(mealNames[i]))
+                    .attr("y", d => yScale(d))
+                    .attr("width", xScale.bandwidth())
+                    .attr("height", d => height - yScale(d))
+                    .attr("fill", color[index])
+                    .attr("class", "clickable-bar")
+                    .style("cursor", "pointer")
+                    .on("click", function(event, d) {
+                        if (!brushEnabled[nutrient.label]) {
+                            const mealIndex = nutrient.values.indexOf(d);
+                            const mealName = mealNames[mealIndex];
+                            // Switch to detail view
+                            currentView[nutrient.label] = 'detail';
+                            selectedMeal[nutrient.label] = mealName;
+                            updateBarChart();
+                        }
+                    })
+                    .on("mouseover", function(event, d) {
+                        if (!brushEnabled[nutrient.label]) {
+                            // Change bar color on hover
+                            d3.select(this).attr("fill", "#cccccc");
+                            
+                            // Show tooltip on hover
+                            showTooltip(svg, d, nutrient, xScale, yScale);
+                        }
+                    })
+                    .on("mouseout", function() {
+                        if (!brushEnabled[nutrient.label]) {
+                            // Reset bar color on mouseout
+                            d3.select(this).attr("fill", color[index]);
+                            
+                            // Hide tooltip on mouseout
+                            svg.selectAll(".tooltip").remove();
+                        }
+                    });
+            }
+            
+            // Add brush toggle button
+            const brushToggleGroup = svgContainer.append("g")
+                .attr("class", "brush-toggle-group")
+                .style("cursor", "pointer")
+                .on("click", function() {
+                    // Toggle brush state
+                    brushEnabled[nutrient.label] = !brushEnabled[nutrient.label];
+                    
+                    // Update button appearance
+                    d3.select(this).select("rect")
+                        .attr("fill", brushEnabled[nutrient.label] ? "#2196F3" : "#9E9E9E");
+                    
+                    d3.select(this).select("text")
+                        .text(brushEnabled[nutrient.label] ? "Brush On" : "Brush Off");
+                    
+                    // Add or remove brush
+                    if (brushEnabled[nutrient.label]) {
+                        addBrush(svg, width, height, function(x0, x1) {
+                            // Update function for brushing
+                            svg.selectAll(`.bar-${index}`).attr("fill", function(d, i) {
+                                const xPos = xScale(mealNames[i]) + xScale.bandwidth() / 2;
+                                const isSelected = (x0 <= xPos && xPos <= x1);
+                                
+                                if (nutrient.label === "calorie") {
+                                    return isSelected ? "orange" : 
+                                        (d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
+                                } else {
+                                    return isSelected ? "orange" : color[index];
+                                }
+                            });
+                        }, function(x0, x1) {
+                            // Display function for brushing
+                            const selectedMeals = mealNames.filter((d, i) => {
+                                const xPos = xScale(d) + xScale.bandwidth() / 2;
+                                return x0 <= xPos && xPos <= x1;
+                            });
+                            
+                            const selectedData = selectedMeals.map(meal => {
+                                const i = mealNames.indexOf(meal);
+                                return { 
+                                    meal: meal, 
+                                    value: nutrient.values[i] 
+                                };
+                            });
+                            
+                            // Calculate total of selected values
+                            const totalValue = selectedData.reduce((sum, item) => sum + item.value, 0);
+                            
+                            let infoText = "";
+                            if (selectedData.length > 0) {
+                                infoText = `Selected ${nutrient.label}: ${selectedData.map(d => 
+                                    `${d.meal}: ${d.value.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`).join(", ")}`;
+                                
+                                // Add total if more than one item is selected
+                                if (selectedData.length > 1) {
+                                    infoText += `, Total: ${totalValue.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`;
+                                }
+                            }
+                            
+                            brushInfo.text(infoText);
+                        }
+                        );
+                    } else {
+                        // Remove brush
+                        svg.select(".brush").remove();
+                        brushInfo.text("");
+                    }
+                    
+                    updateBarChart();
+                });
+                
+            brushToggleGroup.append("rect")
+                .attr("class", "brush-toggle-button")
+                .attr("x", 10) // Position in top-left
+                .attr("y", 10)
+                .attr("width", 80)
+                .attr("height", 20)
+                .attr("rx", 5)
+                .attr("fill", brushEnabled[nutrient.label] ? "#2196F3" : "#9E9E9E");
+                
+            brushToggleGroup.append("text")
+                .attr("class", "brush-toggle-text")
+                .attr("x", 50) // Center text in button
+                .attr("y", 23)
+                .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .text(brushEnabled[nutrient.label] ? "Brush On" : "Brush Off");
+            
+            // Add brush only if enabled
+            if (brushEnabled[nutrient.label]) {
+                addBrush(svg, width, height, function(x0, x1) {
+                    // Update function for brushing
+                    svg.selectAll(`.bar-${index}`).attr("fill", function(d, i) {
+                        const xPos = xScale(mealNames[i]) + xScale.bandwidth() / 2;
+                        const isSelected = (x0 <= xPos && xPos <= x1);
+                        
+                        if (nutrient.label === "calorie") {
+                            return isSelected ? "orange" : 
+                                (d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
+                        } else {
+                            return isSelected ? "orange" : color[index];
+                        }
+                    });
+                }, function(x0, x1) {
+                    // Display function for brushing
+                    const selectedMeals = mealNames.filter((d, i) => {
+                        const xPos = xScale(d) + xScale.bandwidth() / 2;
+                        return x0 <= xPos && xPos <= x1;
+                    });
+                    
+                    const selectedData = selectedMeals.map(meal => {
+                        const i = mealNames.indexOf(meal);
+                        return { 
+                            meal: meal, 
+                            value: nutrient.values[i] 
+                        };
+                    });
+                    
+                    // Calculate total of selected values
+                    const totalValue = selectedData.reduce((sum, item) => sum + item.value, 0);
+                    
+                    let infoText = "";
+                    if (selectedData.length > 0) {
+                        infoText = `Selected ${nutrient.label}: ${selectedData.map(d => 
+                            `${d.meal}: ${d.value.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`).join(", ")}`;
+                        
+                        // Add total if more than one item is selected
+                        if (selectedData.length > 1) {
+                            infoText += `, Total: ${totalValue.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`;
+                        }
+                    }
+                    
+                    brushInfo.text(infoText);
+                });
+            }
+            
+        } else {
+            // Detail view with individual food items bars
+            const detailValues = getDetailValues(nutrient.label, selectedMeal[nutrient.label]);
+            const detailLabels = getDetailLabels(selectedMeal[nutrient.label]);
+            
+            svg.selectAll(`.detail-bar-${index}`)
+                .data(detailValues)
+                .enter().append("rect")
+                .attr("x", (d, i) => xScale(xDomain[i]))
+                .attr("y", d => yScale(d))
+                .attr("width", xScale.bandwidth())
+                .attr("height", d => height - yScale(d))
+                .attr("fill", nutrient.label === "calorie" ? 
+                      (d => d < 100 ? "dark-red" : d > 300 ? "orange" : "red") : 
+                      color[index])
+                .on("mouseover", function(event, d) {
+                    if (!brushEnabled[nutrient.label]) {
+                        // Change bar color on hover
+                        d3.select(this).attr("fill", "#cccccc");
+                        
+                        // Show tooltip for detail view
+                        const i = detailValues.indexOf(d);
+                        const foodItem = detailLabels[i];
+                        showDetailTooltip(svg, d, foodItem, nutrient, xScale, yScale, xDomain[i]);
+                    }
+                })
+                .on("mouseout", function() {
+                    if (!brushEnabled[nutrient.label]) {
+                        // Reset bar color on mouseout
+                        d3.select(this).attr("fill", nutrient.label === "calorie" ? 
+                                    (d => d < 100 ? "dark-red" : d > 300 ? "orange" : "red") : 
+                                    color[index]);
+                        
+                        // Hide tooltip on mouseout
+                        svg.selectAll(".tooltip").remove();
+                    }
+                });
+                
+            // Add Reset button below the chart in detail view
+            const resetGroup = svgContainer.append("g")
+                .attr("class", "reset-button-group")
+                .style("cursor", "pointer")
+                .on("click", function() {
+                    // Reset to main view
+                    currentView[nutrient.label] = 'main';
+                    selectedMeal[nutrient.label] = '';
+                    updateBarChart();
+                });
+                
+            resetGroup.append("rect")
+                .attr("class", "reset-button")
+                .attr("x", (width + 2 * margin) / 2 - 50) // Center horizontally in the SVG
+                .attr("y", height + margin + 25) // Position below the chart
+                .attr("width", 100)
+                .attr("height", 30)
+                .attr("rx", 5)
+                .attr("fill", "#4CAF50");
+                
+            resetGroup.append("text")
+                .attr("class", "reset-text")
+                .attr("x", (width + 2 * margin) / 2) // Center horizontally in the SVG
+                .attr("y", height + margin + 45) // Position text vertically centered in the button
+                .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .text("Reset");
+                
+            // Add brush toggle button for detail view too
+            const brushToggleGroup = svgContainer.append("g")
+                .attr("class", "brush-toggle-group")
+                .style("cursor", "pointer")
+                .on("click", function() {
+                    // Toggle brush state
+                    brushEnabled[nutrient.label] = !brushEnabled[nutrient.label];
+                    
+                    // Update button appearance
+                    d3.select(this).select("rect")
+                        .attr("fill", brushEnabled[nutrient.label] ? "#2196F3" : "#9E9E9E");
+                    
+                    d3.select(this).select("text")
+                        .text(brushEnabled[nutrient.label] ? "Brush On" : "Brush Off");
+                    
+                    // Add or remove brush
+                    if (brushEnabled[nutrient.label]) {
+                        addBrush(svg, width, height, function(x0, x1) {
+                            // Update function for brushing in detail view
+                            svg.selectAll(`.detail-bar-${index}`).attr("fill", function(d, i) {
+                                const xPos = xScale(xDomain[i]) + xScale.bandwidth() / 2;
+                                const isSelected = (x0 <= xPos && xPos <= x1);
+                                
+                                if (nutrient.label === "calorie") {
+                                    return isSelected ? "orange" : 
+                                        (d < 100 ? "dark-red" : d > 300 ? "orange" : "red");
+                                } else {
+                                    return isSelected ? "orange" : color[index];
+                                }
+                            });
+                        }, function(x0, x1) {
+                            // Display function for brushing in detail view
+                            const selectedItems = xDomain.filter((d, i) => {
+                                const xPos = xScale(d) + xScale.bandwidth() / 2;
+                                return x0 <= xPos && xPos <= x1;
+                            });
+                            
+                            const selectedData = selectedItems.map(item => {
+                                const i = xDomain.indexOf(item);
+                                return { 
+                                    item: item, 
+                                    value: detailValues[i],
+                                    food: detailLabels[i]
+                                };
+                            });
+                            
+                            // Calculate total of selected values
+                            const totalValue = selectedData.reduce((sum, item) => sum + item.value, 0);
+                            
+                            let infoText = "";
+                            if (selectedData.length > 0) {
+                                infoText = `Selected ${nutrient.label}: ${selectedData.map(d => 
+                                    `${d.food}: ${d.value.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`).join(", ")}`;
+                                
+                                // Add total if more than one item is selected
+                                if (selectedData.length > 1) {
+                                    infoText += `, Total: ${totalValue.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`;
+                                }
+                            }
+                            
+                            brushInfo.text(infoText);
+                        });
+                    } else {
+                        // Remove brush
+                        svg.select(".brush").remove();
+                        brushInfo.text("");
+                    }
+                });
+                
+            brushToggleGroup.append("rect")
+                .attr("class", "brush-toggle-button")
+                .attr("x", 10) // Position in top-left
+                .attr("y", 10)
+                .attr("width", 80)
+                .attr("height", 30)
+                .attr("rx", 5)
+                .attr("fill", brushEnabled[nutrient.label] ? "#2196F3" : "#9E9E9E");
+                
+            brushToggleGroup.append("text")
+                .attr("class", "brush-toggle-text")
+                .attr("x", 50) // Center text in button
+                .attr("y", 30)
+                .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .text(brushEnabled[nutrient.label] ? "Brush On" : "Brush Off");
+            
+            // Add brush only if enabled
+            if (brushEnabled[nutrient.label]) {
+                addBrush(svg, width, height, function(x0, x1) {
+                    // Update function for brushing in detail view
+                    svg.selectAll(`.detail-bar-${index}`).attr("fill", function(d, i) {
+                        const xPos = xScale(xDomain[i]) + xScale.bandwidth() / 2;
+                        const isSelected = (x0 <= xPos && xPos <= x1);
+                        
+                        if (nutrient.label === "calorie") {
+                            return isSelected ? "orange" : 
+                                (d < 100 ? "dark-red" : d > 300 ? "orange" : "red");
+                        } else {
+                            return isSelected ? "orange" : color[index];
+                        }
+                    });
+                }, function(x0, x1) {
+                    // Display function for brushing in detail view
+                    const selectedItems = xDomain.filter((d, i) => {
+                        const xPos = xScale(d) + xScale.bandwidth() / 2;
+                        return x0 <= xPos && xPos <= x1;
+                    });
+                    
+                    const selectedData = selectedItems.map(item => {
+                        const i = xDomain.indexOf(item);
+                        return { 
+                            item: item, 
+                            value: detailValues[i],
+                            food: detailLabels[i]
+                        };
+                    });
+                    
+                    // Calculate total of selected values
+                    const totalValue = selectedData.reduce((sum, item) => sum + item.value, 0);
+                    
+                    let infoText = "";
+                    if (selectedData.length > 0) {
+                        infoText = `Selected ${nutrient.label}: ${selectedData.map(d => 
+                            `${d.food}: ${d.value.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`).join(", ")}`;
+                        
+                        // Add total if more than one item is selected
+                        if (selectedData.length > 1) {
+                            infoText += `, Total: ${totalValue.toFixed(1)} ${nutrient.label === "calorie" ? "kcal" : "g"}`;
+                        }
+                    }
+                    
+                    brushInfo.text(infoText);
+                });
+            }
+        }
+    });
+}
+
+// Initialize brush state on page load
+function initializeBrushState() {
+    brushEnabled = {
+        calorie: false,
+        sugar: false,
+        protein: false,
+        carbs: false
+    };
+}
+
+// Call this function when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+    // Your existing initialization code...
+    
+    // Initialize chart views and brush state
+    initializeChartViews();
+    initializeBrushState();
+});
+
+// Add some CSS for the brush toggle button
+function addBrushToggleStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+        .brush-toggle-button {
+            transition: fill 0.3s;
+        }
+        .brush-toggle-button:hover {
+            opacity: 0.9;
+        }
+        .brush-toggle-text {
+            pointer-events: none;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    `;
+    document.head.appendChild(styleElement);
+}
+
+// Add the styles when the page loads
+document.addEventListener("DOMContentLoaded", addBrushToggleStyles);
+
+// Helper function to show tooltips in main view
+function showTooltip(svg, value, nutrient, xScale, yScale) {
+    const mealIndex = nutrient.values.indexOf(value);
+    const mealName = ["Breakfast", "Lunch", "Snack", "Dinner"][mealIndex];
+    
+    let tooltip = svg.append("g")
+        .attr("class", "tooltip")
+        .attr("transform", `translate(${xScale(mealName) + xScale.bandwidth() / 2}, ${yScale(value) - 20})`);
+
+    // Calculate tooltip width based on text length
+    const textWidth = Math.max(
+        mealName.length * 8,
+        `${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`.length * 7
+    ) + 30;
+
+    // Tooltip box
+    tooltip.append("rect")
+        .attr("width", textWidth)
+        .attr("height", 40)
+        .attr("fill", "#555")
+        .attr("rx", 5)
+        .attr("x", -textWidth / 2);
+
+    // Tooltip text (meal label)
+    tooltip.append("text")
+        .attr("x", 0)
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .attr("font-weight", "bold")
+        .text(mealName);
+
+    // Tooltip text (value)
+    tooltip.append("text")
+        .attr("x", 0)
+        .attr("y", 35)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text(`${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`);
+}
+
+// Helper function to show tooltips in detail view
+function showDetailTooltip(svg, value, foodItem, nutrient, xScale, yScale, xLabel) {
+    let tooltip = svg.append("g")
+        .attr("class", "tooltip")
+        .attr("transform", `translate(${xScale(xLabel) + xScale.bandwidth() / 2}, ${yScale(value) - 20})`);
+
+    // Calculate tooltip width based on text length
+    const textWidth = Math.max(
+        foodItem.length * 7,
+        `${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`.length * 7
+    ) + 30;
+
+    // Tooltip box
+    tooltip.append("rect")
+        .attr("width", textWidth)
+        .attr("height", 60)
+        .attr("fill", "#555")
+        .attr("rx", 5)
+        .attr("x", -textWidth / 2);
+
+    // Tooltip text (item number)
+    tooltip.append("text")
+        .attr("x", 0)
+        .attr("y", 15)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .attr("font-weight", "bold")
+        .text(xLabel);
+
+    // Tooltip text (food name)
+    tooltip.append("text")
+        .attr("x", 0)
+        .attr("y", 35)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text(foodItem);
+
+    // Tooltip text (value)
+    tooltip.append("text")
+        .attr("x", 0)
+        .attr("y", 50)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text(`${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`);
+}
+
+// Function to get the individual values for each food item in a meal
+function getDetailValues(nutrientLabel, mealType) {
+    const mealLower = mealType.toLowerCase();
+    const selectIds = [
+        `${mealLower}-select-1`,
+        `${mealLower}-select-2`,
+        `${mealLower}-select-3`
+    ];
+    
+    return selectIds.map(id => {
+        const select = document.getElementById(id);
+        if (!select || !select.selectedOptions[0]) return 0;
+        
+        const datasetProp = nutrientLabel === "calorie" ? "calories" : nutrientLabel;
+        return parseFloat(select.selectedOptions[0].dataset[datasetProp] || 0);
+    });
+}
+
+// Function to get the food names for detail view
+function getDetailLabels(mealType) {
+    const mealLower = mealType.toLowerCase();
+    const selectIds = [
+        `${mealLower}-select-1`,
+        `${mealLower}-select-2`,
+        `${mealLower}-select-3`
+    ];
+    
+    return selectIds.map(id => {
+        const select = document.getElementById(id);
+        if (!select || !select.selectedOptions[0]) return "None";
+        return select.selectedOptions[0].textContent || "None";
     });
 }
 
@@ -594,6 +1637,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
     });
+    initializeChartViews();
 });
 
 const chatBody = document.querySelector(".chat-body");
@@ -1660,3 +2704,64 @@ Lemonade,18:30,99.0,26.0,25.0,0.2
         }, index * 1000); // Délai de 1 seconde entre chaque message
     });
 });
+
+function saveMeals() {
+    const meals = {
+        breakfast1: document.getElementById("breakfast-select-1").value,
+        breakfast2: document.getElementById("breakfast-select-2").value,
+        breakfast3: document.getElementById("breakfast-select-3").value,
+        lunch1: document.getElementById("lunch-select-1").value,
+        lunch2: document.getElementById("lunch-select-2").value,
+        lunch3: document.getElementById("lunch-select-3").value,
+        snack1: document.getElementById("snack-select-1").value,
+        snack2: document.getElementById("snack-select-2").value,
+        snack3: document.getElementById("snack-select-3").value,
+        dinner1: document.getElementById("dinner-select-1").value,
+        dinner2: document.getElementById("dinner-select-2").value,
+        dinner3: document.getElementById("dinner-select-3").value,
+    };
+    localStorage.setItem("savedMeals", JSON.stringify(meals));
+    
+}
+
+// Function to clear all selected meals
+function clearMeals() {
+    document.getElementById("breakfast-select-1").value = "";
+    document.getElementById("breakfast-select-2").value = "";
+    document.getElementById("breakfast-select-3").value = "";
+    document.getElementById("lunch-select-1").value = "";
+    document.getElementById("lunch-select-2").value = "";
+    document.getElementById("lunch-select-3").value = "";
+    document.getElementById("snack-select-1").value = "";
+    document.getElementById("snack-select-2").value = "";
+    document.getElementById("snack-select-3").value = "";
+    document.getElementById("dinner-select-1").value = "";
+    document.getElementById("dinner-select-2").value = "";
+    document.getElementById("dinner-select-3").value = "";
+    
+}
+
+// Function to load saved meals from localStorage
+function loadMeals() {
+    const savedMeals = JSON.parse(localStorage.getItem("savedMeals"));
+    if (savedMeals) {
+        document.getElementById("breakfast-select-1").value = savedMeals.breakfast1;
+        document.getElementById("breakfast-select-2").value = savedMeals.breakfast2;
+        document.getElementById("breakfast-select-3").value = savedMeals.breakfast3;
+        document.getElementById("lunch-select-1").value = savedMeals.lunch1;
+        document.getElementById("lunch-select-2").value = savedMeals.lunch2;
+        document.getElementById("lunch-select-3").value = savedMeals.lunch3;
+        document.getElementById("snack-select-1").value = savedMeals.snack1;
+        document.getElementById("snack-select-2").value = savedMeals.snack2;
+        document.getElementById("snack-select-3").value = savedMeals.snack3;
+        document.getElementById("dinner-select-1").value = savedMeals.dinner1;
+        document.getElementById("dinner-select-2").value = savedMeals.dinner2;
+        document.getElementById("dinner-select-3").value = savedMeals.dinner3;
+        
+    }
+}
+
+// Add event listeners for the buttons
+document.getElementById("save-meals").addEventListener("click", saveMeals);
+document.getElementById("clear-meals").addEventListener("click", clearMeals);
+document.getElementById("load-meals").addEventListener("click", loadMeals);

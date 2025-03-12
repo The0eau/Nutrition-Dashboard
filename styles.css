@@ -765,3 +765,100 @@ body.show-emoji-picker em-emoji-picker {
 
 }
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the element */
+    left: 50%;
+    margin-left: -60px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Style for Save, Clear, and Load Buttons */
+#save-meals, #clear-meals, #load-meals {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 14px;
+}
+
+#save-meals:hover, #clear-meals:hover, #load-meals:hover {
+    background-color: #45a049;
+}
+
+/* Styles for clickable bars */
+.clickable-bar {
+    transition: opacity 0.3s;
+}
+
+.clickable-bar:hover {
+    opacity: 0.8;
+}
+
+/* Reset button styling */
+.reset-button {
+    transition: fill 0.3s;
+}
+
+.reset-button:hover {
+    fill: #45a049;
+}
+
+.reset-text {
+    pointer-events: none; /* Make text part of the button click area */
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Chart title styling */
+.chart-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Enhanced tooltip styles */
+.tooltip rect {
+    opacity: 0.9;
+    stroke: #333;
+    stroke-width: 1px;
+}
+
+.tooltip text {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+}

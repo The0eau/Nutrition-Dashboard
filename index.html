@@ -35,7 +35,7 @@
 
     <div id="initial-menu" class="hidden">
         <h2>Enter Your Information</h2>
-        <label for="gender">Gender:</label>
+        <label for="gender">Sex:</label>
         <select id="gender">
             <option value="female">Female</option>
             <option value="male">Male</option>
@@ -62,65 +62,107 @@
             <div class="box" id="total-calories-display"><p id="total">Total required calories: 0 kcal</p>
             <p id="calorie-imp">Choose your meal</p>
             </div>
-            <div class="box" id="but"><button onclick="history.back()">Caracteristics</button><button onclick="location.reload()">Back</button></div>
+            <div class="box" id="but"><button onclick="history.back()">Characteristics</button><button onclick="location.reload()">Back</button></div>
             
         </div>
         <div class="row row-2">
-            <div class="box" id="box1">List of meals taken during the day 
+            <div class="box" id="box1">List of meals eaten during the day 
                 <div class="meal-menu">
                     <div class="meal-row">
                         <label for="breakfast-select-1">Breakfast 1:</label>
-                        <select id="breakfast-select-1"></select>
+                        <span class="tooltip">
+                            <select id="breakfast-select-1"></select>
+                            <span class="tooltiptext">Select your first breakfast item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="breakfast-select-2">Breakfast 2:</label>
-                        <select id="breakfast-select-2"></select>
+                        <span class="tooltip">
+                            <select id="breakfast-select-2"></select>
+                            <span class="tooltiptext">Select your second breakfast item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="breakfast-select-3">Breakfast 3:</label>
-                        <select id="breakfast-select-3"></select>
+                        <span class="tooltip">
+                            <select id="breakfast-select-3"></select>
+                            <span class="tooltiptext">Select your third breakfast item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="lunch-select-1">Lunch 1:</label>
-                        <select id="lunch-select-1"></select>
+                        <span class="tooltip">
+                            <select id="lunch-select-1"></select>
+                            <span class="tooltiptext">Select your first lunch item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="lunch-select-2">Lunch 2:</label>
-                        <select id="lunch-select-2"></select>
+                        <span class="tooltip">
+                            <select id="lunch-select-2"></select>
+                            <span class="tooltiptext">Select your second lunch item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="lunch-select-3">Lunch 3:</label>
-                        <select id="lunch-select-3"></select>
+                        <span class="tooltip">
+                            <select id="lunch-select-3"></select>
+                            <span class="tooltiptext">Select your third lunch item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="snack-select-1">Snack 1:</label>
-                        <select id="snack-select-1"></select>
+                        <span class="tooltip">
+                            <select id="snack-select-1"></select>
+                            <span class="tooltiptext">Select your first snack item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="snack-select-2">Snack 2:</label>
-                        <select id="snack-select-2"></select>
+                        <span class="tooltip">
+                            <select id="snack-select-2"></select>
+                            <span class="tooltiptext">Select your second snack item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="snack-select-3">Snack 3:</label>
-                        <select id="snack-select-3"></select>
+                        <span class="tooltip">
+                            <select id="snack-select-3"></select>
+                            <span class="tooltiptext">Select your third snack item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="dinner-select-1">Dinner 1:</label>
-                        <select id="dinner-select-1"></select>
+                        <span class="tooltip">
+                            <select id="dinner-select-1"></select>
+                            <span class="tooltiptext">Select your first dinner item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="dinner-select-2">Dinner 2:</label>
-                        <select id="dinner-select-2"></select>
+                        <span class="tooltip">
+                            <select id="dinner-select-2"></select>
+                            <span class="tooltiptext">Select your second dinner item</span>
+                        </span>
                     </div>
                     <div class="meal-row">
                         <label for="dinner-select-3">Dinner 3:</label>
-                        <select id="dinner-select-3"></select>
+                        <span class="tooltip">
+                            <select id="dinner-select-3"></select>
+                            <span class="tooltiptext">Select your third dinner item</span>
+                        </span>
                     </div>
+                    
+                </div>
+                <div class="meal-row">
+                    <button id="save-meals">Save</button>
+                    <button id="clear-meals">Clear</button>
+                    <button id="load-meals">Load</button>
                 </div>
             </div>
-            <div class="box" id="box2">Bar chart of calorie intake: 
+            <div class="box" id="box2">Line graph of calorie intake: 
                 <div id="calorieGraph"></div>
-                <div id="calorieChart"></div>
+                <div id="calorieChart">Bar chart of calorie intake: </div>
             </div>
         </div>
         <h3>Brushed Selection Summary</h3>
