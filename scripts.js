@@ -30,21 +30,41 @@ let indice = false;
 
 let totalCaloriesBegin;
 
-function addBrush(svg, width, height, updateFunction, displayFunction) {
+function addBrushing(svg, width, height, xScale, data, nutrientLabel) {
     let brush = d3.brushX()
         .extent([[0, 0], [width, height]])
-        .on("brush end", function ({ selection }) {
-            if (!selection) return;
+        .on("brush end", function (event) {
+            let selection = event.selection;
+            let brushInfo = d3.select("#brush-info");
+
+            if (!selection) {
+                brushInfo.text("Selected Data: None");
+                return;
+            }
+
             let [x0, x1] = selection;
-            updateFunction(x0, x1);
-            displayFunction(x0, x1);
+            let selectedIndices = xScale.domain().map((d, i) => {
+                let xPos = xScale(d) + xScale.bandwidth() / 2;
+                return x0 <= xPos && xPos <= x1 ? i : -1;
+            }).filter(i => i !== -1);
+
+            if (selectedIndices.length === 0) {
+                brushInfo.text("Selected Data: None");
+                return;
+            }
+
+            // Get sum of selected data
+            let selectedData = selectedIndices.map(i => data[i]);
+            let sumValues = selectedData.reduce((sum, val) => sum + val, 0);
+
+            // Update brush info
+            brushInfo.text(`Selected ${nutrientLabel} Total: ${sumValues.toFixed(2)} g`);
         });
-    
+
     svg.append("g")
         .attr("class", "brush")
         .call(brush);
 }
-
 
 function loadCSVData(file, selectId) {
     fetch(file)
@@ -242,6 +262,8 @@ function drawLineChart(data) {
        .attr("cy", d => yScale(d))
        .attr("r", 5)
        .attr("fill", "red");
+
+    addBrushing(svg, width, height, xScale, data, "Calories")
 }
 
 function drawLegend(svg, width, nutrientLabel, colors) {
@@ -337,21 +359,8 @@ function drawBarChart(data) {
 
         let brushInfo = d3.select("#brush-info");
 
-        addBrush(svg, width, height, (x0, x1) => {
-            let selectedIndices = xScale.domain().filter(d => {
-                let xPos = xScale(d) + xScale.bandwidth() / 2;
-                return x0 <= xPos && xPos <= x1;
-            });
-            bars.attr("fill", d => selectedIndices.includes(["Breakfast", "Lunch", "Snack", "Dinner"][data.indexOf(d)]) ? "orange" : "steelblue");
-        }, (x0, x1) => {
-            let selectedData = data.map((nutrient, i) => ({ label: nutrient.label, value: nutrient.values[i] }))
-                                   .filter((_, i) => {
-                                       let xPos = xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]) + xScale.bandwidth() / 2;
-                                       return x0 <= xPos && xPos <= x1;
-                                   });
-            brushInfo.text(`Selected: ${selectedData.map(d => `${d.label}: ${d.value}`).join(", ")}`);
-        });
-
+        
+        
         let color = ["red","lightpink","lightseagreen","lightsalmon"];
 
         if (nutrient.label == "calorie") {
@@ -396,6 +405,8 @@ function drawBarChart(data) {
             .attr("height", d => height - yScale(d))
             .attr("fill", color[index]);
         }
+        addBrushing(svg, width, height, xScale, nutrient.values, nutrient.label);
+
     });
 }
 
