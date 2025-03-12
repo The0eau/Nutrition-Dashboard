@@ -17,7 +17,7 @@ body {
 }
 
 /* Center the dashboard and content */
-#dashboard, #initial-menu, #intro-and, #intro-but, #hook {
+#dashboard, #initial-menu, #intro-and, #intro-but, #hook, #intro {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,7 +50,7 @@ input, select, button {
     margin: 10px auto;
 }
 
-#hook , #intro-and, #intro-but {
+#hook , #intro-and, #intro-but, #intro {
         margin: 0;
         padding: 0;
         display: flex;
@@ -59,7 +59,7 @@ input, select, button {
         height: 100vh;
 }
 
-#hook-container , #intro-and-container, #intro-but-container {
+#hook-container , #intro-and-container, #intro-but-container, #intro-container {
     width: 50%;
     text-align: center;
     padding: 40px;
@@ -69,27 +69,33 @@ input, select, button {
     margin: 20px;
 }
 
-#hook h1, #intro-and h1, #intro-but h1 {
+#hook h1, #intro-and h1, #intro-but h1, #intro h1 {
     font-size: 2em;
     color: #2c3e50;
     margin-bottom: 10px;
 }
 
-#hook p {
+#hook p, #intro p {
     font-size: 1.2em;
     color: #7f8c8d;
 }
 
 
-#hook.hidden, #intro-and.hidden, #intro-but.hidden   {
+#hook.hidden, #intro-and.hidden, #intro-but.hidden, #intro.hidden   {
     display: none;
 }
 
-#hook.visible, #intro-but.visible  {
+#hook.visible, #intro-but.visible, #intro-and.visible   {
     display: flex;
 }
 
-#hook-container:hover , #intro-and-container:hover, #intro-but-container:hover {
+#hook-container:hover , #intro-and-container:hover, #intro-but-container:hover, #intro-container:hover {
+    transform: scale(1.05); /* Slight scale effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#and-btn:hover, #but-btn:hover, #start-btn:hover, #intro-btn:hover{
     transform: scale(1.05); /* Slight scale effect on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -255,17 +261,17 @@ button:hover {
     width: 350px; 
     opacity: 0;
     transform: translateY(-50px); 
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 #dashboard {
+    display: grid; 
     opacity: 0;
     transform: scale(0.5) translateY(100px); 
-    transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: opacity 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #dashboard.active {
-    display: grid; 
     opacity: 1;
     transform: translateY(0); 
 }
@@ -276,13 +282,13 @@ button:hover {
 
 #initial-menu.visible {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1); /* Added slight scale for effect */
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform: translate(-50%, -50%) scale(0.9); /* Added slight scale for effect */
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 /* Optional: Adding hover or focus effects for interactive transitions */
 #initial-menu:hover {
-    transform: translate(-50%, -50%) scale(1.05); /* Slight scale effect on hover */
+    transform: translate(-50%, -50%) scale(1.0); /* Slight scale effect on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
@@ -699,9 +705,16 @@ body.show-emoji-picker em-emoji-picker {
     padding-right: 6px;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 1250px) {
 
     body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #dashboard {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -710,25 +723,28 @@ body.show-emoji-picker em-emoji-picker {
     .row {
         flex-direction: column;
         align-items: center;
-        width: 100vh;
+        width: 100%;
+    }
+
+    .row-2 #box1, .row-3 {
+        width: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 
     .box {
-        width: 70%; 
+        width: 100%; 
     }
 
-    .row-2 #box1 {
-        width: 70%; 
-    }
     
     .row-2 #box2 {
-        width : 70%;
+        width : 80%;
     }
 
-    #initial-menu {
-        width: 90%; 
-        max-width: none; 
-    }
+    
+
 
     #chatbot-toggler {
         bottom: 20px;
@@ -764,6 +780,31 @@ body.show-emoji-picker em-emoji-picker {
     }
 
 }
+
+
+@media (max-width: 900px) {
+
+    .row-2 #box2 {
+        width : 100%;
+    }
+
+
+
+}
+
+@media (max-width: 600px) {
+
+    .row-2 #box1, .row-3 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+
+}
+
 
 .tooltip {
     position: relative;

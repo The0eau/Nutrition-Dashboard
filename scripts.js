@@ -126,6 +126,21 @@ function loadCSVData(file, selectId) {
                 option.dataset.carbs = item.carbs;
                 select.appendChild(option);
             });
+
+            setTimeout(() => {
+                if (select.tomselect) {
+                    select.tomselect.destroy(); // Supprime l'instance existante
+                }
+                new TomSelect(`#${selectId}`, {
+                    create: false,
+                    maxOptions: 10000,
+                    sortField: {
+                        field: "text",
+                        direction: "asc"
+                    },
+                    placeholder: "Select a food item"
+                });
+            }, 100);
         })
         .catch(error => console.error('Erreur lors du chargement du CSV :', error));
 }
@@ -536,7 +551,7 @@ function drawLineChart(data, sugarData, proteinData, carbsData) {
     brushToggleGroup.append("rect")
         .attr("class", "brush-toggle-button")
         .attr("x", 10) // Position in top-left
-        .attr("y", 10)
+        .attr("y", 260)
         .attr("width", 80)
         .attr("height", 20)
         .attr("rx", 5)
@@ -545,7 +560,7 @@ function drawLineChart(data, sugarData, proteinData, carbsData) {
     brushToggleGroup.append("text")
         .attr("class", "brush-toggle-text")
         .attr("x", 50) // Center text in button
-        .attr("y", 23)
+        .attr("y", 273)
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .text(lineChartBrushEnabled ? "Brush On" : "Brush Off");
@@ -618,14 +633,14 @@ function drawLegend(svg, width, nutrientLabel, colors) {
     ];
     legend = svg.append("g")
             .attr("class", "legend")
-            .attr("transform", `translate(${width - 90}, -40)`); 
+            .attr("transform", `translate(${width - 90}, 0)`); 
     } else {
     legendData = [
         { label: nutrientLabel, color: colors } // Couleur générique
     ];
     legend = svg.append("g")
     .attr("class", "legend")
-    .attr("transform", `translate(${width - 150}, -10)`);
+    .attr("transform", `translate(${width - 150}, 250)`);
     }
 
     
@@ -1025,7 +1040,7 @@ function drawBarChart(data) {
             brushToggleGroup.append("rect")
                 .attr("class", "brush-toggle-button")
                 .attr("x", 10) // Position in top-left
-                .attr("y", 10)
+                .attr("y", 280)
                 .attr("width", 80)
                 .attr("height", 20)
                 .attr("rx", 5)
@@ -1034,7 +1049,7 @@ function drawBarChart(data) {
             brushToggleGroup.append("text")
                 .attr("class", "brush-toggle-text")
                 .attr("x", 50) // Center text in button
-                .attr("y", 23)
+                .attr("y", 293)
                 .attr("text-anchor", "middle")
                 .attr("fill", "white")
                 .text(brushEnabled[nutrient.label] ? "Brush On" : "Brush Off");
@@ -1225,16 +1240,16 @@ function drawBarChart(data) {
             brushToggleGroup.append("rect")
                 .attr("class", "brush-toggle-button")
                 .attr("x", 10) // Position in top-left
-                .attr("y", 10)
+                .attr("y", 280)
                 .attr("width", 80)
-                .attr("height", 30)
+                .attr("height", 20)
                 .attr("rx", 5)
                 .attr("fill", brushEnabled[nutrient.label] ? "#2196F3" : "#9E9E9E");
                 
             brushToggleGroup.append("text")
                 .attr("class", "brush-toggle-text")
                 .attr("x", 50) // Center text in button
-                .attr("y", 30)
+                .attr("y", 293)
                 .attr("text-anchor", "middle")
                 .attr("fill", "white")
                 .text(brushEnabled[nutrient.label] ? "Brush On" : "Brush Off");
@@ -1456,11 +1471,14 @@ function getDetailLabels(mealType) {
 
 function goToInitialMenu() {
     document.querySelector("#dashboard").classList.remove("active");
-    document.querySelector("#dashboard").classList.add("hidden");
     setTimeout(function() {
-        document.querySelector("#initial-menu").classList.add("visible");
         document.querySelector("#initial-menu").classList.remove("hidden");
-    }, 500);
+        setTimeout(function() {
+            document.querySelector("#dashboard").classList.add("hidden");
+            document.querySelector("#initial-menu").classList.add("visible");
+        
+        }, 200);
+    }, 200);
     document.getElementById("chatbot-toggler").style.display = "none";
 }
 
@@ -1544,7 +1562,13 @@ function buttonReco(messageInput){
 
 document.addEventListener("DOMContentLoaded", function() {
     // Show the initial menu when "Commencer" button is clicked
+    document.getElementById('intro-btn').addEventListener('click', function() {
+        document.getElementById('intro').classList.add('hidden');
+        document.getElementById('intro-and').classList.remove('hidden');
+        document.getElementById('intro-and').classList.add('visible');
+    });
     document.getElementById('and-btn').addEventListener('click', function() {
+        document.getElementById('intro-and').classList.remove('visible');
         document.getElementById('intro-and').classList.add('hidden');
         document.getElementById('intro-but').classList.remove('hidden');
         document.getElementById('intro-but').classList.add('visible');
@@ -1597,10 +1621,10 @@ document.addEventListener("DOMContentLoaded", function() {
         
         document.querySelector("#initial-menu").classList.remove("visible");
         setTimeout(function() {
-            document.querySelector("#initial-menu").classList.add("hidden");
+            document.querySelector("#dashboard").classList.remove("hidden");
             setTimeout(function() {
             document.querySelector("#dashboard").classList.add("active");
-            document.querySelector("#dashboard").classList.remove("hidden");
+            document.querySelector("#initial-menu").classList.add("hidden");
              }, 100);
         }, 100);
         chatbotToggle.style.display = "flex";
@@ -2706,60 +2730,66 @@ Lemonade,18:30,99.0,26.0,25.0,0.2
 });
 
 function saveMeals() {
-    const meals = {
-        breakfast1: document.getElementById("breakfast-select-1").value,
-        breakfast2: document.getElementById("breakfast-select-2").value,
-        breakfast3: document.getElementById("breakfast-select-3").value,
-        lunch1: document.getElementById("lunch-select-1").value,
-        lunch2: document.getElementById("lunch-select-2").value,
-        lunch3: document.getElementById("lunch-select-3").value,
-        snack1: document.getElementById("snack-select-1").value,
-        snack2: document.getElementById("snack-select-2").value,
-        snack3: document.getElementById("snack-select-3").value,
-        dinner1: document.getElementById("dinner-select-1").value,
-        dinner2: document.getElementById("dinner-select-2").value,
-        dinner3: document.getElementById("dinner-select-3").value,
-    };
+    const mealIds = [
+        "breakfast-select-1", "breakfast-select-2", "breakfast-select-3",
+        "lunch-select-1", "lunch-select-2", "lunch-select-3",
+        "snack-select-1", "snack-select-2", "snack-select-3",
+        "dinner-select-1", "dinner-select-2", "dinner-select-3"
+    ];
+
+    const meals = {};
+
+    mealIds.forEach(id => {
+        const select = document.getElementById(id);
+        if (select) {
+            meals[id] = select.value; // Sauvegarde la valeur sélectionnée
+        }
+    });
+
     localStorage.setItem("savedMeals", JSON.stringify(meals));
-    
 }
+
 
 // Function to clear all selected meals
 function clearMeals() {
-    document.getElementById("breakfast-select-1").value = "";
-    document.getElementById("breakfast-select-2").value = "";
-    document.getElementById("breakfast-select-3").value = "";
-    document.getElementById("lunch-select-1").value = "";
-    document.getElementById("lunch-select-2").value = "";
-    document.getElementById("lunch-select-3").value = "";
-    document.getElementById("snack-select-1").value = "";
-    document.getElementById("snack-select-2").value = "";
-    document.getElementById("snack-select-3").value = "";
-    document.getElementById("dinner-select-1").value = "";
-    document.getElementById("dinner-select-2").value = "";
-    document.getElementById("dinner-select-3").value = "";
-    
+    const mealIds = [
+        "breakfast-select-1", "breakfast-select-2", "breakfast-select-3",
+        "lunch-select-1", "lunch-select-2", "lunch-select-3",
+        "snack-select-1", "snack-select-2", "snack-select-3",
+        "dinner-select-1", "dinner-select-2", "dinner-select-3"
+    ];
+
+    mealIds.forEach(id => {
+        const select = document.getElementById(id);
+        if (select) {
+            select.value = ""; // Réinitialiser la valeur
+
+            if (select.tomselect) {
+                select.tomselect.setValue(""); // Réinitialiser TomSelect
+            }
+        }
+    });
 }
 
+// Function to load saved meals from localStorage
 // Function to load saved meals from localStorage
 function loadMeals() {
     const savedMeals = JSON.parse(localStorage.getItem("savedMeals"));
     if (savedMeals) {
-        document.getElementById("breakfast-select-1").value = savedMeals.breakfast1;
-        document.getElementById("breakfast-select-2").value = savedMeals.breakfast2;
-        document.getElementById("breakfast-select-3").value = savedMeals.breakfast3;
-        document.getElementById("lunch-select-1").value = savedMeals.lunch1;
-        document.getElementById("lunch-select-2").value = savedMeals.lunch2;
-        document.getElementById("lunch-select-3").value = savedMeals.lunch3;
-        document.getElementById("snack-select-1").value = savedMeals.snack1;
-        document.getElementById("snack-select-2").value = savedMeals.snack2;
-        document.getElementById("snack-select-3").value = savedMeals.snack3;
-        document.getElementById("dinner-select-1").value = savedMeals.dinner1;
-        document.getElementById("dinner-select-2").value = savedMeals.dinner2;
-        document.getElementById("dinner-select-3").value = savedMeals.dinner3;
-        
+        Object.keys(savedMeals).forEach(id => {
+            const select = document.getElementById(id);
+            if (select) {
+                select.value = savedMeals[id]; // Restaurer la sélection
+                
+                if (select.tomselect) {
+                    select.tomselect.setValue(savedMeals[id]); // Met à jour TomSelect
+                }
+            }
+        });
     }
 }
+
+
 
 // Add event listeners for the buttons
 document.getElementById("save-meals").addEventListener("click", saveMeals);
