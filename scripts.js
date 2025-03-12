@@ -919,7 +919,22 @@ function drawBarChart(data) {
                     .on("mouseout", function() {
                         if (!brushEnabled[nutrient.label]) {
                             // Reset bar color on mouseout
-                            d3.select(this).attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
+                            d3.select(this).attr("fill", (d, i) => {
+                                const threshold1 = totalCaloriesBegin * (1 / 10);
+                                const threshold3 = totalCaloriesBegin * (3 / 10);
+                                const margin1 = threshold1 * (3 / 10);
+                                const margin3 = threshold3 * (3 / 10);
+                            
+                                if (i === 2) {
+                                    return d < (threshold1 - margin1) ? "dark-red" 
+                                         : d > (threshold1 + margin1) ? "orange" 
+                                         : "red";
+                                } else {
+                                    return d < (threshold3 - margin3) ? "dark-red" 
+                                         : d > (threshold3 + margin3) ? "orange" 
+                                         : "red";
+                                }
+                            });
                             
                             // Hide tooltip on mouseout
                             svg.selectAll(".tooltip").remove();
@@ -1659,7 +1674,9 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("dinner-select-3").addEventListener("change", update);
             indice = true ;
         }
+        
     }
+    update();
     });
     initializeChartViews();
 });
