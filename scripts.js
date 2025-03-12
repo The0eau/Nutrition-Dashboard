@@ -550,13 +550,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
         totalCaloriesDisplay.textContent = `Total required calories: ${totalCaloriesBegin} kcal`;
         // Ajouter la classe "hidden" au menu initial pour le faire disparaître
-        document.querySelector("#initial-menu").classList.remove("visible");
-        document.querySelector("#initial-menu").classList.add("hidden");
         
+        
+        document.querySelector("#initial-menu").classList.remove("visible");
         setTimeout(function() {
+            document.querySelector("#initial-menu").classList.add("hidden");
+            setTimeout(function() {
             document.querySelector("#dashboard").classList.add("active");
             document.querySelector("#dashboard").classList.remove("hidden");
-        }, 500);
+             }, 100);
+        }, 100);
         chatbotToggle.style.display = "flex";
         if (indice == false){
             loadCSVData("breakfast.csv", "breakfast-select-1");

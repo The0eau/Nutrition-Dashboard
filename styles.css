@@ -45,6 +45,11 @@ body {
     display: flex;
 }
 
+#hook-container:hover , #intro-and-container:hover, #intro-but-container:hover {
+    transform: scale(1.05); /* Slight scale effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
 
 #start-btn {
     transition: transform 0.3s ease;
@@ -69,6 +74,12 @@ body {
     margin: 10px;
     width: 30%; 
     box-sizing: border-box;
+}
+
+.box:hover {
+    transform: scale(1.05); /* Slight scale effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 #but {
@@ -106,6 +117,8 @@ body {
 #calorieChart {
     padding-left: 20px;
 }
+
+
 
 .row-1 .box {
     width: 48%; 
@@ -188,7 +201,6 @@ button:hover {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     padding: 30px;
     border: 2px solid #4CAF50;
     background-color: #f0f8ff;
@@ -197,20 +209,15 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
     width: 350px; 
-    opacity: 1;
+    opacity: 0;
+    transform: translateY(-50px); 
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 #dashboard {
-    display: none; 
     opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-}
-
-#initial-menu.hidden {
-    opacity: 0;
-    transform: translateY(-50px); 
+    transform: scale(0.5) translateY(100px); 
+    transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #dashboard.active {
@@ -219,16 +226,26 @@ button:hover {
     transform: translateY(0); 
 }
 
-#dashboard.hidden {
-    opacity: 0;
-    transform: scale(0.5) translateY(100px); 
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+#initial-menu.hidden, #dashboard.hidden {
+    display: none;
 }
-
 
 #initial-menu.visible {
     opacity: 1;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1.1); /* Added slight scale for effect */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/* Optional: Adding hover or focus effects for interactive transitions */
+#initial-menu:hover {
+    transform: translate(-50%, -50%) scale(1.05); /* Slight scale effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#dashboard.active:hover {
+    transform: scale(1.05) translateY(0); /* Slight zoom effect */
+    transition: transform 0.3s ease-in-out;
 }
 
 #initial-menu h2 {
@@ -263,6 +280,7 @@ button:hover {
 #initial-menu button:hover {
     background-color: #45a049;
 }
+
 
 
 /* Importing Google Fonts - Inter */
