@@ -5,6 +5,50 @@ body {
     background-color: #f4f4f4; 
 }
 
+/* Center the entire page content */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Center the dashboard and content */
+#dashboard, #initial-menu, #intro-and, #intro-but, #hook {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Ensure boxes and sections are centered */
+.row {
+    display: flex;
+    justify-content: center; /* Centers all items */
+    width: 100%;
+}
+
+/* Center charts and boxes */
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: auto; /* Keeps natural width */
+    margin: 10px auto; /* Ensures centering */
+}
+
+/* Make sure text inputs and buttons are centered */
+input, select, button {
+    text-align: center;
+    display: block;
+    margin: 10px auto;
+}
 
 #hook , #intro-and, #intro-but {
         margin: 0;
@@ -243,10 +287,7 @@ button:hover {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-#dashboard.active:hover {
-    transform: scale(1.05) translateY(0); /* Slight zoom effect */
-    transition: transform 0.3s ease-in-out;
-}
+
 
 #initial-menu h2 {
     color: #333;
@@ -291,7 +332,7 @@ button:hover {
     padding: 0;
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
-    max-width: 1300px;
+    max-width: 100%;
 }
 
 body {
