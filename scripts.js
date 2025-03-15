@@ -355,12 +355,13 @@ function drawLineChart(data, sugarData, proteinData, carbsData) {
     let yAxis = d3.axisLeft(yScale);
     svg.append("g")
         .attr("class", "y-axis")
+        .attr("transform", `translate(20, 0)`)
         .call(yAxis);
 
     // Add y-axis label
     svg.append("text")
         .attr("x", -height / 2)
-        .attr("y", -30)
+        .attr("y", -20)
         .attr("transform", "rotate(-90)")
         .attr("text-anchor", "middle")
         .attr("class", "y-axis-label")
@@ -633,7 +634,7 @@ function drawLegend(svg, width, nutrientLabel, colors) {
     ];
     legend = svg.append("g")
             .attr("class", "legend")
-            .attr("transform", `translate(${width - 90}, 0)`); 
+            .attr("transform", `translate(${width - 90}, 230)`); 
     } else {
     legendData = [
         { label: nutrientLabel, color: colors } // Couleur générique
@@ -845,20 +846,29 @@ function drawBarChart(data) {
 
         // Create the y-axis
         let yAxis = d3.axisLeft(yScale);
-        svg.append("g")
-            .attr("class", "y-axis")
-            .call(yAxis);
+        
 
         // Add y-axis label
         if (nutrient.label == "calorie") {
+            svg.append("g")
+                .attr("class", "y-axis")
+                .attr("transform", `translate(20, 0)`)
+                .call(yAxis);
+
             svg.append("text")
                 .attr("x", -height / 2)
-                .attr("y", -30)
+                .attr("y", -20)
                 .attr("transform", "rotate(-90)")
                 .attr("text-anchor", "middle")
                 .attr("class", "y-axis-label")
                 .text(`${nutrient.label} (Kcal)`);
+
+                
         } else {
+            svg.append("g")
+            .attr("class", "y-axis")
+            .call(yAxis);
+
             svg.append("text")
                 .attr("x", -height / 2)
                 .attr("y", -30)
@@ -894,7 +904,22 @@ function drawBarChart(data) {
                     .attr("y", d => yScale(d))
                     .attr("width", xScale.bandwidth())
                     .attr("height", d => height - yScale(d))
-                    .attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red")
+                    .attr("fill", (d, i) => {
+                        const threshold1 = totalCaloriesBegin * (1 / 10);
+                        const threshold3 = totalCaloriesBegin * (3 / 10);
+                        const margin1 = threshold1 * (3 / 10);
+                        const margin3 = threshold3 * (3 / 10);
+                    
+                        if (i === 2) {
+                            return d < (threshold1 - margin1) ? "dark-red" 
+                                 : d > (threshold1 + margin1) ? "orange" 
+                                 : "red";
+                        } else {
+                            return d < (threshold3 - margin3) ? "dark-red" 
+                                 : d > (threshold3 + margin3) ? "orange" 
+                                 : "red";
+                        }
+                    })
                     .attr("class", "clickable-bar")
                     .style("cursor", "pointer")
                     .on("click", function(event, d) {
@@ -919,22 +944,7 @@ function drawBarChart(data) {
                     .on("mouseout", function() {
                         if (!brushEnabled[nutrient.label]) {
                             // Reset bar color on mouseout
-                            d3.select(this).attr("fill", (d, i) => {
-                                const threshold1 = totalCaloriesBegin * (1 / 10);
-                                const threshold3 = totalCaloriesBegin * (3 / 10);
-                                const margin1 = threshold1 * (3 / 10);
-                                const margin3 = threshold3 * (3 / 10);
-                            
-                                if (i === 2) {
-                                    return d < (threshold1 - margin1) ? "dark-red" 
-                                         : d > (threshold1 + margin1) ? "orange" 
-                                         : "red";
-                                } else {
-                                    return d < (threshold3 - margin3) ? "dark-red" 
-                                         : d > (threshold3 + margin3) ? "orange" 
-                                         : "red";
-                                }
-                            });
+                            d3.select(this).attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
                             
                             // Hide tooltip on mouseout
                             svg.selectAll(".tooltip").remove();
@@ -1388,7 +1398,7 @@ function showTooltip(svg, value, nutrient, xScale, yScale) {
     // Tooltip text (meal label)
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 20)
+        .attr("y", 10)
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .attr("font-weight", "bold")
@@ -1397,10 +1407,18 @@ function showTooltip(svg, value, nutrient, xScale, yScale) {
     // Tooltip text (value)
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 35)
+        .attr("y", 23)
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .text(`${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`);
+
+    // Tooltip text (value)
+    tooltip.append("text")
+        .attr("x", 0)
+        .attr("y", 35)
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text(`Click for details`);
 }
 
 // Helper function to show tooltips in detail view
