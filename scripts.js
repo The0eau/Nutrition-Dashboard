@@ -239,78 +239,6 @@ function initializeChartViews() {
     };
 }
 
-// function drawLineChart(data) {
-//     d3.select("#calorieGraph").selectAll("*").remove();
-//     let width = 500, height = 200, margin = 40;
-//     let svg = d3.select("#calorieGraph")
-//                 .append("svg")
-//                 .attr("width", width + 2 * margin)
-//                 .attr("height", height + 2 * margin)
-//                 .append("g")
-//                 .attr("transform", `translate(${margin}, ${margin})`);
-
-        
-//     let xScale = d3.scaleBand()
-//                 .domain(["Breakfast", "Lunch", "Snack", "Dinner"]) // L'ordre des repas
-//                 .range([0, width])  // La largeur totale du graphique
-//                 .padding(0); // Ajuster l'espacement des barres
-
-//     let yScale;
-
-//     if (d3.max(data) == 0) {
-//         yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
-//     } else {
-//         yScale = d3.scaleLinear().domain([0, d3.max(data) + 30]).range([height, 0]);
-//     }
-
-
-
-//     let xAxis = d3.axisBottom(xScale);
-//     svg.append("g")
-//     .attr("class", "x-axis")
-//     .attr("transform", `translate(0, ${height})`)
-//     .call(xAxis);
-
-//     let yAxis = d3.axisLeft(yScale);
-//     svg.append("g")
-//     .attr("class", "y-axis")
-//     .call(yAxis);
-
-//     svg.append("text")
-//     .attr("x", -height / 2)
-//     .attr("y", -30)
-//     .attr("transform", "rotate(-90)")
-//     .attr("text-anchor", "middle")
-//     .attr("class", "y-axis-label")
-//     .text(`calorie (Kcal)`);
-
-//     let line = d3.line()
-//     .x((d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))
-//                  .y(d => yScale(d))
-//                  .curve(d3.curveMonotoneX);
-
-//     svg.append("path")
-//        .datum(data)
-//        .attr("fill", "none")
-//        .attr("stroke", "red")
-//        .attr("transform", `translate(63,0)`)
-//        .attr("stroke-width", 3)
-//        .attr("d", line);
-
-//     svg.selectAll(".dot")
-//        .data(data)
-//        .enter().append("circle")
-//        .attr("cx", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i]))  // Utilisation des labels
-//        .attr("transform", `translate(63,0)`)
-//        .attr("cy", d => yScale(d))
-//        .attr("r", 5)
-//        .attr("fill", "red");
-
-//     addBrushing(svg, width, height, xScale, data, "Calories")
-// }
-
-
-// Add brush functionality - reusing the existing function
 
 // Add a global variable to track line chart brush state
 let lineChartBrushEnabled = false;
@@ -395,20 +323,30 @@ function drawLineChart(data, sugarData, proteinData, carbsData) {
         .enter().append("circle")
         .attr("cx", (d, i) => xScale(mealNames[i]) + xScale.bandwidth() / 2)
         .attr("cy", d => yScale(d))
-        .attr("r", 5)
+        .attr("r", 6) // Slightly larger dots for better clickability
         .attr("fill", "red")
+        .attr("data-meal-index", (d, i) => i) // Store the meal index for each dot
         .on("mouseover", function(event, d) {
             if (!lineChartBrushEnabled) {
-                // Change dot color on hover
-                d3.select(this).attr("fill", "#ff6666");
-
-                // Show tooltip on hover
-                const mealIndex = data.indexOf(d);
+                // Get the correct meal index for this specific dot
+                const mealIndex = parseInt(d3.select(this).attr("data-meal-index"));
                 const mealName = mealNames[mealIndex];
                 
+                // Don't remove existing tooltip if it's already displayed for this meal
+                if (!svg.select(`.tooltip[data-for-meal="${mealName}"]`).empty()) {
+                    // Change dot color and exit if tooltip already exists
+                    d3.select(this).attr("fill", "#ff6666");
+                    return;
+                }
+                
+                // Change dot color on hover
+                d3.select(this).attr("fill", "#ff6666");
+                
+                // Create tooltip if it doesn't exist
                 let tooltip = svg.append("g")
                     .attr("class", "tooltip")
-                    .attr("transform", `translate(${xScale(mealName) + xScale.bandwidth() / 2}, ${yScale(d) - 20})`);
+                    .attr("data-for-meal", mealName) // Store which meal this tooltip is for
+                    .attr("transform", `translate(${xScale(mealName) + xScale.bandwidth() / 2}, ${yScale(d) - 30})`);
 
                 // Calculate the width based on the text length
                 const textWidth = Math.max(
@@ -422,62 +360,168 @@ function drawLineChart(data, sugarData, proteinData, carbsData) {
                 // Tooltip box
                 tooltip.append("rect")
                     .attr("width", textWidth) // Dynamic width
-                    .attr("height", 80) // Increased height to fit all values
+                    .attr("height", 84) // Slightly increased height
                     .attr("fill", "#555")
                     .attr("rx", 5)
                     .attr("x", -textWidth / 2); // Center the tooltip on the data point
 
-                // Tooltip text (meal label)
+                // Tooltip text (meal label) - move text up
                 tooltip.append("text")
                     .attr("x", 0) // Center the text in the box
-                    .attr("y", 20) // Vertical alignment
+                    .attr("y", 15) // Reduced from 20 to move up
                     .attr("text-anchor", "middle") // Center the text
                     .attr("fill", "white") // Text color
                     .attr("font-weight", "bold") // Bold text
                     .text(mealName);
 
-                // Tooltip text (calories)
+                // Tooltip text (calories) - move text up
                 tooltip.append("text")
-                    .attr("x", 0) // Center the text in the box
-                    .attr("y", 35) // Vertical alignment
-                    .attr("text-anchor", "middle") // Center the text
-                    .attr("fill", "white") // Text color
+                    .attr("x", 0) 
+                    .attr("y", 30) // Reduced from 35 to move up
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "white")
                     .text(`${d} kcal`);
 
-                // Tooltip text (sugar)
+                // Tooltip text (sugar) - move text up
                 tooltip.append("text")
-                    .attr("x", 0) // Center the text in the box
-                    .attr("y", 50) // Vertical alignment
-                    .attr("text-anchor", "middle") // Center the text
-                    .attr("fill", "white") // Text color
+                    .attr("x", 0)
+                    .attr("y", 45) // Reduced from 50 to move up
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "white")
                     .text(`${sugarData[mealIndex]} g sugar`);
 
-                // Tooltip text (protein)
+                // Tooltip text (protein) - move text up
                 tooltip.append("text")
-                    .attr("x", 0) // Center the text in the box
-                    .attr("y", 65) // Vertical alignment
-                    .attr("text-anchor", "middle") // Center the text
-                    .attr("fill", "white") // Text color
+                    .attr("x", 0)
+                    .attr("y", 60) // Reduced from 65 to move up
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "white")
                     .text(`${proteinData[mealIndex]} g protein`);
 
-                // Tooltip text (carbs)
+                // Tooltip text (carbs) - move text up
                 tooltip.append("text")
-                    .attr("x", 0) // Center the text in the box
-                    .attr("y", 80) // Vertical alignment
-                    .attr("text-anchor", "middle") // Center the text
-                    .attr("fill", "white") // Text color
+                    .attr("x", 0)
+                    .attr("y", 75) // Reduced from 80 to move up
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "white")
                     .text(`${carbsData[mealIndex]} g carbs`);
             }
         })
-        .on("mouseout", function() {
+        .on("mouseout", function(event) {
             if (!lineChartBrushEnabled) {
-                // Reset dot color on mouseout
-                d3.select(this).attr("fill", "red");
-
-                // Hide tooltip on mouseout
-                svg.selectAll(".tooltip").remove();
+                const currentDot = d3.select(this);
+                const thisMealIndex = parseInt(currentDot.attr("data-meal-index"));
+                const thisMealName = mealNames[thisMealIndex];
+                
+                // Use a single global variable to track mouse checking state
+                if (window.checkingMousePosition) {
+                    return; // Don't start another check if one is already in progress
+                }
+                
+                window.checkingMousePosition = true;
+                
+                // Use a delay to check if mouse moved to another dot
+                setTimeout(() => {
+                    // Get current mouse position relative to the SVG
+                    const mouseX = event.clientX;
+                    const mouseY = event.clientY;
+                    
+                    // Check if mouse is over or near any dot
+                    let nearAnyDot = false;
+                    
+                    // We'll check each dot manually
+                    svg.selectAll(".dot").each(function() {
+                        const dot = d3.select(this);
+                        // Get dot position in screen coordinates
+                        const dotNode = dot.node();
+                        const dotRect = dotNode.getBoundingClientRect();
+                        const dotCenterX = dotRect.left + dotRect.width/2;
+                        const dotCenterY = dotRect.top + dotRect.height/2;
+                        
+                        // Calculate distance from mouse to dot center
+                        const distToDot = Math.sqrt(
+                            Math.pow(mouseX - dotCenterX, 2) + 
+                            Math.pow(mouseY - dotCenterY, 2)
+                        );
+                        
+                        // Check if within or near the dot (10px radius)
+                        if (distToDot <= 10) {
+                            nearAnyDot = true;
+                        }
+                    });
+                    
+                    // If mouse is not near any dot
+                    if (!nearAnyDot) {
+                        // Reset this dot's color
+                        currentDot.attr("fill", "red");
+                        
+                        // Remove the tooltip only for this meal
+                        svg.select(`.tooltip[data-for-meal="${thisMealName}"]`).remove();
+                    }
+                    
+                    // Clear checking state
+                    window.checkingMousePosition = false;
+                }, 100); // Longer delay to reduce checking frequency
+            }
+        })
+        .on("mouseout", function(event) {
+            if (!lineChartBrushEnabled) {
+                const currentDot = d3.select(this);
+                const thisMealIndex = parseInt(currentDot.attr("data-meal-index"));
+                const thisMealName = mealNames[thisMealIndex];
+                
+                // Use a single global variable to track mouse checking state
+                if (window.checkingMousePosition) {
+                    return; // Don't start another check if one is already in progress
+                }
+                
+                window.checkingMousePosition = true;
+                
+                // Use a delay to check if mouse moved to another dot
+                setTimeout(() => {
+                    // Get current mouse position relative to the SVG
+                    const mouseX = event.clientX;
+                    const mouseY = event.clientY;
+                    
+                    // Check if mouse is over or near any dot
+                    let nearAnyDot = false;
+                    
+                    // We'll check each dot manually
+                    svg.selectAll(".dot").each(function() {
+                        const dot = d3.select(this);
+                        // Get dot position in screen coordinates
+                        const dotNode = dot.node();
+                        const dotRect = dotNode.getBoundingClientRect();
+                        const dotCenterX = dotRect.left + dotRect.width/2;
+                        const dotCenterY = dotRect.top + dotRect.height/2;
+                        
+                        // Calculate distance from mouse to dot center
+                        const distToDot = Math.sqrt(
+                            Math.pow(mouseX - dotCenterX, 2) + 
+                            Math.pow(mouseY - dotCenterY, 2)
+                        );
+                        
+                        // Check if within or near the dot (10px radius)
+                        if (distToDot <= 10) {
+                            nearAnyDot = true;
+                        }
+                    });
+                    
+                    // If mouse is not near any dot
+                    if (!nearAnyDot) {
+                        // Reset this dot's color
+                        currentDot.attr("fill", "red");
+                        
+                        // Remove the tooltip only for this meal
+                        svg.select(`.tooltip[data-for-meal="${thisMealName}"]`).remove();
+                    }
+                    
+                    // Clear checking state
+                    window.checkingMousePosition = false;
+                }, 100); // Longer delay to reduce checking frequency
             }
         });
+        
 
     // Add brush toggle button
     const brushToggleGroup = svgContainer.append("g")
@@ -667,107 +711,6 @@ function drawLegend(svg, width, nutrientLabel, colors) {
     .attr("fill", "black");
 }
 
-// function drawBarChart(data) {
-//     data.forEach((nutrient, index) => {
-//         d3.select(`#${nutrient.label}Chart`).selectAll("*").remove();
-
-//         let width = 300, height = 200, margin = 40;
-//         if (nutrient.label == "calorie") {
-//             width = 500, height = 200, margin = 40;
-//         }
-        
-//         let svg = d3.select(`#${nutrient.label}Chart`)
-//                     .append("svg")
-//                     .attr("width", width + 2 * margin)
-//                     .attr("height", height + 2 * margin)
-//                     .append("g")
-//                     .attr("transform", `translate(${margin}, ${margin})`);
-
-//         let xScale = d3.scaleBand()
-//                     .domain(["Breakfast", "Lunch", "Snack", "Dinner"])
-//                     .range([0, width])
-//                     .padding(0.2);
-
-//         let yScale;
-        
-//         if (d3.max(nutrient.values) == 0) {
-//             yScale = d3.scaleLinear()
-//                     .domain([0, 100])
-//                     .range([height, 0]);
-//         } else {
-//             yScale = d3.scaleLinear()
-//                     .domain([0, d3.max(nutrient.values) + (20/100)*d3.max(nutrient.values)])
-//                     .range([height, 0]);
-//         }
-        
-
-//         // Création de l'axe X
-//         let xAxis = d3.axisBottom(xScale);
-//         svg.append("g")
-//         .attr("class", "x-axis")
-//         .attr("transform", `translate(0, ${height})`)
-//         .call(xAxis);
-
-//         // Création de l'axe Y
-//         let yAxis = d3.axisLeft(yScale);
-//         svg.append("g")
-//         .attr("class", "y-axis")
-//         .call(yAxis);
-
-//         let brushInfo = d3.select("#brush-info");
-
-        
-        
-//         let color = ["red","lightpink","lightseagreen","lightsalmon"];
-
-//         if (nutrient.label == "calorie") {
-            
-//             svg.append("text")
-//                 .attr("x", -height / 2)
-//                 .attr("y", -30)
-//                 .attr("transform", "rotate(-90)")
-//                 .attr("text-anchor", "middle")
-//                 .attr("class", "y-axis-label")
-//                 .text(`${nutrient.label} (Kcal)`);
-
-//             drawLegend(svg, width, nutrient.label, color[index])
-//         } else {
-//             svg.append("text")
-//             .attr("x", -height / 2)
-//             .attr("y", -30)
-//             .attr("transform", "rotate(-90)")
-//             .attr("text-anchor", "middle")
-//             .attr("class", "y-axis-label")
-//             .text(`${nutrient.label} (g)`); // Le titre de l'axe Y correspond au label du nutriment
-//             drawLegend(svg, width, nutrient.label, color[index])
-//         }
-
-        
-//         if (nutrient.label == "calorie"){
-//             svg.selectAll(`.bar-${index}`)
-//             .data(nutrient.values)
-//             .enter().append("rect")
-//             .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
-//             .attr("y", d => yScale(d))
-//             .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
-//             .attr("height", d => height - yScale(d))
-//             .attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
-//         } else {
-//             svg.selectAll(`.bar-${index}`)
-//             .data(nutrient.values)
-//             .enter().append("rect")
-//             .attr("x", (d, i) => xScale(["Breakfast", "Lunch", "Snack", "Dinner"][i])) // Décaler chaque barre pour chaque nutriment
-//             .attr("y", d => yScale(d))
-//             .attr("width", xScale.bandwidth()) // Largeur des barres réduite pour plusieurs barres par repas
-//             .attr("height", d => height - yScale(d))
-//             .attr("fill", color[index]);
-//         }
-//         addBrushing(svg, width, height, xScale, nutrient.values, nutrient.label);
-
-//     });
-// }
-
-
 
 
 // Add global variables to track brush state
@@ -777,6 +720,8 @@ let brushEnabled = {
     protein: false,
     carbs: false
 };
+
+
 
 function drawBarChart(data) {
     data.forEach((nutrient, index) => {
@@ -1331,6 +1276,7 @@ function drawBarChart(data) {
     });
 }
 
+
 // Initialize brush state on page load
 function initializeBrushState() {
     brushEnabled = {
@@ -1373,32 +1319,42 @@ function addBrushToggleStyles() {
 document.addEventListener("DOMContentLoaded", addBrushToggleStyles);
 
 // Helper function to show tooltips in main view
+// Helper function to show tooltips in main view
+// Helper function to show tooltips in main view
 function showTooltip(svg, value, nutrient, xScale, yScale) {
     const mealIndex = nutrient.values.indexOf(value);
     const mealName = ["Breakfast", "Lunch", "Snack", "Dinner"][mealIndex];
     
+    // Position tooltip - handle short bars differently
+    // For very small values, place tooltip above the bar instead of inside it
+    const tooltipY = value < 5 ? yScale(value) - 45 : yScale(value) - 20;
+    
+    // Remove any existing tooltips first to prevent duplicates
+    svg.selectAll(".tooltip").remove();
+    
     let tooltip = svg.append("g")
         .attr("class", "tooltip")
-        .attr("transform", `translate(${xScale(mealName) + xScale.bandwidth() / 2}, ${yScale(value) - 20})`);
+        .attr("transform", `translate(${xScale(mealName) + xScale.bandwidth() / 2}, ${tooltipY})`);
 
     // Calculate tooltip width based on text length
     const textWidth = Math.max(
         mealName.length * 8,
-        `${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`.length * 7
+        `${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`.length * 7,
+        "Click for details".length * 7
     ) + 30;
 
-    // Tooltip box
+    // Tooltip box - increase height to add spacing
     tooltip.append("rect")
         .attr("width", textWidth)
-        .attr("height", 40)
+        .attr("height", 50) // Increased for more space
         .attr("fill", "#555")
         .attr("rx", 5)
         .attr("x", -textWidth / 2);
 
-    // Tooltip text (meal label)
+    // Tooltip text (meal label) - moved down to add more space at top
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 10)
+        .attr("y", 15) // Increased from 10 to give more space at top
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .attr("font-weight", "bold")
@@ -1407,28 +1363,37 @@ function showTooltip(svg, value, nutrient, xScale, yScale) {
     // Tooltip text (value)
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 23)
+        .attr("y", 28) // Adjusted for spacing
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .text(`${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`);
 
-    // Tooltip text (value)
+    // Add spacing before "Click for details"
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 35)
+        .attr("y", 43) // Kept to maintain space before this text
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .text(`Click for details`);
 }
 
 // Helper function to show tooltips in detail view
+// Helper function to show tooltips in detail view
 function showDetailTooltip(svg, value, foodItem, nutrient, xScale, yScale, xLabel) {
+    // Position tooltip - handle short bars differently
+    // For very small values, place tooltip above the bar instead of inside it
+    const tooltipY = value < 5 ? yScale(value) - 65 : yScale(value) - 20;
+    
+    // Remove any existing tooltips first to prevent duplicates
+    svg.selectAll(".tooltip").remove();
+    
     let tooltip = svg.append("g")
         .attr("class", "tooltip")
-        .attr("transform", `translate(${xScale(xLabel) + xScale.bandwidth() / 2}, ${yScale(value) - 20})`);
+        .attr("transform", `translate(${xScale(xLabel) + xScale.bandwidth() / 2}, ${tooltipY})`);
 
     // Calculate tooltip width based on text length
     const textWidth = Math.max(
+        xLabel.length * 8,
         foodItem.length * 7,
         `${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`.length * 7
     ) + 30;
@@ -1441,10 +1406,10 @@ function showDetailTooltip(svg, value, foodItem, nutrient, xScale, yScale, xLabe
         .attr("rx", 5)
         .attr("x", -textWidth / 2);
 
-    // Tooltip text (item number)
+    // Tooltip text (item number) - moved down to add more space at top
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 15)
+        .attr("y", 20) // Increased from 15 to give more space at top
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .attr("font-weight", "bold")

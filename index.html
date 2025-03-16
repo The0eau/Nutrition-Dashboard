@@ -12,20 +12,20 @@
 <body>
     <div id="intro">
         <div id="intro-container">
-            <h1>How to track your diet?</h1>
+            <h1>How to Track Your Diet?</h1>
             <p>Theau Aguet, Justin Seo, Selina Wu</p>
             <button id="intro-btn">Start</button>
         </div>
     </div>
     <div id="intro-and" class="hidden">
         <div id="intro-and-container">
-            <h1>You are someone who cares about your health and what you eat, but you're not exactly sure how to track your progress day by day!</h1>
+            <h1>You are someone who cares about your health and diet, but you're not sure how to track your progress day by day!</h1>
             <button id="and-btn">Start</button>
         </div>
     </div>
     <div id="intro-but" class="hidden">
         <div id="intro-but-container">
-            <h1>But despite your efforts, it can be difficult to accurately track your calories, protein, carbs, and sugar, or even know what meal to choose to reach your health goals!</h1>
+            <h1>But despite your efforts, it can be difficult to accurately track your calories, protein, carbs, and sugar, or choose the right meal to reach your health goals!</h1>
             <button id="but-btn">Start</button>
         </div>
     </div>
@@ -162,9 +162,18 @@
                     
                 </div>
                 <div class="meal-row">
-                    <button id="save-meals">Save</button>
-                    <button id="clear-meals">Clear</button>
-                    <button id="load-meals">Load</button>
+                    <span class = "tooltip">
+                        <button id="save-meals">Save</button>
+                        <span class = "tooltiptext">Save meals</span>
+                    </span>
+                    <span class = "tooltip">
+                        <button id="clear-meals">Clear</button>
+                        <span class = "tooltiptext">Clear current selection</span>
+                    </span>
+                    <span class = "tooltip">
+                        <button id="load-meals">Load</button>
+                        <span class = "tooltiptext">Reload saved meals</span>
+                    </span>
                 </div>
             </div>
             <div class="box" id="box2">
@@ -183,7 +192,7 @@
         </div>
         <div class="row row-4">
             <div class="box">
-                <h1>Takeaways</h1>
+                <h2>Takeaways</h2>
                 <p>Our visualization reveals that balanced nutrition is not just about meeting calorie goals but understanding the composition of those calories across different meals and food items. Our interactive dashboard succeeds at demonstrating how your choices combine to create significant nutritional patterns, and empowers users to make informed decisions about their diet through direct visual feedback rather than abstract numbers alone.</p> 
             </div>
         </div>
