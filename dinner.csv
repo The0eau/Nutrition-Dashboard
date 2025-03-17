@@ -21,7 +21,7 @@ Salad,20:15:00,13.0,2.8,1.2,0.8
 Green Smoothie,20:30:00,308.0,69.0,38.0,7.2
 Cheese Pita,19:50:00,640.0,95.0,0.0,30.0
 Spinach Smoothie,20:00:00,308.0,69.0,38.0,7.2
-(Red Baron) Brick Oven Pepperoni Pizza,18:00:00,1360.0,144.0,28.0,52.0
+Brick Oven Pepperoni Pizza,18:00:00,1360.0,144.0,28.0,52.0
 M & M ,20:19:00,400.0,62.0,56.0,4.0
 Stouffers Salisbury Steak Family Size ,17:50:00,175.0,12.0,2.0,11.5
 Mashed Potato,17:50:00,300.0,40.0,2.0,4.0
@@ -41,7 +41,7 @@ Mash Potato,19:15:00,237.0,36.0,3.0,4.1
 Sweet Tea,19:15:00,160.0,41.0,40.0,0.0
 Cake,21:30:00,262.0,38.0,28.0,2.0
 Rice Krispies,17:22:00,140.0,31.0,3.6,2.5
-(Hamburger Helper) Deluxe Cheeseburger Macaroni,19:00:00,660.0,132.0,18.0,18.0
+Deluxe Cheeseburger Macaroni,19:00:00,660.0,132.0,18.0,18.0
 Chocolate Cake,21:30:00,424.0,58.0,44.0,3.8
 Power Smoothie,18:55:00,202.5,43.7,38.7,5.0
 French Dressing,20:20:00,129.0,1.8,1.4,0.4
@@ -125,8 +125,8 @@ Salad - Butter Lettuce,17:55,171.0,8.5,3.7,2.5
 Chickpeas,17:55,116.0,19.0,3.4,6.3
 Red Onion,17:55,11.4,2.6,1.2,0.4
 (Toast) Red Wine Vinegrette,17:55,35.0,1.8,1.6,0.1
-(Jolly Time) Select Yellow Pop Corn - Air Popped,20:30,200.0,48.0,0.0,8.0
-(Peppridge Farm) Whole Wheat Hamburger Bun,22:25,130.0,22.0,3.0,7.0
+Select Yellow Pop Corn - Air Popped,20:30,200.0,48.0,0.0,8.0
+Whole Wheat Hamburger Bun,22:25,130.0,22.0,3.0,7.0
 (Jif) Extra Crunchy Peanut Butter,22:25,190.0,8.0,3.0,7.0
 Tilapia,19:05,74.0,0.0,0.0,15.0
 (Harris Teeter) Charleston Crabcake,19:05,90.0,3.7,0.7,5.8
@@ -137,12 +137,12 @@ Butter Lettuce,18:10,11.0,1.9,0.8,1.1
 Pecans,18:40,207.0,4.2,1.2,2.8
 Smart Balance,22:30,41.0,0.0,0.0,0.0
 Navel Orange,22:30,104.0,27.0,18.0,1.9
-Homemade soup with Hot Italian sausage kale cannolli beans onion garlic (Kirkland) organic chicken stock white wine,20:25,600.0,48.0,8.3,22.5
+Homemade soup,20:25,600.0,48.0,8.3,22.5
 Chicken breaded with (Progesso) Italian Bread Crumbs,18:35,275.6,20.5,1.3,29.9
 Potato,18:35,50.2,11.3,0.6,1.4
 Extra Virgin Olive Oil,18:35,119.0,0.0,0.0,0.0
 Salad - Spring Mix,19:15,17.0,3.1,0.5,1.3
-Homemade Chicken Noodle Soup with chicken onion celery (Kirkland) organic chicken stock and (Amish Kitchens) wide egg noodles,19:15,124.0,15.0,1.3,6.3
+Homemade Chicken Noodle Soup,19:15,124.0,15.0,1.3,6.3
 Steamed Shrimp,17:55:00,29.0,0.4,0.0,5.5
 Mixed Vegetable,17:55:00,5.7,1.2,0.5,0.3
 Moscato,17:55:00,197.0,13.0,0.0,0.2
@@ -158,7 +158,7 @@ Steamed Broccoli,20:15:00,30.0,6.1,1.2,2.0
 Air Fried French Fries,19:18:00,442.0,59.0,0.4,4.9
 Air Fried Chicken Loingettes ,18:25:00,377.0,4.4,0.0,40.0
 Salad - Tomato Cheese Lettuce Tortilla Strips,18:25:00,80.0,17.0,7.3,4.9
-Burger Salad - Lettuce Tomato Cheese Tortilla Strips Burger Thousand Island Dressing,17:32:00,471.0,13.0,8.7,28.0
+Burger,17:32:00,471.0,13.0,8.7,28.0
 Baked Sweet Potato,17:00:00,103.0,24.0,7.4,2.3
 Lemon Cookies,17:00:00,550.7,89.3,50.7,6.0
 Chicken Wingettes,19:00:00,526.0,16.0,0.4,27.0
@@ -203,7 +203,7 @@ Cooked Broccoli,18:00:00,54.0,11.2,2.2,3.8
 (Dove) Promises Dark Chocolate,18:32:00,168.0,19.2,15.2,1.6
 Celery,17:12:00,14.0,3.0,1.8,0.6
 Grilled Salmon,18:07:00,292.0,0.0,0.0,31.0
-Homemade potato cauliflower soup with potato cauliflower chicken broth onions,18:07:00,450.0,41.0,1.9,23.0
+Homemade potato cauliflower soup,18:07:00,450.0,41.0,1.9,23.0
 Sausage Kale Sweet Potato Soup,17:30:00,300.0,46.0,26.0,5.4
 Mountain Dew,19:00:00,230.0,62.0,62.0,0.0
 Hamburger,19:20:00,1080.0,81.0,0.0,69.0
@@ -309,7 +309,7 @@ Lanad o Lakes Cinnamon Sugar,18:50:00,60.0,17.0,15.0,0.0
 Asndes Cremede Menth Thin Mints,19:32:00,75.0,8.4,7.2,1.1
 Lu Petit Ecolier Milk Chocolate Biscuit Cookie,17:30:00,123.0,18.2,5.3,1.6
 Chicken Breast Air Fried,19:21:00,198.0,0.0,0.0,37.0
-Green Smoothie (with avocado cotton candy green grapes pear broccoli kale spinach banana),19:21:00,123.0,28.0,15.0,3.0
+Green Smoothie,19:21:00,123.0,28.0,15.0,3.0
 Sathers Caramel Creams,17:30:00,94.0,17.0,9.0,0.7
 Large Eggs Scrambled (nothing added),19:40:00,182.0,2.0,2.0,12.0
 Thomas English Muffin Blueberry,19:40:00,150.0,28.0,1.0,5.0
@@ -342,7 +342,7 @@ Outback Cobb salad with salmon,20:00,577.0,15.0,5.7,43.0
 Blue cheese dressing,20:00,146.0,1.4,1.0,0.4
 Outback cheesecake with chocolate sauce,22:00,480.0,45.0,37.0,7.1
 Outback bread loaf (1/2) + butter,18:00,320.0,60.0,0.7,11.2
-Chipotle burrito bowl chicken and steak black beans cheese lettuce salsa sour cream,19:30,1008.0,117.0,5.6,49.0
+Chipotle burrito bowl ,19:30,1008.0,117.0,5.6,49.0
 2 Yuengling beers,19:30,312.0,26.4,0.0,3.4
 Chicken soup,18:00,168.0,24.0,5.2,10.0
 Crostinis (slice of French bread swiss tomato),18:00,522.0,99.0,9.0,20.7
