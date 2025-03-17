@@ -204,7 +204,7 @@ function update() {
 }
 
 function updateCalorieChart() {
-    let calorieData = [breakfastCalories, lunchCalories, snackCalories, dinnerCalories];
+    let calorieData = [breakfastCalories, breakfastCalories +lunchCalories, breakfastCalories + lunchCalories + snackCalories,breakfastCalories + lunchCalories + snackCalories + dinnerCalories];
     let sugarData = [breakfastSugar, lunchSugar, snackSugar, dinnerSugar];
     let proteinData = [breakfastProtein, lunchProtein, snackProtein, dinnerProtein];
     let carbsData = [breakfastCarbs, lunchCarbs, snackCarbs, dinnerCarbs];
