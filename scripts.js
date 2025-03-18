@@ -204,7 +204,7 @@ function update() {
 }
 
 function updateCalorieChart() {
-    let calorieData = [breakfastCalories, lunchCalories, snackCalories, dinnerCalories];
+    let calorieData = [breakfastCalories, breakfastCalories +lunchCalories, breakfastCalories + lunchCalories + snackCalories,breakfastCalories + lunchCalories + snackCalories + dinnerCalories];
     let sugarData = [breakfastSugar, lunchSugar, snackSugar, dinnerSugar];
     let proteinData = [breakfastProtein, lunchProtein, snackProtein, dinnerProtein];
     let carbsData = [breakfastCarbs, lunchCarbs, snackCarbs, dinnerCarbs];
@@ -721,6 +721,13 @@ let brushEnabled = {
     carbs: false
 };
 
+function isMouseNearBar(mouseX, mouseY, barRect, buffer = 5) {
+    // Check if mouse is within the bar boundaries (with a small buffer)
+    return mouseX >= barRect.left - buffer && 
+           mouseX <= barRect.right + buffer && 
+           mouseY >= barRect.top - buffer && 
+           mouseY <= barRect.bottom + buffer;
+}
 
 
 function drawBarChart(data) {
@@ -737,6 +744,49 @@ function drawBarChart(data) {
                     .append("svg")
                     .attr("width", width + 2 * margin)
                     .attr("height", height + 2 * margin + 50);
+
+                    svgContainer.on("mouseleave", function() {
+                        if (!brushEnabled[nutrient.label]) {
+                            // Reset all bar colors
+                            if (currentView[nutrient.label] === 'main') {
+                                svg.selectAll(`.bar-${index}`).each(function() {
+                                    const bar = d3.select(this);
+                                    const barValue = bar.datum();
+                                    if (nutrient.label === "calorie") {
+                                        const i = nutrient.values.indexOf(barValue);
+                                        if (i === 2) { // Snack
+                                            const threshold1 = totalCaloriesBegin * (1 / 10);
+                                            const margin1 = threshold1 * (3 / 10);
+                                            bar.attr("fill", barValue < (threshold1 - margin1) ? "dark-red" 
+                                                          : barValue > (threshold1 + margin1) ? "orange" 
+                                                          : "red");
+                                        } else {
+                                            const threshold3 = totalCaloriesBegin * (3 / 10);
+                                            const margin3 = threshold3 * (3 / 10);
+                                            bar.attr("fill", barValue < (threshold3 - margin3) ? "dark-red" 
+                                                          : barValue > (threshold3 + margin3) ? "orange" 
+                                                          : "red");
+                                        }
+                                    } else {
+                                        bar.attr("fill", color[index]);
+                                    }
+                                });
+                            } else {
+                                svg.selectAll(`.detail-bar-${index}`).each(function() {
+                                    const bar = d3.select(this);
+                                    const barValue = bar.datum();
+                                    if (nutrient.label === "calorie") {
+                                        bar.attr("fill", barValue < 100 ? "dark-red" : barValue > 300 ? "orange" : "red");
+                                    } else {
+                                        bar.attr("fill", color[index]);
+                                    }
+                                });
+                            }
+                            
+                            // Remove all tooltips
+                            svg.selectAll(".tooltip").remove();
+                        }
+                    });
         
         // Create a group for the chart elements
         const svg = svgContainer.append("g")
@@ -886,13 +936,69 @@ function drawBarChart(data) {
                             showTooltip(svg, d, nutrient, xScale, yScale);
                         }
                     })
-                    .on("mouseout", function() {
+                    .on("mouseout", function(event) {
                         if (!brushEnabled[nutrient.label]) {
-                            // Reset bar color on mouseout
-                            d3.select(this).attr("fill", d => d < 250 ? "dark-red" : d > 700 ? "orange" : "red");
+                            const currentBar = d3.select(this);
+                            const barData = currentBar.datum();
+                            const barIndex = nutrient.values.indexOf(barData);
+                            const barMealName = mealNames[barIndex];
                             
-                            // Hide tooltip on mouseout
-                            svg.selectAll(".tooltip").remove();
+                            // Use a single global variable to track mouse checking state
+                            if (window.checkingBarPosition) {
+                                return; // Don't start another check if one is already in progress
+                            }
+                            
+                            window.checkingBarPosition = true;
+                            
+                            // Reset bar color immediately to avoid lag
+                            currentBar.attr("fill", (d, i) => {
+                                const threshold1 = totalCaloriesBegin * (1 / 10);
+                                const threshold3 = totalCaloriesBegin * (3 / 10);
+                                const margin1 = threshold1 * (3 / 10);
+                                const margin3 = threshold3 * (3 / 10);
+                            
+                                if (barIndex === 2) {
+                                    return d < (threshold1 - margin1) ? "dark-red" 
+                                         : d > (threshold1 + margin1) ? "orange" 
+                                         : "red";
+                                } else {
+                                    return d < (threshold3 - margin3) ? "dark-red" 
+                                         : d > (threshold3 + margin3) ? "orange" 
+                                         : "red";
+                                }
+                            });
+                            
+                            // Use a delay to check if mouse moved to another bar
+                            setTimeout(() => {
+                                // Get current mouse position
+                                const mouseX = event.clientX;
+                                const mouseY = event.clientY;
+                                
+                                // Check if mouse is over or near any bar
+                                let nearAnyBar = false;
+                                
+                                // Check each bar manually
+                                svg.selectAll(`.bar-${index}`).each(function() {
+                                    const bar = d3.select(this);
+                                    // Get bar position in screen coordinates
+                                    const barNode = bar.node();
+                                    const barRect = barNode.getBoundingClientRect();
+                                    
+                                    // Check if mouse is within the bar boundaries (with a small buffer)
+                                    if (isMouseNearBar(mouseX, mouseY, barRect)) {
+                                        nearAnyBar = true;
+                                    }
+                                });
+                                
+                                // If mouse is not near any bar
+                                if (!nearAnyBar) {
+                                    // Remove tooltip
+                                    svg.select(`.tooltip[data-for-meal="${barMealName}"]`).remove();
+                                }
+                                
+                                // Clear checking state
+                                window.checkingBarPosition = false;
+                            }, 30); // Short delay for responsive behavior
                         }
                     });
             } else {
@@ -925,13 +1031,54 @@ function drawBarChart(data) {
                             showTooltip(svg, d, nutrient, xScale, yScale);
                         }
                     })
-                    .on("mouseout", function() {
+                    .on("mouseout", function(event) {
                         if (!brushEnabled[nutrient.label]) {
-                            // Reset bar color on mouseout
-                            d3.select(this).attr("fill", color[index]);
+                            const currentBar = d3.select(this);
+                            const barData = currentBar.datum();
+                            const barIndex = nutrient.values.indexOf(barData);
+                            const barMealName = mealNames[barIndex];
                             
-                            // Hide tooltip on mouseout
-                            svg.selectAll(".tooltip").remove();
+                            // Use a single global variable to track mouse checking state
+                            if (window.checkingBarPosition) {
+                                return; // Don't start another check if one is already in progress
+                            }
+                            
+                            window.checkingBarPosition = true;
+                            
+                            // Reset bar color immediately to avoid lag
+                            currentBar.attr("fill", color[index]);
+                            
+                            // Use a delay to check if mouse moved to another bar
+                            setTimeout(() => {
+                                // Get current mouse position
+                                const mouseX = event.clientX;
+                                const mouseY = event.clientY;
+                                
+                                // Check if mouse is over or near any bar
+                                let nearAnyBar = false;
+                                
+                                // Check each bar manually
+                                svg.selectAll(`.bar-${index}`).each(function() {
+                                    const bar = d3.select(this);
+                                    // Get bar position in screen coordinates
+                                    const barNode = bar.node();
+                                    const barRect = barNode.getBoundingClientRect();
+                                    
+                                    // Check if mouse is within the bar boundaries (with a small buffer)
+                                    if (isMouseNearBar(mouseX, mouseY, barRect)) {
+                                        nearAnyBar = true;
+                                    }
+                                });
+                                
+                                // If mouse is not near any bar
+                                if (!nearAnyBar) {
+                                    // Remove tooltip
+                                    svg.select(`.tooltip[data-for-meal="${barMealName}"]`).remove();
+                                }
+                                
+                                // Clear checking state
+                                window.checkingBarPosition = false;
+                            }, 30); // Short delay for responsive behavior
                         }
                     });
             }
@@ -1098,15 +1245,58 @@ function drawBarChart(data) {
                         showDetailTooltip(svg, d, foodItem, nutrient, xScale, yScale, xDomain[i]);
                     }
                 })
-                .on("mouseout", function() {
+                .on("mouseout", function(event) {
                     if (!brushEnabled[nutrient.label]) {
-                        // Reset bar color on mouseout
-                        d3.select(this).attr("fill", nutrient.label === "calorie" ? 
-                                    (d => d < 100 ? "dark-red" : d > 300 ? "orange" : "red") : 
-                                    color[index]);
+                        const currentBar = d3.select(this);
+                        const barData = currentBar.datum();
+                        const barIndex = detailValues.indexOf(barData);
+                        const foodItem = detailLabels[barIndex];
                         
-                        // Hide tooltip on mouseout
-                        svg.selectAll(".tooltip").remove();
+                        // Reset bar color immediately to avoid lag
+                        if (nutrient.label === "calorie") {
+                            currentBar.attr("fill", barData < 100 ? "dark-red" : barData > 300 ? "orange" : "red");
+                        } else {
+                            currentBar.attr("fill", color[index]);
+                        }
+                        
+                        // Use a single global variable to track mouse checking state
+                        if (window.checkingBarPosition) {
+                            return; // Don't start another check if one is already in progress
+                        }
+                        
+                        window.checkingBarPosition = true;
+                        
+                        // Use a delay to check if mouse moved to another bar
+                        setTimeout(() => {
+                            // Get current mouse position
+                            const mouseX = event.clientX;
+                            const mouseY = event.clientY;
+                            
+                            // Check if mouse is over or near any bar
+                            let nearAnyBar = false;
+                            
+                            // Check each bar manually
+                            svg.selectAll(`.detail-bar-${index}`).each(function() {
+                                const bar = d3.select(this);
+                                // Get bar position in screen coordinates
+                                const barNode = bar.node();
+                                const barRect = barNode.getBoundingClientRect();
+                                
+                                // Check if mouse is within the bar boundaries (with a small buffer)
+                                if (isMouseNearBar(mouseX, mouseY, barRect)) {
+                                    nearAnyBar = true;
+                                }
+                            });
+                            
+                            // If mouse is not near any bar
+                            if (!nearAnyBar) {
+                                // Remove tooltip
+                                svg.select(`.tooltip[data-for-food="${foodItem}"]`).remove();
+                            }
+                            
+                            // Clear checking state
+                            window.checkingBarPosition = false;
+                        }, 30); // Short delay for responsive behavior
                     }
                 });
                 
@@ -1334,7 +1524,8 @@ function showTooltip(svg, value, nutrient, xScale, yScale) {
     
     let tooltip = svg.append("g")
         .attr("class", "tooltip")
-        .attr("transform", `translate(${xScale(mealName) + xScale.bandwidth() / 2}, ${tooltipY})`);
+        .attr("transform", `translate(${xScale(mealName) + xScale.bandwidth() / 2}, ${tooltipY})`)
+        .attr("data-for-meal", mealName);
 
     // Calculate tooltip width based on text length
     const textWidth = Math.max(
@@ -1349,12 +1540,13 @@ function showTooltip(svg, value, nutrient, xScale, yScale) {
         .attr("height", 50) // Increased for more space
         .attr("fill", "#555")
         .attr("rx", 5)
-        .attr("x", -textWidth / 2);
+        .attr("x", -textWidth / 2)
+        .attr("y", -35);
 
     // Tooltip text (meal label) - moved down to add more space at top
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 15) // Increased from 10 to give more space at top
+        .attr("y", -20) // Increased from 10 to give more space at top
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .attr("font-weight", "bold")
@@ -1363,7 +1555,7 @@ function showTooltip(svg, value, nutrient, xScale, yScale) {
     // Tooltip text (value)
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 28) // Adjusted for spacing
+        .attr("y", -7) // Adjusted for spacing
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .text(`${value} ${nutrient.label === "calorie" ? "kcal" : "g"}`);
@@ -1371,7 +1563,7 @@ function showTooltip(svg, value, nutrient, xScale, yScale) {
     // Add spacing before "Click for details"
     tooltip.append("text")
         .attr("x", 0)
-        .attr("y", 43) // Kept to maintain space before this text
+        .attr("y", 8) // Kept to maintain space before this text
         .attr("text-anchor", "middle")
         .attr("fill", "white")
         .text(`Click for details`);
@@ -1389,7 +1581,8 @@ function showDetailTooltip(svg, value, foodItem, nutrient, xScale, yScale, xLabe
     
     let tooltip = svg.append("g")
         .attr("class", "tooltip")
-        .attr("transform", `translate(${xScale(xLabel) + xScale.bandwidth() / 2}, ${tooltipY})`);
+        .attr("transform", `translate(${xScale(xLabel) + xScale.bandwidth() / 2}, ${tooltipY})`)
+        .attr("data-for-food", foodItem);
 
     // Calculate tooltip width based on text length
     const textWidth = Math.max(
